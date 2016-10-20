@@ -46,6 +46,4 @@ public class mainWin extends Frame{
     void addList(list p){
         this.add(p, BorderLayout.WEST);
     }
-    
-   
 }

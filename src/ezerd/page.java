@@ -12,12 +12,11 @@ import java.awt.event.*;
  * @author CMC
  */
 public class page extends Panel{
-    static Color c[]={Color.YELLOW, Color.BLUE, Color.GREEN, Color.PINK};
+    static Color c[]={Color.YELLOW, Color.CYAN};
     static int count=0;
     page(){
         super();        
-        //this.setBackground(Color.YELLOW);
-        this.setBackground(c[count++%4]);
+        this.setBackground(Color.WHITE);
+        //this.setBackground(c[count++%2]);
     }
-
 }

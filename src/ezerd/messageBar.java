@@ -38,7 +38,7 @@ public class messageBar extends Panel{
         parent=p;
         message="1";
         this.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.LIGHT_GRAY);
         showMessage();
     }
             

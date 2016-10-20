@@ -24,20 +24,22 @@ public class workSpace extends Panel{
         this.setLayout(new BorderLayout());
         Pages = new Vector<page>();
     }
-    void addPage(page p){
-        parent.Ptb.addBtton(count++);
-        if(activePage!=null)
-        {
+    void addPage(page p,String s){
+        parent.Ptb.addBtton(count++,s);
+        if(activePage!=null){
             this.remove(activePage);
         }
         this.add(p, BorderLayout.CENTER);
         this.validate();
         activePage=p;
         Pages.add(p);
-
     }
+    
+    void cloPage(){
+        parent.Ptb.delButton();
+    }
+    
     void addPageToolBar(pageToolBar p) {
         this.add(p,BorderLayout.NORTH);
     }
-    
 }

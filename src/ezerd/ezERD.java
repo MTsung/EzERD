@@ -7,6 +7,7 @@ package ezerd;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
+import javax.swing.*;
 
 /**
  *
@@ -20,7 +21,8 @@ public class ezERD {
     pageToolBar Ptb;
     list Lt;
     int totalPages=1;
-    int curPage=1;
+    int curPage=0;
+    DefaultListModel<String> model = new DefaultListModel<>();
     
     ezERD(){
         win =new mainWin(this);
@@ -28,14 +30,14 @@ public class ezERD {
         Mb=new messageBar(this);
         Ws=new workSpace(this);
         Ptb=new pageToolBar(Ws);
-        Lt=new list();
+        Lt=new list(model);
         
         win.addList(Lt);
         win.addWorkSpace(Ws);
         Ws.addPageToolBar(Ptb);
         win.addToolbar(Tb);
         win.addMessagebar(Mb);
-        Ws.addPage(new page());
+        Ws.addPage(new page(),"新頁面");
         
     }
     void run(){
