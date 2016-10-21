@@ -22,7 +22,7 @@ public class toolBar extends Panel{
         parent=p;
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(new Color(205,205,205));
-        //JButton newPageBtn = new JButton("",new ImageIcon("new.png"));
+        //newPageBtn = new JButton("New",new ImageIcon("new.png"));
         //newPageBtn.setBorder(null);
         newPageBtn.setBackground(Color.WHITE);
         this.add(newPageBtn);
@@ -35,7 +35,7 @@ public class toolBar extends Panel{
                 if(name != null){
                     parent.totalPages++;
                     parent.Mb.updateMessage();
-                    parent.Ws.addPage(new page(), "".equals(name) ? "未命名" : name);
+                    parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名" : name);
                 }
             }
         });

@@ -14,14 +14,15 @@ import java.awt.event.*;
 public class mainWin extends Frame{
     ezERD parent; 
     int mainWinWidth=1000,mainWinHeight=700;
+    Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
     
     mainWin(ezERD p){
         super();
         parent=p;        
         this.setLayout(new BorderLayout());
+        this.setTitle("EzERD");
         this.setSize(mainWinWidth, mainWinHeight);
         
-        Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
         this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); 
         
         this.addWindowListener(new WindowAdapter(){

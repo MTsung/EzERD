@@ -8,7 +8,6 @@ package ezerd;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
-import static javafx.application.Platform.exit;
 import javax.swing.*;
 
 /**
@@ -93,8 +92,8 @@ public class pageToolBar extends Panel{
         return i;
     }
     void yButton(int n){
-        for(int i=0;i<Btns.size();i++)
-            Btns.elementAt(i).setBackground(Color.WHITE);
+        for(JButton B:Btns)
+            B.setBackground(Color.WHITE);
          Btns.elementAt(n).setBackground(BtnC);
     }
 }

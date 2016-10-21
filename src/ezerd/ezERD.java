@@ -8,39 +8,43 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 import javax.swing.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
  *
  * @author CMC
  */
 public class ezERD {
-    mainWin win;
+    mainWin Win;
     toolBar Tb;
     messageBar Mb;
     workSpace Ws;
     pageToolBar Ptb;
     list Lt;
+    colorWin Cw;
     int totalPages=1;
     int curPage=0;
     DefaultListModel<String> model = new DefaultListModel<>();
     
     ezERD(){
-        win =new mainWin(this);
+        Win =new mainWin(this);
         Tb=new toolBar(this);
         Mb=new messageBar(this);
         Ws=new workSpace(this);
         Ptb=new pageToolBar(Ws);
         Lt=new list(model);
+        Cw=new colorWin(this);
         
-        win.addList(Lt);
-        win.addWorkSpace(Ws);
+        Win.addList(Lt);
+        Win.addWorkSpace(Ws);
+        Win.addToolbar(Tb);
+        Win.addMessagebar(Mb);
         Ws.addPageToolBar(Ptb);
-        win.addToolbar(Tb);
-        win.addMessagebar(Mb);
-        Ws.addPage(new page(),"新頁面");
+        Ws.addPage(new page(this),"新頁面");
         
     }
     void run(){
-        win.setVisible(true);
+        Win.setVisible(true);
+        //Cw.setVisible(true);
     }
 }
