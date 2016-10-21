@@ -20,8 +20,8 @@ public class page extends Panel{
     static int count=0;
     ezERD parent;
     Point Sp,Ep;
-    Vector<points> Points;
-    Stack<Integer> undos;
+    Vector<points> Points,RePoints;
+    Stack<Integer> undos,redos;
     int undo=0;
     
     page(ezERD p){
@@ -29,7 +29,9 @@ public class page extends Panel{
         parent=p;      
         this.setBackground(Color.WHITE);
         Points=new Vector<points>();
+        RePoints=new Vector<points>();
         undos=new Stack<Integer>();
+        redos=new Stack<Integer>();
         
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
@@ -52,13 +54,16 @@ public class page extends Panel{
             public void mousePressed(MouseEvent e){
                 Sp=e.getPoint();
                 undo=0;
+                
                 //System.out.println("mousePressed");
             }
             
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
                 undos.add(undo);
-                System.out.println(undo);
+                RePoints.removeAllElements();
+                redos.removeAllElements();
+                //System.out.println(undo);
                 parent.Win.setTitle("EzERD");
             }
         });

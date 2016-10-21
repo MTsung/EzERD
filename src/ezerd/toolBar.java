@@ -18,6 +18,7 @@ public class toolBar extends Panel{
     JButton cloPageBtn = new JButton("Close");
     JButton newPageBtn = new JButton("New");
     JButton undoBtn = new JButton("Undo");
+    JButton redoBtn = new JButton("Redo");
     
     toolBar(ezERD p){
         super();
@@ -54,6 +55,7 @@ public class toolBar extends Panel{
                         parent.Ws.cloPage();
             }
         });
+        
         undoBtn.setBackground(Color.WHITE);
         this.add(undoBtn);
         undoBtn.addMouseListener(new MouseAdapter()
@@ -62,9 +64,31 @@ public class toolBar extends Panel{
             public void mouseClicked(MouseEvent e)
             {
                 if(parent.Ws.activePage.undos.size()!=0){
-                    int o=parent.Ws.activePage.undos.pop();
-                    for(int i=o;i>0;i--)
+                    int temp=parent.Ws.activePage.undos.pop();
+                    parent.Ws.activePage.redos.add(temp);
+                    for(int i=temp;i>0;i--){
+                        parent.Ws.activePage.RePoints.add(parent.Ws.activePage.Points.elementAt(parent.Ws.activePage.Points.size()-i));
                         parent.Ws.activePage.Points.remove(parent.Ws.activePage.Points.size()-i);
+                    }
+                    parent.Ws.activePage.repaint();
+                }
+            }
+        });
+        
+        redoBtn.setBackground(Color.WHITE);
+        this.add(redoBtn);
+        redoBtn.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if(parent.Ws.activePage.redos.size()!=0){
+                    int temp=parent.Ws.activePage.redos.pop();
+                    parent.Ws.activePage.undos.add(temp);
+                    for(int i=temp;i>0;i--){
+                        parent.Ws.activePage.Points.add(parent.Ws.activePage.RePoints.elementAt(parent.Ws.activePage.RePoints.size()-i));
+                        parent.Ws.activePage.RePoints.remove(parent.Ws.activePage.RePoints.size()-i);
+                    }
                     parent.Ws.activePage.repaint();
                 }
             }
