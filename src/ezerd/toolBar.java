@@ -17,6 +17,8 @@ public class toolBar extends Panel{
     ezERD parent;
     JButton cloPageBtn = new JButton("Close");
     JButton newPageBtn = new JButton("New");
+    JButton undoBtn = new JButton("Undo");
+    
     toolBar(ezERD p){
         super();
         parent=p;
@@ -52,6 +54,20 @@ public class toolBar extends Panel{
                         parent.Ws.cloPage();
             }
         });
-
+        undoBtn.setBackground(Color.WHITE);
+        this.add(undoBtn);
+        undoBtn.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if(parent.Ws.activePage.undos.size()!=0){
+                    int o=parent.Ws.activePage.undos.pop();
+                    for(int i=o;i>0;i--)
+                        parent.Ws.activePage.Points.remove(parent.Ws.activePage.Points.size()-i);
+                    parent.Ws.activePage.repaint();
+                }
+            }
+        });
     }
 }

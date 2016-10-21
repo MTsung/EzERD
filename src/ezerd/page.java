@@ -7,6 +7,7 @@ package ezerd;
 import java.awt.*;
 import static java.awt.BasicStroke.*;
 import java.awt.event.*;
+import java.util.Stack;
 import java.util.Vector;
 import javax.swing.*;
         
@@ -20,13 +21,15 @@ public class page extends Panel{
     ezERD parent;
     Point Sp,Ep;
     Vector<points> Points;
+    Stack<Integer> undos;
+    int undo=0;
     
     page(ezERD p){
         super();      
         parent=p;      
         this.setBackground(Color.WHITE);
         Points=new Vector<points>();
-        
+        undos=new Stack<Integer>();
         
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
@@ -39,7 +42,7 @@ public class page extends Panel{
                 Points.add(new points(Sp,Ep));
                 Sp=Ep;
                 parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
-                
+                undo++;
             }
             public void mouseMoved(MouseEvent e) {
             }
@@ -48,13 +51,14 @@ public class page extends Panel{
         this.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
                 Sp=e.getPoint();
-                Graphics g = page.this.getGraphics();
-                g.setColor(Color.GREEN);
+                undo=0;
                 //System.out.println("mousePressed");
             }
             
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
+                undos.add(undo);
+                System.out.println(undo);
                 parent.Win.setTitle("EzERD");
             }
         });
@@ -66,6 +70,5 @@ public class page extends Panel{
         g.setColor(Color.BLUE);
         for(points p:Points)
             g.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
-            
     }
 }
