@@ -48,6 +48,9 @@ public class toolBar extends Panel{
         this.add(LineBtn);
         this.add(RecBtn);
         this.add(CirBtn);
+        
+        for(Component a:this.getComponents())/**/
+            a.addKeyListener(new keyListener(parent));/**/
         //this.setPreferredSize(new Dimension(90,0));
         
     }

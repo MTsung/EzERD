@@ -23,6 +23,7 @@ public class workSpace extends Panel{
         parent=p;
         this.setLayout(new BorderLayout());
         Pages = new Vector<page>();
+        
     }
     void addPage(page p,String s){
         parent.Ptb.addBtton(count++,s);

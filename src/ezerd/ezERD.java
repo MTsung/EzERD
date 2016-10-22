@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 import javax.swing.*;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
  *
@@ -41,7 +40,6 @@ public class ezERD {
         Win.addMessagebar(Mb);
         Ws.addPageToolBar(Ptb);
         Ws.addPage(new page(this),"新頁面");
-        
     }
     void run(){
         Win.setVisible(true);

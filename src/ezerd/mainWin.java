@@ -7,6 +7,7 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 /**
  *
  * @author CMC
@@ -34,7 +35,10 @@ public class mainWin extends Frame{
                    System.exit(0);
             }
         });
-        //component com=new component();
+        
+        this.addKeyListener(new keyListener(parent));/**/
+        
+       
     }
     void addWorkSpace(workSpace p){
         this.add(p, BorderLayout.CENTER);

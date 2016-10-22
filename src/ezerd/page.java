@@ -64,22 +64,27 @@ public class page extends Panel{
                 }
             }
             
-                int n=0;
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
                 if(LineT){
-                    undos.add(undo);
+                    if(undo!=0)
+                        undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
-                    parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
-                    parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
+                    //parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
+                    //parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
                     //System.out.println(undo);
                     parent.Win.setTitle("EzERD");
                 }
             }
         });
         
+        
+        for(Component a:this.getComponents())/**/
+            a.addKeyListener(new keyListener(parent));/**/
+        this.addKeyListener(new keyListener(parent));/**/
     }
+    
     public void paint(Graphics g) {
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
@@ -88,8 +93,8 @@ public class page extends Panel{
         for(points p:Points)
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
-        parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
+        //parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
+        //parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
         
     }
 }

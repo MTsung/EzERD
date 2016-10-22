@@ -36,14 +36,13 @@ public class topToolBar extends Panel{
         //newPageBtn.setBorder(null);
         //newPageBtn.setBackground(Color.WHITE);
         newPageBtn.setBackground(this.getBackground());
-        newPageBtn.setToolTipText("New Page");
+        newPageBtn.setToolTipText("New Page(Ctrl+N)");
+        newPageBtn.setActionCommand("New");
         newPageBtn.setBorder(null);
         this.add(newPageBtn);
-        newPageBtn.addMouseListener(new MouseAdapter()
-        {
+        newPageBtn.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 String name=JOptionPane.showInputDialog("檔名");
                 if(name != null){
                     parent.totalPages++;
@@ -55,14 +54,13 @@ public class topToolBar extends Panel{
         
         cloPageBtn.setBackground(Color.WHITE);
         cloPageBtn.setBackground(this.getBackground());
-        cloPageBtn.setToolTipText("Close Page");
+        cloPageBtn.setToolTipText("Close Page(Ctrl+W)");
+        cloPageBtn.setActionCommand("Close");
         cloPageBtn.setBorder(null);
         this.add(cloPageBtn);
-        cloPageBtn.addMouseListener(new MouseAdapter()
-        {
+        cloPageBtn.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 if(parent.totalPages!=1)
                     if(0==JOptionPane.showConfirmDialog(null, "是否關閉","Message",2 ) )
                         parent.Ws.cloPage();
@@ -71,14 +69,13 @@ public class topToolBar extends Panel{
         
         undoBtn.setBackground(Color.WHITE);
         undoBtn.setBackground(this.getBackground());
-        undoBtn.setToolTipText("Undo");
+        undoBtn.setToolTipText("Undo(Ctrl+Z)");
+        undoBtn.setActionCommand("Undo");
         undoBtn.setBorder(null);
         this.add(undoBtn);
-        undoBtn.addMouseListener(new MouseAdapter()
-        {
+        undoBtn.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 if(parent.Ws.activePage.undos.size()!=0){
                     int temp=parent.Ws.activePage.undos.pop();
                     parent.Ws.activePage.redos.add(temp);
@@ -93,14 +90,13 @@ public class topToolBar extends Panel{
         
         redoBtn.setBackground(Color.WHITE);
         redoBtn.setBackground(this.getBackground());
-        redoBtn.setToolTipText("Redo");
+        redoBtn.setToolTipText("Redo(Ctrl+Y)");
+        redoBtn.setActionCommand("Redo");
         redoBtn.setBorder(null);
         this.add(redoBtn);
-        redoBtn.addMouseListener(new MouseAdapter()
-        {
+        redoBtn.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 if(parent.Ws.activePage.redos.size()!=0){
                     int temp=parent.Ws.activePage.redos.pop();
                     parent.Ws.activePage.undos.add(temp);
@@ -112,7 +108,11 @@ public class topToolBar extends Panel{
                 }
             }
         });
+        
+        for(Component a:this.getComponents())/**/
+            a.addKeyListener(new keyListener(parent));/**/
         /*
+        
         JSlider slider=new JSlider(1,50);
         slider.setMajorTickSpacing(5);
         slider.setPaintTicks(true);
