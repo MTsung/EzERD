@@ -16,11 +16,11 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class ezERD {
     mainWin Win;
-    toolBar Tb;
+    topToolBar Ttb;
     messageBar Mb;
     workSpace Ws;
     pageToolBar Ptb;
-    list Lt;
+    toolBar Tb;
     colorWin Cw;
     int totalPages=1;
     int curPage=0;
@@ -28,16 +28,16 @@ public class ezERD {
     
     ezERD(){
         Win =new mainWin(this);
-        Tb=new toolBar(this);
+        Ttb=new topToolBar(this);
         Mb=new messageBar(this);
         Ws=new workSpace(this);
+        Tb=new toolBar(this);
         Ptb=new pageToolBar(Ws);
-        Lt=new list(model);
         Cw=new colorWin(this);
         
-        Win.addList(Lt);
+        Win.addList(Tb);
         Win.addWorkSpace(Ws);
-        Win.addToolbar(Tb);
+        Win.addToolbar(Ttb);
         Win.addMessagebar(Mb);
         Ws.addPageToolBar(Ptb);
         Ws.addPage(new page(this),"新頁面");

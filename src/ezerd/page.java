@@ -16,13 +16,14 @@ import javax.swing.*;
  * @author CMC
  */
 public class page extends Panel{
-    //static Color c[]={Color.YELLOW, Color.CYAN};
     static int count=0;
+    Boolean LineT=false;
     ezERD parent;
     Point Sp,Ep;
     Vector<points> Points,RePoints;
     Stack<Integer> undos,redos;
     int undo=0;
+    float PanSize=1;
     
     page(ezERD p){
         super();      
@@ -36,44 +37,59 @@ public class page extends Panel{
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
-                Graphics2D g = (Graphics2D)page.this.getGraphics();    
-                g.setStroke(new BasicStroke(10.0f,CAP_ROUND,JOIN_ROUND));
-                g.setColor(Color.BLUE);
-                Ep=e.getPoint();
-                g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                Points.add(new points(Sp,Ep));
-                Sp=Ep;
-                parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
-                undo++;
+                if(LineT){
+                    Graphics2D g = (Graphics2D)page.this.getGraphics();    
+                    g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
+                    g.setColor(Color.BLUE);
+                    Ep=e.getPoint();
+                    g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
+                    Points.add(new points(Sp,Ep));
+                    Sp=Ep;
+                    parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
+                    undo++;
+                }
             }
+            
             public void mouseMoved(MouseEvent e) {
+                
             }
         });
         
         this.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
-                Sp=e.getPoint();
-                undo=0;
-                
                 //System.out.println("mousePressed");
+                if(LineT){
+                    Sp=e.getPoint();
+                    undo=0;
+                }
             }
             
+                int n=0;
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
-                undos.add(undo);
-                RePoints.removeAllElements();
-                redos.removeAllElements();
-                //System.out.println(undo);
-                parent.Win.setTitle("EzERD");
+                if(LineT){
+                    undos.add(undo);
+                    RePoints.removeAllElements();
+                    redos.removeAllElements();
+                    parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
+                    parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
+                    //System.out.println(undo);
+                    parent.Win.setTitle("EzERD");
+                }
             }
         });
         
     }
     public void paint(Graphics g) {
+        parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
-        g2.setStroke(new BasicStroke(10.0f,CAP_ROUND,JOIN_ROUND));
-        g.setColor(Color.BLUE);
+        g2.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
+        g2.setColor(Color.BLUE);
         for(points p:Points)
-            g.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
+            g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
+        parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
+        parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
+        
     }
 }

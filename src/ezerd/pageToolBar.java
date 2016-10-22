@@ -31,8 +31,7 @@ public class pageToolBar extends Panel{
         BtnJ.add(true);
         Btns.elementAt(n).addMouseListener(new MouseAdapter(){
             @Override
-            public void mousePressed(MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e){
                 WorkSpace.parent.curPage=n;
                 /*       */System.out.println("Click : " + n);
                 upPage(n);

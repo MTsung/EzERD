@@ -34,17 +34,18 @@ public class mainWin extends Frame{
                    System.exit(0);
             }
         });
+        //component com=new component();
     }
     void addWorkSpace(workSpace p){
         this.add(p, BorderLayout.CENTER);
     }
-    void addToolbar(toolBar p){
+    void addToolbar(topToolBar p){
         this.add(p, BorderLayout.NORTH);
     }
     void addMessagebar(messageBar p){
         this.add(p, BorderLayout.SOUTH);
     }
-    void addList(list p){
+    void addList(toolBar p){
         this.add(p, BorderLayout.WEST);
     }
 }
