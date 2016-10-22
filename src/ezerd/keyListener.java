@@ -32,6 +32,10 @@ public class keyListener implements KeyListener{
             parent.Ttb.undoBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Y){
             parent.Ttb.redoBtn.doClick();
+        }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_O){
+            parent.Ttb.openBtn.doClick();
+        }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_S){
+            parent.Ttb.saveBtn.doClick();
         }
                
     }
