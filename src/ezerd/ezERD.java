@@ -39,7 +39,7 @@ public class ezERD {
         Win.addToolbar(Ttb);
         Win.addMessagebar(Mb);
         Ws.addPageToolBar(Ptb);
-        Ws.addPage(new page(this),"新頁面");
+        Ws.addPage(new page(this),"未命名.sss");
     }
     void run(){
         Win.setVisible(true);

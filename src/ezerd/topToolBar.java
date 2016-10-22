@@ -7,8 +7,12 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.filechooser.*;
 
 /**
  *
@@ -19,6 +23,8 @@ public class topToolBar extends Panel{
     
     JButton newPageBtn = new JButton(new ImageIcon("New.png"));
     JButton cloPageBtn = new JButton(new ImageIcon("Close.png"));
+    JButton openBtn = new JButton(new ImageIcon("Open.png"));
+    JButton saveBtn = new JButton(new ImageIcon("Save.png"));
     JButton undoBtn = new JButton(new ImageIcon("Undo.png"));
     JButton redoBtn = new JButton(new ImageIcon("Redo.png"));
     /*
@@ -47,7 +53,7 @@ public class topToolBar extends Panel{
                 if(name != null){
                     parent.totalPages++;
                     parent.Mb.updateMessage();
-                    parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名" : name);
+                    parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名.sss" : name+".sss");
                 }
             }
         });
@@ -64,6 +70,67 @@ public class topToolBar extends Panel{
                 if(parent.totalPages!=1)
                     if(0==JOptionPane.showConfirmDialog(null, "是否關閉","Message",2 ) )
                         parent.Ws.cloPage();
+            }
+        });
+        
+        openBtn.setBackground(this.getBackground());
+        openBtn.setToolTipText("Open File(Ctrl+O)");
+        openBtn.setActionCommand("New");
+        openBtn.setBorder(null);
+        this.add(openBtn);
+        openBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Page(*.sss)", "sss"));
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION)
+                { 
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        String newLine = null;
+                        Point Sp = null,Ep = null;
+                        int i=0;
+                        BufferedReader br = new BufferedReader(new FileReader(selectedFile));
+                        parent.Ws.addPage(new page(parent),selectedFile.getName());
+                        while((newLine=br.readLine()) != null){
+                            //System.out.println(newLine);
+                            String[] L = newLine.split(",");
+                            parent.Ws.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
+                                                                    ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))));
+                        }
+                         parent.Ws.activePage.repaint();
+                    } catch (IOException ex) {
+                        Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } 
+            }
+        });
+        
+        saveBtn.setBackground(this.getBackground());
+        saveBtn.setToolTipText("Save File(Ctrl+S)");
+        saveBtn.setActionCommand("New");
+        saveBtn.setBorder(null);
+        this.add(saveBtn);
+        saveBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setSelectedFile(new File(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()));
+                int n = fileChooser.showSaveDialog(null);
+                if(n==JFileChooser.APPROVE_OPTION){
+                    String Str=fileChooser.getSelectedFile().getAbsolutePath();
+                    try {
+                        PrintWriter pw   = new PrintWriter(new File(Str));
+                        for(points p:parent.Ws.activePage.Points){
+                            pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y +"\r\n");
+                        }
+                        pw.close();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
+                    parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(fileChooser.getSelectedFile().getName());
+                }
             }
         });
         
