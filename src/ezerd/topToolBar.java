@@ -71,10 +71,11 @@ public class topToolBar extends Panel{
             public void actionPerformed(ActionEvent e) {
                 if(parent.totalPages!=1)
                     if(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*")){
-                        if(0==JOptionPane.showConfirmDialog(null, "尚未儲存，是否儲存？","Message",2 ) )
-                            saveBtn.doClick();
+                        if(0==JOptionPane.showConfirmDialog(null, "尚未儲存，是否關閉？","Message",2 ) )
+                            parent.Ws.cloPage();
                     }else
                         parent.Ws.cloPage();
+                        
             }
         });
         
@@ -224,6 +225,7 @@ public class topToolBar extends Panel{
                 }
             }
         });
+       
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/

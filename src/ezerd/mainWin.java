@@ -31,8 +31,8 @@ public class mainWin extends Frame{
             public void windowClosing(WindowEvent e)
             {
                 Boolean B=false;
-                for(JButton Btn:parent.Ptb.Btns)
-                    if(Btn.getText().endsWith("*"))
+                for(int i=0;i<parent.Ptb.Btns.size();i++)
+                    if(parent.Ptb.Btns.elementAt(i).getText().endsWith("*") && parent.Ptb.BtnJ.elementAt(i))
                         B=true;
                 if(B){
                     int n=JOptionPane.showConfirmDialog(null, "尚有頁面未儲存，是否關閉？","Message",2);
@@ -40,9 +40,6 @@ public class mainWin extends Frame{
                             System.exit(0);
                 }else
                     System.exit(0);
-                    
-                
-                        
             }
         });
         

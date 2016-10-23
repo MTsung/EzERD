@@ -37,10 +37,13 @@ public class pageToolBar extends Panel{
                 /*       */System.out.println("Click : " + n);
                 upPage(n);
                 yButton(n);
+                WorkSpace.parent.Win.setTitle("EzERD-"+Btns.elementAt(n).getText());
             }
         });
         yButton(n);
+        WorkSpace.parent.Win.setTitle("EzERD-"+Btns.elementAt(n).getText());
         this.add(Btns.elementAt(n));
+        //System.out.println(WorkSpace.parent.Ttb.combo1.getItemAt(WorkSpace.parent.Ttb.combo1.getSelectedIndex()).toString());
         
         /*       */System.out.println("New : " + n);
         /*       */for(int ii=0;ii<BtnJ.size();ii++)

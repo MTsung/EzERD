@@ -35,6 +35,7 @@ public class page extends Panel{
         redos=new Stack<Integer>();
         
         this.addMouseMotionListener(new MouseAdapter(){
+            @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
                 if(LineT){
@@ -45,15 +46,20 @@ public class page extends Panel{
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
                     Points.add(new points(Sp,Ep));
                     Sp=Ep;
-                    parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
+                    //parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
                     undo++; 
                     if(!parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*"))
                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(
                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()+"*");
                 }
+                parent.Mb.XY=e.getPoint();
+                parent.Mb.updateMessage();
             }
             
+            @Override
             public void mouseMoved(MouseEvent e) {
+                    parent.Mb.XY=e.getPoint();
+                    parent.Mb.updateMessage();
                 
             }
         });
@@ -77,7 +83,7 @@ public class page extends Panel{
                     //parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
                     //parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
                     //System.out.println(undo);
-                    parent.Win.setTitle("EzERD");
+                    //parent.Win.setTitle("EzERD");
                 }
             }
         });

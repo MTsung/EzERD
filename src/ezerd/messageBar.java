@@ -15,11 +15,12 @@ public class messageBar extends Panel{
     ezERD parent;
     String message;
     Label pageInfo;
+    Point XY=new Point(1000,0);
     
     public void updatePageInfo()
     {
         //pageInfo.setText(""+ parent.curPage + "/" + parent.totalPages);
-        pageInfo.setText(""+parent.totalPages);
+        pageInfo.setText("(" + XY.x + "," + XY.y + ")");// +parent.totalPages);
     }
     
     public void updateMessage()
@@ -36,8 +37,8 @@ public class messageBar extends Panel{
     messageBar(ezERD p){
         super();
         parent=p;
-        message="1";
-        this.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        message="(" + XY.x + "," + XY.y + ")";
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(Color.LIGHT_GRAY);
         showMessage();
     }

@@ -37,6 +37,9 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.Ws.activePage.LineT=true;
+                Cursor cusTand = toolBar.this.getToolkit().createCustomCursor( new ImageIcon("Line.png").getImage(),new Point(5,40),"Pan");  
+                parent.Ws.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                parent.Ws.activePage.setCursor(cusTand);
             }
         });
         RecBtn.setBackground(this.getBackground());
