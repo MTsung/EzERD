@@ -23,7 +23,7 @@ public class page extends Panel{
     Vector<points> Points,RePoints;
     Stack<Integer> undos,redos;
     int undo=0;
-    float PanSize=1;
+    float PanSize=8;
     
     page(ezERD p){
         super();      
@@ -94,6 +94,7 @@ public class page extends Panel{
         this.addKeyListener(new keyListener(parent));/**/
     }
     
+    @Override
     public void paint(Graphics g) {
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
