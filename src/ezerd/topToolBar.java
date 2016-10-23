@@ -47,13 +47,14 @@ public class topToolBar extends Panel{
         newPageBtn.setBorder(null);
         this.add(newPageBtn);
         newPageBtn.addActionListener(new ActionListener(){
+            int i=1;
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name=JOptionPane.showInputDialog("檔名");
                 if(name != null){
                     parent.totalPages++;
                     parent.Mb.updateMessage();
-                    parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名.sss" : name+".sss");
+                    parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名(" + i++ + ").sss" : name+".sss");
                 }
             }
         });
@@ -81,15 +82,38 @@ public class topToolBar extends Panel{
         openBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*AWT作法*/
+                FileDialog fileChooser=new FileDialog(topToolBar.this.parent.Win, "Open", FileDialog.LOAD);
+                fileChooser.setFile("*.sss");
+                fileChooser.setVisible(true);
+                if(fileChooser.getDirectory() != null && fileChooser.getFile() != null){
+                    File selectedFile = new File(fileChooser.getDirectory() + fileChooser.getFile());
+                    try {
+                        String newLine = null;
+                        int i=0;
+                        BufferedReader br = new BufferedReader(new FileReader(selectedFile));
+                        parent.Ws.addPage(new page(parent),selectedFile.getName());
+                        while((newLine=br.readLine()) != null){
+                            //System.out.println(newLine);
+                            String[] L = newLine.split(",");
+                            parent.Ws.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
+                                                                    ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))));
+                        }
+                         parent.Ws.activePage.repaint();
+                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
+                    } catch (IOException ex) {
+                        Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                /*SWING作法*/
+                /*
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileFilter(new FileNameExtensionFilter("Page(*.sss)", "sss"));
                 int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION)
-                { 
+                if (returnValue == JFileChooser.APPROVE_OPTION){ 
                     File selectedFile = fileChooser.getSelectedFile();
                     try {
                         String newLine = null;
-                        Point Sp = null,Ep = null;
                         int i=0;
                         BufferedReader br = new BufferedReader(new FileReader(selectedFile));
                         parent.Ws.addPage(new page(parent),selectedFile.getName());
@@ -104,6 +128,7 @@ public class topToolBar extends Panel{
                         Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } 
+                */
             }
         });
         
@@ -115,6 +140,25 @@ public class topToolBar extends Panel{
         saveBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*AWT作法*/
+                FileDialog fileChooser=new FileDialog(topToolBar.this.parent.Win, "Save", FileDialog.SAVE);
+                fileChooser.setFile(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
+                fileChooser.setVisible(true);
+                if(fileChooser.getDirectory() != null && fileChooser.getFile() != null){
+                    File selectedFile = new File(fileChooser.getDirectory() + fileChooser.getFile());
+                    try {
+                        PrintWriter pw   = new PrintWriter(selectedFile);
+                        for(points p:parent.Ws.activePage.Points){
+                            pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y +"\r\n");
+                        }
+                        pw.close();
+                        parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
+                    parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(selectedFile.getName());
+                }
+                /*SWING作法*//*
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setSelectedFile(new File(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()));
                 int n = fileChooser.showSaveDialog(null);
@@ -131,6 +175,7 @@ public class topToolBar extends Panel{
                     } 
                     parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(fileChooser.getSelectedFile().getName());
                 }
+                */
             }
         });
         
@@ -191,4 +236,5 @@ public class topToolBar extends Panel{
         });
         this.add(slider);*/
     }
+
 }

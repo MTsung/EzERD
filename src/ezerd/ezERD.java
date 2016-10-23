@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 import javax.swing.*;
-
 /**
  *
  * @author CMC
