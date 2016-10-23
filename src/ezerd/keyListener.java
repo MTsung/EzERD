@@ -37,6 +37,7 @@ public class keyListener implements KeyListener{
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_S){
             parent.Ttb.saveBtn.doClick();
         }
+        parent.Win.requestFocusInWindow();
                
     }
 
