@@ -46,7 +46,10 @@ public class page extends Panel{
                     Points.add(new points(Sp,Ep));
                     Sp=Ep;
                     parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
-                    undo++;
+                    undo++; 
+                    if(!parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*"))
+                        parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(
+                        parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()+"*");
                 }
             }
             

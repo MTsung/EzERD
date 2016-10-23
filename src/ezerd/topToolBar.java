@@ -50,12 +50,13 @@ public class topToolBar extends Panel{
             int i=1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name=JOptionPane.showInputDialog("檔名");
-                if(name != null){
+                //String name=JOptionPane.showInputDialog("檔名");
+                //if(name != null){
                     parent.totalPages++;
                     parent.Mb.updateMessage();
-                    parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名(" + i++ + ").sss" : name+".sss");
-                }
+                    parent.Ws.addPage(new page(parent),"未命名(" + i++ + ").sss");
+                    //parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名(" + i++ + ").sss" : name+".sss");
+                //}
             }
         });
         
@@ -69,7 +70,10 @@ public class topToolBar extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(parent.totalPages!=1)
-                    if(0==JOptionPane.showConfirmDialog(null, "是否關閉","Message",2 ) )
+                    if(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*")){
+                        if(0==JOptionPane.showConfirmDialog(null, "尚未儲存，是否儲存？","Message",2 ) )
+                            saveBtn.doClick();
+                    }else
                         parent.Ws.cloPage();
             }
         });
@@ -142,7 +146,7 @@ public class topToolBar extends Panel{
             public void actionPerformed(ActionEvent e) {
                 /*AWT作法*/
                 FileDialog fileChooser=new FileDialog(topToolBar.this.parent.Win, "Save", FileDialog.SAVE);
-                fileChooser.setFile(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
+                fileChooser.setFile(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().replace("*",""));
                 fileChooser.setVisible(true);
                 if(fileChooser.getDirectory() != null && fileChooser.getFile() != null){
                     File selectedFile = new File(fileChooser.getDirectory() + fileChooser.getFile());
