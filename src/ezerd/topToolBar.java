@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.filechooser.*;
 
 /**
  *
@@ -27,6 +26,7 @@ public class topToolBar extends Panel{
     JButton saveBtn = new JButton(new ImageIcon("Save.png"));
     JButton undoBtn = new JButton(new ImageIcon("Undo.png"));
     JButton redoBtn = new JButton(new ImageIcon("Redo.png"));
+    
     
     topToolBar(ezERD p){
         super();
@@ -171,6 +171,8 @@ public class topToolBar extends Panel{
             }
         });
        
+        parent.Win.setMenuBar(new menuBar(parent));
+        
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
