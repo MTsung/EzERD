@@ -19,7 +19,8 @@ public class pageToolBar extends Panel{
     Vector<JButton> Btns=new Vector<JButton>();
     Vector<Boolean> BtnJ=new Vector<Boolean>();
     Color BtnC=new Color(200,255,255);
-    int BtnN=1,BtnW=115;
+    int BtnSum=1;
+    
     pageToolBar(workSpace Ws){
         super();
         WorkSpace=Ws;
@@ -27,40 +28,36 @@ public class pageToolBar extends Panel{
         this.setBackground(Color.LIGHT_GRAY);
         
     }
+    
     void addBtton(int n,String s){    
         Btns.add(new JButton(s));   
-        BtnJ.add(true);
         Btns.elementAt(n).setToolTipText(s);
-        BtnN++;
-        int BtnW=(WorkSpace.parent.Win.getWidth()-45-5*BtnN)/BtnN;
+        BtnJ.add(true);
+        
+        BtnSum++;
+        int BtnWidth=(WorkSpace.parent.Win.getWidth()-45-5*BtnSum)/BtnSum;
         for(JButton Btn:Btns)
-            Btn.setPreferredSize(new Dimension(BtnW > 200 ? 200 : BtnW ,25));
+            Btn.setPreferredSize(new Dimension(BtnWidth > 200 ? 200 : BtnWidth ,25));
 
         Btns.elementAt(n).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 WorkSpace.parent.curPage = n;
-                /*       */System.out.println("Click : " + n);
-                upPage(n);
-                yButton(n);
+                updatePage(n);
+                activeButtonColor(n);
             }
         });
-        yButton(n);
+        activeButtonColor(n);
         this.add(Btns.elementAt(n));
-        
-        /*       */for(int ii=0;ii<BtnJ.size();ii++)
-        /*       */    if(BtnJ.elementAt(ii))
-        /*       */        System.out.print(ii+" ");
-        /*       */System.out.println();
-
         Btns.elementAt(n).addKeyListener(new keyListener(WorkSpace.parent));/**/
+        allPage();
     }
     
     void delButton(){
         int n=activeButton(),i;
-        /*       */System.out.println("Del : " + n);
-        BtnN--;
-        int BtnW=(WorkSpace.parent.Win.getWidth()-45-5*BtnN)/BtnN;
+        
+        BtnSum--;
+        int BtnW=(WorkSpace.parent.Win.getWidth()-45-5*BtnSum)/BtnSum;
         for(JButton Btn:Btns)
             Btn.setPreferredSize(new Dimension(BtnW > 200 ? 200 : BtnW ,25));
         
@@ -71,21 +68,14 @@ public class pageToolBar extends Panel{
             while(!BtnJ.elementAt(++n));
         else 
             while(!BtnJ.elementAt(--n));
-        upPage(n);
-        yButton(n);
-        WorkSpace.validate();
+        updatePage(n);
+        activeButtonColor(n);
         this.repaint();
         WorkSpace.parent.totalPages--;
-        WorkSpace.parent.Mb.updateMessage();
-        
-        /*       */for(int ii=0;ii<BtnJ.size();ii++)
-        /*       */    if(BtnJ.elementAt(ii))
-        /*       */        System.out.print(ii+" ");
-        /*       */System.out.println();
-
+        allPage();
     }
     
-    void upPage(int n){
+    void updatePage(int n){
         page ep =WorkSpace.Pages.elementAt(n);
         if(WorkSpace.activePage!=null){
             WorkSpace.remove(WorkSpace.activePage);
@@ -94,7 +84,6 @@ public class pageToolBar extends Panel{
         WorkSpace.validate();
         WorkSpace.activePage=ep;
         WorkSpace.parent.curPage=n;
-        WorkSpace.parent.Mb.updateMessage();
     }
     
     int activeButton(){
@@ -103,11 +92,16 @@ public class pageToolBar extends Panel{
         return i;
     }
     
-    void yButton(int n){
+    void activeButtonColor(int n){
         for(JButton B:Btns)
             B.setBackground(Color.WHITE);
         Btns.elementAt(n).setBackground(BtnC);
-        WorkSpace.parent.Win.setTitle("EzERD-" + Btns.elementAt(n).getText());
+    }
+    void allPage(){
+        for(int i=0;i<BtnJ.size();i++)
+            if(BtnJ.elementAt(i))
+                System.out.print(i+" ");
+        System.out.println();
     }
     
 }

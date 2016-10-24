@@ -19,7 +19,6 @@ public class ezERD {
     workSpace Ws;
     pageToolBar Ptb;
     toolBar Tb;
-    colorWin Cw;
     int totalPages=1;
     int curPage=0;
     DefaultListModel<String> model = new DefaultListModel<>();
@@ -31,7 +30,6 @@ public class ezERD {
         Ws=new workSpace(this);
         Tb=new toolBar(this);
         Ptb=new pageToolBar(Ws);
-        Cw=new colorWin(this);
         
         Win.addList(Tb);
         Win.addWorkSpace(Ws);
@@ -42,6 +40,5 @@ public class ezERD {
     }
     void run(){
         Win.setVisible(true);
-        //Cw.setVisible(true);
     }
 }

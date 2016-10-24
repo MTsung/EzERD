@@ -26,6 +26,7 @@ public class messageBar extends Panel{
     public void updateMessage()
     {
         updatePageInfo();
+        parent.Win.setTitle("EzERD-" + parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
     }
     
     public void showMessage()

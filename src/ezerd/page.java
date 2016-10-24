@@ -46,11 +46,10 @@ public class page extends Panel{
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
                     Points.add(new points(Sp,Ep));
                     Sp=Ep;
-                    //parent.Win.setTitle("EzERD ("+e.getX()+","+e.getY()+")");
                     undo++; 
                     if(!parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*"))
                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(
-                        parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()+"*");
+                                                 parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()+"*");
                 }
                 parent.Mb.XY=e.getPoint();
                 parent.Mb.updateMessage();
@@ -60,7 +59,6 @@ public class page extends Panel{
             public void mouseMoved(MouseEvent e) {
                     parent.Mb.XY=e.getPoint();
                     parent.Mb.updateMessage();
-                
             }
         });
         
@@ -80,10 +78,8 @@ public class page extends Panel{
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
-                    //parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
-                    //parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
-                    //System.out.println(undo);
-                    //parent.Win.setTitle("EzERD");
+                    parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
+                    parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
                 }
             }
         });
@@ -103,8 +99,9 @@ public class page extends Panel{
         for(points p:Points)
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        //parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
-        //parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
+        parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
+        parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
+        parent.Win.setTitle("EzERD-" + parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
         
     }
 }

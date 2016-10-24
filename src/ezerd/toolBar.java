@@ -20,10 +20,6 @@ public class toolBar extends Panel{
     JButton LineBtn = new JButton(new ImageIcon("Line.png"));
     JButton RecBtn = new JButton(new ImageIcon("Rectangle.png"));
     JButton CirBtn = new JButton(new ImageIcon("Circular.png"));
-    /*JButton ChoBtn = new JButton("Choose");
-    JButton LineBtn = new JButton("Line");
-    JButton RecBtn = new JButton("Rectangle");
-    JButton CirBtn = new JButton("Circular");*/
     
     toolBar(ezERD p){
         super();
@@ -31,6 +27,15 @@ public class toolBar extends Panel{
         this.setBackground(new Color(150,150,150));
         ChoBtn.setBackground(this.getBackground());
         ChoBtn.setBorder(null);
+        ChoBtn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                parent.Ws.activePage.LineT=false;
+                parent.Ws.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+        
+        
         LineBtn.setBackground(this.getBackground());
         LineBtn.setBorder(null);
         LineBtn.addMouseListener(new MouseAdapter(){
@@ -38,14 +43,27 @@ public class toolBar extends Panel{
             public void mousePressed(MouseEvent e){
                 parent.Ws.activePage.LineT=true;
                 Cursor cusTand = toolBar.this.getToolkit().createCustomCursor( new ImageIcon("Line.png").getImage(),new Point(5,40),"Pan");  
-                parent.Ws.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 parent.Ws.activePage.setCursor(cusTand);
             }
         });
         RecBtn.setBackground(this.getBackground());
         RecBtn.setBorder(null);
+        RecBtn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                parent.Ws.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+            }
+        });
+        
         CirBtn.setBackground(this.getBackground());
         CirBtn.setBorder(null);
+        CirBtn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                parent.Ws.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+            }
+        });
+        
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(ChoBtn);
         this.add(LineBtn);
@@ -54,7 +72,6 @@ public class toolBar extends Panel{
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
-        //this.setPreferredSize(new Dimension(90,0));
         
     }
 }

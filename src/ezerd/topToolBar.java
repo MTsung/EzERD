@@ -27,20 +27,13 @@ public class topToolBar extends Panel{
     JButton saveBtn = new JButton(new ImageIcon("Save.png"));
     JButton undoBtn = new JButton(new ImageIcon("Undo.png"));
     JButton redoBtn = new JButton(new ImageIcon("Redo.png"));
-    /*
-    JButton newPageBtn = new JButton("New");
-    JButton cloPageBtn = new JButton("Close");
-    JButton undoBtn = new JButton("Undo");
-    JButton redoBtn = new JButton("Redo");*/
     
     topToolBar(ezERD p){
         super();
         parent=p;
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(new Color(205,205,205));
-        //newPageBtn = new JButton("New",new ImageIcon("new.png"));
-        //newPageBtn.setBorder(null);
-        //newPageBtn.setBackground(Color.WHITE);
+        
         newPageBtn.setBackground(this.getBackground());
         newPageBtn.setToolTipText("New Page(Ctrl+N)");
         newPageBtn.setActionCommand("New");
@@ -50,17 +43,11 @@ public class topToolBar extends Panel{
             int i=1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                //String name=JOptionPane.showInputDialog("檔名");
-                //if(name != null){
-                    parent.totalPages++;
-                    parent.Mb.updateMessage();
-                    parent.Ws.addPage(new page(parent),"未命名(" + i++ + ").sss");
-                    //parent.Ws.addPage(new page(parent), "".equals(name) ? "未命名(" + i++ + ").sss" : name+".sss");
-                //}
+                parent.totalPages++;
+                parent.Ws.addPage(new page(parent), "未命名(" + i++ + ").sss");
             }
         });
         
-        cloPageBtn.setBackground(Color.WHITE);
         cloPageBtn.setBackground(this.getBackground());
         cloPageBtn.setToolTipText("Close Page(Ctrl+W)");
         cloPageBtn.setActionCommand("Close");
@@ -69,6 +56,7 @@ public class topToolBar extends Panel{
         cloPageBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(parent.totalPages);
                 if(parent.totalPages!=1)
                     if(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*")){
                         if(0==JOptionPane.showConfirmDialog(null, "尚未儲存，是否關閉？","Message",2 ) )
@@ -87,7 +75,6 @@ public class topToolBar extends Panel{
         openBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*AWT作法*/
                 FileDialog fileChooser=new FileDialog(topToolBar.this.parent.Win, "Open", FileDialog.LOAD);
                 fileChooser.setFile("*.sss");
                 fileChooser.setVisible(true);
@@ -97,43 +84,18 @@ public class topToolBar extends Panel{
                         String newLine = null;
                         int i=0;
                         BufferedReader br = new BufferedReader(new FileReader(selectedFile));
+                        parent.totalPages++;
                         parent.Ws.addPage(new page(parent),selectedFile.getName());
                         while((newLine=br.readLine()) != null){
-                            //System.out.println(newLine);
                             String[] L = newLine.split(",");
                             parent.Ws.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                     ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))));
                         }
-                         parent.Ws.activePage.repaint();
-                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
+                        parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
                     } catch (IOException ex) {
                         Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                /*SWING作法*/
-                /*
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileFilter(new FileNameExtensionFilter("Page(*.sss)", "sss"));
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION){ 
-                    File selectedFile = fileChooser.getSelectedFile();
-                    try {
-                        String newLine = null;
-                        int i=0;
-                        BufferedReader br = new BufferedReader(new FileReader(selectedFile));
-                        parent.Ws.addPage(new page(parent),selectedFile.getName());
-                        while((newLine=br.readLine()) != null){
-                            //System.out.println(newLine);
-                            String[] L = newLine.split(",");
-                            parent.Ws.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
-                                                                    ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))));
-                        }
-                         parent.Ws.activePage.repaint();
-                    } catch (IOException ex) {
-                        Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } 
-                */
             }
         });
         
@@ -145,7 +107,6 @@ public class topToolBar extends Panel{
         saveBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*AWT作法*/
                 FileDialog fileChooser=new FileDialog(topToolBar.this.parent.Win, "Save", FileDialog.SAVE);
                 fileChooser.setFile(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().replace("*",""));
                 fileChooser.setVisible(true);
@@ -163,28 +124,9 @@ public class topToolBar extends Panel{
                     } 
                     parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(selectedFile.getName());
                 }
-                /*SWING作法*//*
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setSelectedFile(new File(parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()));
-                int n = fileChooser.showSaveDialog(null);
-                if(n==JFileChooser.APPROVE_OPTION){
-                    String Str=fileChooser.getSelectedFile().getAbsolutePath();
-                    try {
-                        PrintWriter pw   = new PrintWriter(new File(Str));
-                        for(points p:parent.Ws.activePage.Points){
-                            pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y +"\r\n");
-                        }
-                        pw.close();
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(topToolBar.class.getName()).log(Level.SEVERE, null, ex);
-                    } 
-                    parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(fileChooser.getSelectedFile().getName());
-                }
-                */
             }
         });
         
-        undoBtn.setBackground(Color.WHITE);
         undoBtn.setBackground(this.getBackground());
         undoBtn.setToolTipText("Undo(Ctrl+Z)");
         undoBtn.setActionCommand("Undo");
@@ -202,10 +144,10 @@ public class topToolBar extends Panel{
                     }
                     parent.Ws.activePage.repaint();
                 }
+                parent.Win.requestFocusInWindow();
             }
         });
         
-        redoBtn.setBackground(Color.WHITE);
         redoBtn.setBackground(this.getBackground());
         redoBtn.setToolTipText("Redo(Ctrl+Y)");
         redoBtn.setActionCommand("Redo");
@@ -223,6 +165,7 @@ public class topToolBar extends Panel{
                     }
                     parent.Ws.activePage.repaint();
                 }
+                parent.Win.requestFocusInWindow();
             }
         });
        
