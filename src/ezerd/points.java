@@ -12,8 +12,10 @@ import java.awt.*;
  */
 public class points {
     Point Sp,Ep;
-    points(Point s,Point e){
+    float PanSize;
+    points(Point s,Point e,float Size){
         Sp=s;
         Ep=e;
+        PanSize=Size;
     }
 }

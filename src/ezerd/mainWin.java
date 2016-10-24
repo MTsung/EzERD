@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 public class mainWin extends Frame{
     ezERD parent; 
-    int mainWinWidth=1000,mainWinHeight=700;
+    int mainWinWidth=1500,mainWinHeight=900;
     Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
     
     mainWin(ezERD p){
@@ -50,13 +50,16 @@ public class mainWin extends Frame{
     void addWorkSpace(workSpace p){
         this.add(p, BorderLayout.CENTER);
     }
-    void addToolbar(topToolBar p){
+    void addTopToolbar(topToolBar p){
         this.add(p, BorderLayout.NORTH);
     }
     void addMessagebar(messageBar p){
         this.add(p, BorderLayout.SOUTH);
     }
-    void addList(toolBar p){
+    void addToolBar(toolBar p){
         this.add(p, BorderLayout.WEST);
+    }
+    void addAttributesToolBar(attributesToolBar p){
+        this.add(p, BorderLayout.EAST);
     }
 }

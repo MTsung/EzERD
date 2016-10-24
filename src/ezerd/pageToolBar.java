@@ -35,9 +35,9 @@ public class pageToolBar extends Panel{
         BtnJ.add(true);
         
         BtnSum++;
-        int BtnWidth=(WorkSpace.parent.Win.getWidth()-45-5*BtnSum)/BtnSum;
+        int BtnWidth=(this.getWidth()-5*BtnSum)/BtnSum;
         for(JButton Btn:Btns)
-            Btn.setPreferredSize(new Dimension(BtnWidth > 200 ? 200 : BtnWidth ,25));
+            Btn.setPreferredSize(new Dimension(BtnWidth > 200 || BtnWidth < 0 ? 200 : BtnWidth ,25));
 
         Btns.elementAt(n).addActionListener(new ActionListener() {
             @Override
@@ -57,7 +57,7 @@ public class pageToolBar extends Panel{
         int n=activeButton(),i;
         
         BtnSum--;
-        int BtnW=(WorkSpace.parent.Win.getWidth()-45-5*BtnSum)/BtnSum;
+        int BtnW=(this.getWidth()-5*BtnSum)/BtnSum;
         for(JButton Btn:Btns)
             Btn.setPreferredSize(new Dimension(BtnW > 200 ? 200 : BtnW ,25));
         

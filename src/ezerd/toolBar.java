@@ -24,7 +24,7 @@ public class toolBar extends Panel{
     toolBar(ezERD p){
         super();
         parent=p;
-        this.setBackground(new Color(150,150,150));
+        this.setBackground(new Color(205,205,200));
         ChoBtn.setBackground(this.getBackground());
         ChoBtn.setBorder(null);
         ChoBtn.addMouseListener(new MouseAdapter(){

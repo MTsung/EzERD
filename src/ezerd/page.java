@@ -24,6 +24,7 @@ public class page extends Panel{
     Stack<Integer> undos,redos;
     int undo=0;
     float PanSize=8;
+    rightClickMenu popupMenu1=new rightClickMenu();
     
     page(ezERD p){
         super();      
@@ -38,13 +39,13 @@ public class page extends Panel{
             @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
-                if(LineT){
+                if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
                     g.setColor(Color.BLUE);
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                    Points.add(new points(Sp,Ep));
+                    Points.add(new points(Sp,Ep,PanSize));
                     Sp=Ep;
                     undo++; 
                     if(!parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*"))
@@ -63,17 +64,19 @@ public class page extends Panel{
         });
         
         this.addMouseListener(new MouseAdapter(){
+            @Override
             public void mousePressed(MouseEvent e){
                 //System.out.println("mousePressed");
-                if(LineT){
+                if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     Sp=e.getPoint();
                     undo=0;
                 }
             }
             
+            @Override
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
-                if(LineT){
+                if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     if(undo!=0)
                         undos.add(undo);
                     RePoints.removeAllElements();
@@ -81,10 +84,13 @@ public class page extends Panel{
                     parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
                     parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
                 }
+                else if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                    //popupMenu1.show(page.this, e.getX(), e.getY());
+                }
             }
         });
         
-        
+        //this.add(popupMenu1);
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
         this.addKeyListener(new keyListener(parent));/**/
@@ -94,10 +100,11 @@ public class page extends Panel{
     public void paint(Graphics g) {
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
-        g2.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
         g2.setColor(Color.BLUE);
-        for(points p:Points)
+        for(points p:Points){
+            g2.setStroke(new BasicStroke(p.PanSize,CAP_ROUND,JOIN_ROUND));
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
+        }
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
         parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
