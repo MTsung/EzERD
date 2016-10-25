@@ -20,7 +20,7 @@ public class attributesToolBar extends JPanel {
     public attributesToolBar(ezERD p) {
         super();
         parent = p;
-        this.setPreferredSize(new Dimension(1000,0));
+        this.setPreferredSize(new Dimension(300,0));
         this.setBackground(new Color(205,205,200));
         this.setLayout(new BorderLayout());
         slider=new JSlider(1,255);

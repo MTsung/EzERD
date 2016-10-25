@@ -22,6 +22,8 @@ public class mainWin extends Frame{
         parent=p;        
         this.setLayout(new BorderLayout());
         this.setTitle("EzERD");
+        mainWinWidth=(int) ((int) ScreenSize.getWidth()*0.8);
+        mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
         this.setSize(mainWinWidth, mainWinHeight);
         
         this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); 

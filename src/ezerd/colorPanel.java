@@ -8,21 +8,13 @@ package ezerd;
 import java.awt.*;
 import static java.awt.BasicStroke.CAP_ROUND;
 import static java.awt.BasicStroke.JOIN_ROUND;
-import java.awt.event.*;
-import javax.swing.JColorChooser;
 
 /**
  *
  * @author User
  */
-public class colorChoose extends Panel {
-attributesToolBar pp;
-    colorChoose(attributesToolBar p) {
-        super();
-        //Color bgColor = JColorChooser.showDialog(this,"Choose Background Color",getBackground());
-        pp=p;
-    }
-    public void paint(Graphics g) {
+public class colorPanel extends Panel{
+    colorPanel(){
         Graphics2D g1 = (Graphics2D)g;
         g1.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
         for(int i=0;i<10;i++){
