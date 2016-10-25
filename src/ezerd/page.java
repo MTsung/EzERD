@@ -24,6 +24,7 @@ public class page extends Panel{
     Stack<Integer> undos,redos;
     int undo=0;
     float PanSize=8;
+    Color PanColor;
     rightClickMenu popupMenu1=new rightClickMenu();
     
     page(ezERD p){
@@ -39,10 +40,11 @@ public class page extends Panel{
             @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
+                PanColor=parent.Atb.J.getColor();
                 if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
-                    g.setColor(Color.BLUE);
+                    g.setColor(PanColor);
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
                     Points.add(new points(Sp,Ep,PanSize));
@@ -100,7 +102,7 @@ public class page extends Panel{
     public void paint(Graphics g) {
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
-        g2.setColor(Color.BLUE);
+        g2.setColor(PanColor);
         for(points p:Points){
             g2.setStroke(new BasicStroke(p.PanSize,CAP_ROUND,JOIN_ROUND));
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);

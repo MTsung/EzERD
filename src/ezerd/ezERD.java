@@ -19,7 +19,7 @@ public class ezERD {
     workSpace Ws;
     pageToolBar Ptb;
     toolBar Tb;
-    attributesToolBar PP;
+    attributesToolBar Atb;
     int totalPages=1;
     int curPage=0;
     DefaultListModel<String> model = new DefaultListModel<>();
@@ -30,7 +30,7 @@ public class ezERD {
         Mb=new messageBar(this);
         Ws=new workSpace(this);
         Tb=new toolBar(this);
-        PP=new attributesToolBar(this);
+        Atb=new attributesToolBar(this);
         Ptb=new pageToolBar(Ws);
         
         Win.addToolBar(Tb);
@@ -39,7 +39,7 @@ public class ezERD {
         Win.addMessagebar(Mb);
         Ws.addPageToolBar(Ptb);
         Ws.addPage(new page(this),"未命名.sss");
-        Win.addAttributesToolBar(PP);
+        Win.addAttributesToolBar(Atb);
     }
     void run(){
         Win.setVisible(true);
