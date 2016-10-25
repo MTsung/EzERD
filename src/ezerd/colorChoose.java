@@ -9,37 +9,37 @@ import java.awt.*;
 import static java.awt.BasicStroke.CAP_ROUND;
 import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
+import java.util.Vector;
 import javax.swing.JColorChooser;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author User
  */
 public class colorChoose extends Panel {
-attributesToolBar pp;
+    attributesToolBar AtoolBat;
     colorChoose(attributesToolBar p) {
         super();
-        //Color bgColor = JColorChooser.showDialog(this,"Choose Background Color",getBackground());
-        pp=p;
+        AtoolBat=p;
     }
-    public void paint(Graphics g) {
-        Graphics2D g1 = (Graphics2D)g;
-        g1.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
-        for(int i=0;i<10;i++){
-            for(int j=0;j<300;j++){
-                int a=Color.HSBtoRGB((float)j/300, 1, 1);
-                g1.setColor(new Color(a));
-                g1.drawLine(j, i, j, i);
+    public void paint(Graphics g){
+        int nnn=250;
+        for(int i=0;i<nnn;i++){
+            for(int j=0;j<nnn;j++){
+                int a=Color.HSBtoRGB((float)AtoolBat.slider1.getValue()/255,(float)i/nnn ,(float)j/nnn );
+                g.setColor(new Color(a));
+                g.drawLine(j, i+295, j, i+295);
                 
             }
         }
-        int nnn=100;
-        for(int i=0;i<nnn;i++){
-            for(int j=0;j<nnn;j++){
-                int a=Color.HSBtoRGB((float)pp.slider.getValue()/255,(float)i/nnn ,(float)j/nnn );
-                g1.setColor(new Color(a));
-                g1.drawLine(j, i+15, j, i+15);
-                
+        for(int i=0;i<20;i++){
+            for(int j=0;j<250;j++){
+                int a=Color.HSBtoRGB((float)j/250, 1, 1);
+                g.setColor(new Color(a));
+                g.drawLine(j, i+570, j, i+570);
             }
         }
     }

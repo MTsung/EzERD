@@ -20,7 +20,7 @@ import javax.swing.event.*;
 public class topToolBar extends Panel{
     ezERD parent;
     
-    JButton newPageBtn = new JButton(new ImageIcon("New.png"));
+    JButton newPageBtn = new JButton(new ImageIcon("Neww.png"));
     JButton cloPageBtn = new JButton(new ImageIcon("Close.png"));
     JButton openBtn = new JButton(new ImageIcon("Open.png"));
     JButton saveBtn = new JButton(new ImageIcon("Save.png"));
