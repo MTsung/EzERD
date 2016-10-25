@@ -15,20 +15,25 @@ import javax.swing.event.*;
  */
 public class attributesToolBar extends JPanel {
     ezERD parent;
+        JSlider slider;
+        colorChoose ppp=new colorChoose(this);
     public attributesToolBar(ezERD p) {
         super();
         parent = p;
-        //this.setPreferredSize(new Dimension(50,0));
+        this.setPreferredSize(new Dimension(1000,0));
+        this.setBackground(new Color(205,205,200));
         this.setLayout(new BorderLayout());
-        JSlider slider=new JSlider(1,50);
+        slider=new JSlider(1,255);
         slider.setMajorTickSpacing(5);
         slider.setPaintTicks(true);
         slider.setValue(8);
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 parent.Ws.activePage.PanSize=slider.getValue();
+                ppp.repaint();
             }
         });
+        this.add(ppp,BorderLayout.CENTER);
         this.add(slider, BorderLayout.NORTH);
     }
 
