@@ -7,6 +7,7 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 /**
@@ -15,34 +16,37 @@ import javax.swing.*;
  */
 public class colorChoose extends Panel{
     attributesToolBar AtoolBat;
-    JColorChooser colorChooser;
+    int C;
     Image bufferImage;
     Graphics bufferGraphics;
     colorChoose(attributesToolBar p) {
         super();
         AtoolBat=p;
-        /*
-        colorChooser= new JColorChooser();
-        colorChooser.setColor(0, 0, 0);
-        colorChooser.setPreviewPanel(new JPanel());
-        
-        for(AbstractColorChooserPanel ppp:colorChooser.getChooserPanels()){
-            System.out.println(ppp.getDisplayName());
-            if((ppp.getDisplayName().indexOf("HSV")<0)&&(ppp.getDisplayName().indexOf("RGB")<0))
-                colorChooser.removeChooserPanel(ppp);
-        }
-        this.add(colorChooser);
-        */
+        this.addMouseMotionListener(new MouseAdapter(){
+            public void mouseDragged(MouseEvent e){
+                
+            }
+            public void mouseMoved(MouseEvent e) {
+                    
+            }
+        });
+        this.addMouseListener(new MouseAdapter(){
+            public void mouseReleased(MouseEvent e){
+                BufferedImage bufImg = (BufferedImage) bufferImage;
+                System.out.println(bufImg.getRGB(e.getPoint().x, e.getPoint().y));
+                C=bufImg.getRGB(e.getPoint().x, e.getPoint().y);
+            }
+        });
     }
-    Color getColor(){
-        return colorChooser.getColor();
+    int getColor(){
+        return C;
     } 
     public void update(Graphics g) {
         paint(g);
     }
     public void paint(Graphics g){
         
-        bufferImage = createImage(255, 255);
+        bufferImage = createImage(300, 300);
         bufferGraphics = bufferImage.getGraphics();
         
         int nnn=250;
@@ -50,7 +54,7 @@ public class colorChoose extends Panel{
             for(int j=0;j<nnn;j++){
                 int a=Color.HSBtoRGB((float)AtoolBat.slider1.getValue()/255,(float)i/nnn ,(float)j/nnn );
                 bufferGraphics.setColor(new Color(a));
-                bufferGraphics.drawLine(j, i+20, j, i+20);
+                bufferGraphics.drawLine(j, i+25, j, i+25);
                 
             }
         }
