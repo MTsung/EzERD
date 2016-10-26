@@ -48,8 +48,12 @@ public class attributesToolBar extends Panel {
         });
         colorBox =new colorChoose(this);
         this.add(colorBox,BorderLayout.CENTER);
-        this.add(slider, BorderLayout.NORTH);
-        this.add(slider1, BorderLayout.SOUTH);
+        this.add(slider1, BorderLayout.NORTH);
+        this.add(slider, BorderLayout.SOUTH);
+        
+        for(Component a:this.getComponents())/**/
+            a.addKeyListener(new keyListener(parent));/**/
+        this.addKeyListener(new keyListener(parent));/**/
     }
 
 }

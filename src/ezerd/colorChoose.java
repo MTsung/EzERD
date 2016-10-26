@@ -43,6 +43,12 @@ public class colorChoose extends Panel{
                 
             }
         });
+        
+        
+        for(Component a:this.getComponents())/**/
+            a.addKeyListener(new keyListener(AtoolBat.parent));/**/
+        this.addKeyListener(new keyListener(AtoolBat.parent));/**/
+        
     }
     int getColor(){
         //System.out.println(new Color(ColorInt));
