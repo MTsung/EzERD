@@ -7,8 +7,13 @@ package ezerd;
 import java.awt.*;
 import static java.awt.BasicStroke.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Stack;
 import java.util.Vector;
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
 import javax.swing.*;
         
 /**
@@ -24,8 +29,9 @@ public class page extends Panel{
     Stack<Integer> undos,redos;
     int undo=0;
     float PanSize=8;
-    Color PanColor;
+    Color PanColor=new Color(0,0,0);
     rightClickMenu popupMenu1=new rightClickMenu();
+    BufferedImage img;
     
     page(ezERD p){
         super();      
@@ -40,7 +46,7 @@ public class page extends Panel{
             @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
-                PanColor=parent.Atb.J.getColor();
+                //PanColor=parent.Atb.colorBox.getColor();
                 if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
@@ -96,10 +102,12 @@ public class page extends Panel{
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
         this.addKeyListener(new keyListener(parent));/**/
+       // img  = ImageIO.read(new File("usb.jpg"));
+
     }
-    
     @Override
     public void paint(Graphics g) {
+        //g.drawImage(img, 0, 0, this);
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
         g2.setColor(PanColor);

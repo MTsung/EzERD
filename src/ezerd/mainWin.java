@@ -22,6 +22,7 @@ public class mainWin extends Frame{
         parent=p;        
         this.setLayout(new BorderLayout());
         this.setTitle("EzERD");
+        this.setMenuBar(new menuBar(parent));
         mainWinWidth=(int) ((int) ScreenSize.getWidth()*0.8);
         mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
         this.setSize(mainWinWidth, mainWinHeight);
@@ -44,10 +45,7 @@ public class mainWin extends Frame{
                     System.exit(0);
             }
         });
-        
         this.addKeyListener(new keyListener(parent));/**/
-        
-       
     }
     void addWorkSpace(workSpace p){
         this.add(p, BorderLayout.CENTER);

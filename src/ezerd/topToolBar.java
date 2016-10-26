@@ -171,7 +171,7 @@ public class topToolBar extends Panel{
             }
         });
        
-        parent.Win.setMenuBar(new menuBar(parent));
+        
         
         
         for(Component a:this.getComponents())/**/

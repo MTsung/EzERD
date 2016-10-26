@@ -6,41 +6,62 @@
 package ezerd;
 
 import java.awt.*;
-import static java.awt.BasicStroke.CAP_ROUND;
-import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
-import java.util.Vector;
-import javax.swing.JColorChooser;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author User
  */
-public class colorChoose extends Panel {
+public class colorChoose extends Panel{
     attributesToolBar AtoolBat;
+    JColorChooser colorChooser;
+    Image bufferImage;
+    Graphics bufferGraphics;
     colorChoose(attributesToolBar p) {
         super();
         AtoolBat=p;
+        /*
+        colorChooser= new JColorChooser();
+        colorChooser.setColor(0, 0, 0);
+        colorChooser.setPreviewPanel(new JPanel());
+        
+        for(AbstractColorChooserPanel ppp:colorChooser.getChooserPanels()){
+            System.out.println(ppp.getDisplayName());
+            if((ppp.getDisplayName().indexOf("HSV")<0)&&(ppp.getDisplayName().indexOf("RGB")<0))
+                colorChooser.removeChooserPanel(ppp);
+        }
+        this.add(colorChooser);
+        */
+    }
+    Color getColor(){
+        return colorChooser.getColor();
+    } 
+    public void update(Graphics g) {
+        paint(g);
     }
     public void paint(Graphics g){
+        
+        bufferImage = createImage(255, 255);
+        bufferGraphics = bufferImage.getGraphics();
+        
         int nnn=250;
         for(int i=0;i<nnn;i++){
             for(int j=0;j<nnn;j++){
                 int a=Color.HSBtoRGB((float)AtoolBat.slider1.getValue()/255,(float)i/nnn ,(float)j/nnn );
-                g.setColor(new Color(a));
-                g.drawLine(j, i+295, j, i+295);
+                bufferGraphics.setColor(new Color(a));
+                bufferGraphics.drawLine(j, i+20, j, i+20);
                 
             }
         }
         for(int i=0;i<20;i++){
             for(int j=0;j<250;j++){
                 int a=Color.HSBtoRGB((float)j/250, 1, 1);
-                g.setColor(new Color(a));
-                g.drawLine(j, i+570, j, i+570);
+                bufferGraphics.setColor(new Color(a));
+                bufferGraphics.drawLine(j, i, j, i);
             }
         }
-    }
+        g.drawImage(bufferImage, 0, 0, this);
+        
+    } 
 }
