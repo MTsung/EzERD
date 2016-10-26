@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Stack;
 import java.util.Vector;
-import javafx.scene.image.Image;
+//import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 import javax.swing.*;
         
@@ -31,7 +31,8 @@ public class page extends Panel{
     float PanSize=8;
     Color PanColor=new Color(0,0,0);
     rightClickMenu popupMenu1=new rightClickMenu();
-    BufferedImage img;
+    Image bufferImage;
+    Graphics bufferGraphics;
     
     page(ezERD p){
         super();      
@@ -102,23 +103,29 @@ public class page extends Panel{
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
         this.addKeyListener(new keyListener(parent));/**/
-       // img  = ImageIO.read(new File("usb.jpg"));
 
+    }
+    
+    
+    public void update(Graphics g) {
+        paint(g);
     }
     @Override
     public void paint(Graphics g) {
-        //g.drawImage(img, 0, 0, this);
+        bufferImage = createImage(parent.Win.ScreenSize.width, parent.Win.ScreenSize.height);
+        bufferGraphics = bufferImage.getGraphics();
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        Graphics2D g2 = (Graphics2D)g;  
+        Graphics2D g2 = (Graphics2D)bufferGraphics;  
         for(points p:Points){
             g2.setColor(p.PanColor);
             g2.setStroke(new BasicStroke(p.PanSize,CAP_ROUND,JOIN_ROUND));
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         }
+        g.drawImage(bufferImage, 0, 0, this);
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
         parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
         parent.Win.setTitle("EzERD-" + parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
         
-    }
+    }     
 }

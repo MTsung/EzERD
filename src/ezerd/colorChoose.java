@@ -39,15 +39,15 @@ public class colorChoose extends Panel{
                 int X,Y;
                 if(e.getPoint().x<0)
                     X=0;
-                else if(e.getPoint().x>249)
-                    X=249;
+                else if(e.getPoint().x>250)
+                    X=250;
                 else
                     X=e.getPoint().x;
                 
                 if(e.getPoint().y<25)
                     Y=25;
-                else if(e.getPoint().y>274)
-                    Y=274;
+                else if(e.getPoint().y>275)
+                    Y=275;
                 else
                     Y=e.getPoint().y;
                 ColorInt=bufImg.getRGB(X,Y);
@@ -55,6 +55,7 @@ public class colorChoose extends Panel{
         });
     }
     int getColor(){
+        //System.out.println(new Color(ColorInt));
         return ColorInt;
     } 
     public void update(Graphics g) {
@@ -63,19 +64,20 @@ public class colorChoose extends Panel{
     public void paint(Graphics g){
         
         int nnn=250;
-        bufferImage = createImage(nnn, 275);
+        bufferImage = createImage(nnn+1, 275+1);
         bufferGraphics = bufferImage.getGraphics();
         
-        for(int i=0;i<nnn;i++){
-            for(int j=0;j<nnn;j++){
-                int a=Color.HSBtoRGB((float)AtoolBat.slider1.getValue()/255,(float)i/nnn ,(float)j/nnn );
+        for(int i=0;i<=nnn;i++){
+            for(int j=0;j<=nnn;j++){
+                //System.out.println((float)i/nnn );
+                int a=Color.HSBtoRGB((float)AtoolBat.slider1.getValue()/250 , (float)i/nnn , (float)j/nnn );
                 bufferGraphics.setColor(new Color(a));
-                bufferGraphics.drawLine(j, i+25, j, i+25);
+                bufferGraphics.drawLine(i, j+25 , i , j+25);
                 
             }
         }
         for(int i=0;i<20;i++){
-            for(int j=0;j<250;j++){
+            for(int j=0;j<=250;j++){
                 int a=Color.HSBtoRGB((float)j/250, 1, 1);
                 bufferGraphics.setColor(new Color(a));
                 bufferGraphics.drawLine(j, i, j, i);

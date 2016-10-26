@@ -43,7 +43,7 @@ public class topToolBar extends Panel{
             int i=1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                parent.totalPages++;
+                parent.curPage=++parent.totalPages;
                 parent.Ws.addPage(new page(parent), "未命名(" + i++ + ").sss");
             }
         });
@@ -84,7 +84,7 @@ public class topToolBar extends Panel{
                         String newLine = null;
                         int i=0;
                         BufferedReader br = new BufferedReader(new FileReader(selectedFile));
-                        parent.totalPages++;
+                        parent.curPage=++parent.totalPages;
                         parent.Ws.addPage(new page(parent),selectedFile.getName());
                         while((newLine=br.readLine()) != null){
                             String[] L = newLine.split(",");

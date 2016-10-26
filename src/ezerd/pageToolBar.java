@@ -42,9 +42,11 @@ public class pageToolBar extends Panel{
         Btns.elementAt(n).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WorkSpace.parent.curPage = n;
-                updatePage(n);
-                activeButtonColor(n);
+                if(WorkSpace.parent.curPage != n){
+                    WorkSpace.parent.curPage = n;
+                    updatePage(n);
+                    activeButtonColor(n);
+                }
             }
         });
         activeButtonColor(n);
@@ -71,6 +73,7 @@ public class pageToolBar extends Panel{
         updatePage(n);
         activeButtonColor(n);
         this.repaint();
+        WorkSpace.parent.curPage=n;
         WorkSpace.parent.totalPages--;
         allPage();
     }
