@@ -31,15 +31,6 @@ public class attributesToolBar extends Panel {
         slider.setMajorTickSpacing(5);
         slider.setPaintTicks(true);
         slider.setValue(8);
-        slider1=new JSlider(0,250);
-        slider1.setMajorTickSpacing(5);
-        slider1.setPaintTicks(true);
-        slider1.setValue(0);
-        slider1.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                colorBox.repaint();
-            }
-        });
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 parent.Ws.activePage.PanSize=slider.getValue();
@@ -48,7 +39,6 @@ public class attributesToolBar extends Panel {
         });
         colorBox =new colorChoose(this);
         this.add(colorBox,BorderLayout.CENTER);
-        this.add(slider1, BorderLayout.NORTH);
         this.add(slider, BorderLayout.SOUTH);
         
         for(Component a:this.getComponents())/**/
