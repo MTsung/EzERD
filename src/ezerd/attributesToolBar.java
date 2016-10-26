@@ -31,10 +31,10 @@ public class attributesToolBar extends Panel {
         slider.setMajorTickSpacing(5);
         slider.setPaintTicks(true);
         slider.setValue(8);
-        slider1=new JSlider(1,250);
+        slider1=new JSlider(0,250);
         slider1.setMajorTickSpacing(5);
         slider1.setPaintTicks(true);
-        slider1.setValue(8);
+        slider1.setValue(0);
         slider1.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 colorBox.repaint();

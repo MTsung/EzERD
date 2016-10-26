@@ -19,12 +19,14 @@ public class colorChoose extends Panel{
     int ColorInt;
     Image bufferImage;
     Graphics bufferGraphics;
+    int X=240, Y=260;
     colorChoose(attributesToolBar p) {
         super();
         AtoolBat=p;
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
-                
+                upPoint(e);
+                colorChoose.this.repaint();
             }
             public void mouseMoved(MouseEvent e) {
                 AtoolBat.parent.Mb.XY=e.getPoint();
@@ -33,11 +35,21 @@ public class colorChoose extends Panel{
             }
         });
         this.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent e){
+                upPoint(e);
+                colorChoose.this.repaint();
+            }
             public void mouseReleased(MouseEvent e){
-                BufferedImage bufImg = (BufferedImage) bufferImage;
-                //System.out.println(bufImg.getRGB(e.getPoint().x, e.getPoint().y));
-                int X,Y;
-                if(e.getPoint().x<0)
+                
+            }
+        });
+    }
+    int getColor(){
+        //System.out.println(new Color(ColorInt));
+        return ColorInt;
+    } 
+    public void upPoint(MouseEvent e){
+        if(e.getPoint().x<0)
                     X=0;
                 else if(e.getPoint().x>250)
                     X=250;
@@ -50,14 +62,10 @@ public class colorChoose extends Panel{
                     Y=275;
                 else
                     Y=e.getPoint().y;
-                ColorInt=bufImg.getRGB(X,Y);
-            }
-        });
     }
-    int getColor(){
-        //System.out.println(new Color(ColorInt));
-        return ColorInt;
-    } 
+            
+    
+    
     public void update(Graphics g) {
         paint(g);
     }
@@ -83,7 +91,14 @@ public class colorChoose extends Panel{
                 bufferGraphics.drawLine(j, i, j, i);
             }
         }
+        bufferGraphics.setColor(Color.BLACK);
+        bufferGraphics.drawOval(X - 6, Y - 6, 12, 12);
+        bufferGraphics.drawOval(X - 4, Y - 4, 8, 8);
+        bufferGraphics.setColor(Color.WHITE);
+        bufferGraphics.drawOval(X - 5, Y - 5, 10, 10);
         g.drawImage(bufferImage, 0, 0, this);
+        BufferedImage bufImg = (BufferedImage) bufferImage;
+        ColorInt=bufImg.getRGB(X,Y);
         
     } 
 }
