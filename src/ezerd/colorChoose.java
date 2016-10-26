@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class colorChoose extends Panel{
     attributesToolBar AtoolBat;
-    int C;
+    int ColorInt;
     Image bufferImage;
     Graphics bufferGraphics;
     colorChoose(attributesToolBar p) {
@@ -27,29 +27,45 @@ public class colorChoose extends Panel{
                 
             }
             public void mouseMoved(MouseEvent e) {
+                AtoolBat.parent.Mb.XY=e.getPoint();
+                AtoolBat.parent.Mb.updateMessage();
                     
             }
         });
         this.addMouseListener(new MouseAdapter(){
             public void mouseReleased(MouseEvent e){
                 BufferedImage bufImg = (BufferedImage) bufferImage;
-                System.out.println(bufImg.getRGB(e.getPoint().x, e.getPoint().y));
-                C=bufImg.getRGB(e.getPoint().x, e.getPoint().y);
+                //System.out.println(bufImg.getRGB(e.getPoint().x, e.getPoint().y));
+                int X,Y;
+                if(e.getPoint().x<0)
+                    X=0;
+                else if(e.getPoint().x>249)
+                    X=249;
+                else
+                    X=e.getPoint().x;
+                
+                if(e.getPoint().y<25)
+                    Y=25;
+                else if(e.getPoint().y>274)
+                    Y=274;
+                else
+                    Y=e.getPoint().y;
+                ColorInt=bufImg.getRGB(X,Y);
             }
         });
     }
     int getColor(){
-        return C;
+        return ColorInt;
     } 
     public void update(Graphics g) {
         paint(g);
     }
     public void paint(Graphics g){
         
-        bufferImage = createImage(300, 300);
+        int nnn=250;
+        bufferImage = createImage(nnn, 275);
         bufferGraphics = bufferImage.getGraphics();
         
-        int nnn=250;
         for(int i=0;i<nnn;i++){
             for(int j=0;j<nnn;j++){
                 int a=Color.HSBtoRGB((float)AtoolBat.slider1.getValue()/255,(float)i/nnn ,(float)j/nnn );

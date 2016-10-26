@@ -90,7 +90,7 @@ public class topToolBar extends Panel{
                             String[] L = newLine.split(",");
                             parent.Ws.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                     ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
-                                                                    ,Float.parseFloat(L[4])
+                                                                    ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
                                                                     ));
                         }
                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -117,7 +117,8 @@ public class topToolBar extends Panel{
                     try {
                         PrintWriter pw   = new PrintWriter(selectedFile);
                         for(points p:parent.Ws.activePage.Points){
-                            pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + "," + p.PanSize + "\r\n");
+                            pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + ","
+                                    + p.PanSize + "," + p.PanColor.getRGB() +"\r\n");
                         }
                         pw.close();
                         parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());

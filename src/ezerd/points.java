@@ -13,9 +13,11 @@ import java.awt.*;
 public class points {
     Point Sp,Ep;
     float PanSize;
-    points(Point s,Point e,float Size){
+    Color PanColor;
+    points(Point s,Point e,float Size,Color color){
         Sp=s;
         Ep=e;
         PanSize=Size;
+        PanColor=color;
     }
 }

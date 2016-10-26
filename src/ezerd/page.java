@@ -53,7 +53,7 @@ public class page extends Panel{
                     g.setColor(PanColor);
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                    Points.add(new points(Sp,Ep,PanSize));
+                    Points.add(new points(Sp,Ep,PanSize,PanColor));
                     Sp=Ep;
                     undo++; 
                     if(!parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*"))
@@ -110,8 +110,8 @@ public class page extends Panel{
         //g.drawImage(img, 0, 0, this);
         parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)g;  
-        g2.setColor(PanColor);
         for(points p:Points){
+            g2.setColor(p.PanColor);
             g2.setStroke(new BasicStroke(p.PanSize,CAP_ROUND,JOIN_ROUND));
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         }
