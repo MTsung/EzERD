@@ -21,7 +21,6 @@ import javax.swing.*;
  * @author CMC
  */
 public class page extends Panel{
-    static int count=0;
     Boolean LineT=false;
     ezERD parent;
     Point Sp,Ep;

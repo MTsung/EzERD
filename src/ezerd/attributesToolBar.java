@@ -21,10 +21,11 @@ public class attributesToolBar extends Panel {
     ezERD parent;
     JSlider slider,slider1;
     colorChooseBox ColorChooseBox;
+    Panel P;
     public attributesToolBar(ezERD p) {
         super();
         parent = p;
-        this.setPreferredSize(new Dimension(255,0));
+        this.setPreferredSize(new Dimension(380,0));
         this.setBackground(new Color(205,205,200));
         this.setLayout(new BorderLayout());
         slider=new JSlider(1,50);
@@ -40,6 +41,22 @@ public class attributesToolBar extends Panel {
         ColorChooseBox =new colorChooseBox(this);
         this.add(ColorChooseBox,BorderLayout.CENTER);
         this.add(slider, BorderLayout.SOUTH);
+        P=new Panel();
+        P.setBackground(Color.LIGHT_GRAY);
+        P.setPreferredSize(new Dimension(10,0));
+        P.addMouseListener(new MouseAdapter(){
+            @Override                   
+            public void mousePressed(MouseEvent e){
+                System.out.println("mousePressed");
+                if(attributesToolBar.this.getWidth()<20)
+                    attributesToolBar.this.setPreferredSize(new Dimension(380,0));
+                else
+                    attributesToolBar.this.setPreferredSize(new Dimension(10,0));
+                parent.Win.validate();
+                
+            }
+        });
+        this.add(P,BorderLayout.WEST);
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/

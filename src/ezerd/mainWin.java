@@ -20,14 +20,14 @@ public class mainWin extends Frame{
     mainWin(ezERD p){
         super();
         parent=p;        
+        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         this.setLayout(new BorderLayout());
         this.setTitle("EzERD");
         this.setMenuBar(new menuBar(parent));
         mainWinWidth=(int) ((int) ScreenSize.getWidth()*0.8);
         mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
-        this.setSize(mainWinWidth, mainWinHeight);
-        
-        this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); 
+        /*this.setSize(mainWinWidth, mainWinHeight);
+        this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); */
         
         this.addWindowListener(new WindowAdapter(){
             @Override
