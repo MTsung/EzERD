@@ -14,36 +14,37 @@ import javax.swing.*;
  *
  * @author User
  */
-public class colorChoose extends Panel{
-    attributesToolBar AtoolBat;
+public class colorBox extends Panel{
+    attributesToolBar AtoolBat;                                                                                            
     int ColorInt;
     Image bufferImage;
     Graphics bufferGraphics;
-    int X=240, Y=260,XX=0;
-    colorChoose(attributesToolBar p) {
+    int X=240, Y=260,XX=0,CWidth=250;
+    colorBox(attributesToolBar p) {
         super();
         AtoolBat=p;
+        this.setPreferredSize(new Dimension(255,275));
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
                 upPoint(e);
-                colorChoose.this.repaint();
+                colorBox.this.repaint();
             }
             public void mouseMoved(MouseEvent e) {
                 AtoolBat.parent.Mb.XY=e.getPoint();
                 AtoolBat.parent.Mb.updateMessage();
-                    
             }
         });
         this.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
                 upPoint(e);
-                colorChoose.this.repaint();
+                colorBox.this.repaint();
             }
             public void mouseReleased(MouseEvent e){
                 
             }
         });
-        
+        setColor(255,0,0);
+        //setColor(0.5f,1f,1f);
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(AtoolBat.parent));/**/
@@ -51,9 +52,22 @@ public class colorChoose extends Panel{
         
     }
     int getColor(){
-        //System.out.println(new Color(ColorInt));
         return ColorInt;
     } 
+    void setColor(int r,int g,int b){
+        float f[]=Color.RGBtoHSB(r, g, b, null);
+        XX=(int) (f[0]*CWidth);        
+        X=(int) (f[1]*CWidth);
+        Y=(int) (f[2]*CWidth)+25;
+        System.out.println(f[0]+","+f[1]+","+f[2]);
+        this.repaint();
+    }
+    void setColor(float h,float s,float b){
+        XX=(int) (h*CWidth);
+        X=(int) (s*CWidth);
+        Y=(int) (b*CWidth)+25;
+        this.repaint();
+    }
     public void upPoint(MouseEvent e){
         if (e.getPoint().y >= 25) {
             if (e.getPoint().x < 0) {
@@ -79,9 +93,7 @@ public class colorChoose extends Panel{
             }else{
                 XX = e.getPoint().x-4;    
             }
-                
         }
-        
     }
             
     
@@ -91,25 +103,20 @@ public class colorChoose extends Panel{
     }
     public void paint(Graphics g){
         
-        int nnn=250;
-        bufferImage = createImage(nnn+1, 275+1);
+        bufferImage = createImage(CWidth+1, 275+1);
         bufferGraphics = bufferImage.getGraphics();
         
-        for(int i=0;i<=nnn;i++){
-            for(int j=0;j<=nnn;j++){
+        for(int i=0;i<=CWidth;i++){
+            for(int j=0;j<=CWidth;j++){
                 //System.out.println((float)i/nnn );
-                int a=Color.HSBtoRGB((float)(XX+4)/250 , (float)i/nnn , (float)j/nnn );
-                bufferGraphics.setColor(new Color(a));
+                bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)(XX+4)/CWidth , (float)i/CWidth , (float)j/CWidth)));
                 bufferGraphics.drawLine(i, j+25 , i , j+25);
                 
             }
         }
-        for(int i=0;i<20;i++){
-            for(int j=0;j<=250;j++){
-                int a=Color.HSBtoRGB((float)j/250, 1, 1);
-                bufferGraphics.setColor(new Color(a));
-                bufferGraphics.drawLine(j, i, j, i);
-            }
+        for (int j = 0; j <= CWidth; j++) {
+            bufferGraphics.setColor(new Color(Color.HSBtoRGB((float) j / CWidth, 1, 1)));
+            bufferGraphics.drawLine(j, 0, j, 20);
         }
         bufferGraphics.setColor(Color.BLACK);
         bufferGraphics.drawRect(XX, 0, 8, 19);

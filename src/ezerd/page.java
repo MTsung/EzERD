@@ -47,7 +47,7 @@ public class page extends Panel{
             @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
-                PanColor=new Color(parent.Atb.colorBox.getColor());
+                PanColor=new Color(parent.Atb.ColorChooseBox.CB.getColor());
                 if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));

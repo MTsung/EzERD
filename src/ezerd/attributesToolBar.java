@@ -20,7 +20,7 @@ import javax.swing.border.*;
 public class attributesToolBar extends Panel {
     ezERD parent;
     JSlider slider,slider1;
-    colorChoose colorBox;
+    colorChooseBox ColorChooseBox;
     public attributesToolBar(ezERD p) {
         super();
         parent = p;
@@ -37,8 +37,8 @@ public class attributesToolBar extends Panel {
                 //colorBox.repaint();
             }
         });
-        colorBox =new colorChoose(this);
-        this.add(colorBox,BorderLayout.CENTER);
+        ColorChooseBox =new colorChooseBox(this);
+        this.add(ColorChooseBox,BorderLayout.CENTER);
         this.add(slider, BorderLayout.SOUTH);
         
         for(Component a:this.getComponents())/**/
