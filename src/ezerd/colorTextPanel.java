@@ -14,27 +14,21 @@ import javax.swing.event.*;
  * @author CMC
  */
 public class colorTextPanel extends Panel{
-    panAttributesBox PanAttributesBox;
+    penAttributesBox PenAttributesBox;
     TextField[] TextRGB=new TextField[3];
     TextField[] TextHSB=new TextField[3];
     Panel TextPanel,ColorPanel;
-    colorTextPanel(panAttributesBox c){
+    colorTextPanel(penAttributesBox c){
         super();
-        PanAttributesBox=c;
+        PenAttributesBox=c;
         TextPanel=new Panel();
-        TextPanel.setPreferredSize(new Dimension(270,60));
+        TextPanel.setPreferredSize(new Dimension(270,80));
+        String Str[]={"R:","G:","B:"};
         for(int i=0;i<3;i++){
             TextRGB[i]=new TextField("255");
-            switch (i) {
-                case 0:
-                    TextPanel.add(new Label("R:"));
-                    break;
-                case 1:
-                    TextPanel.add(new Label("G:"));
-                    break;
-                case 2:
-                    TextPanel.add(new Label("B:"));
-            }
+            Label TempLabel=new Label(Str[i]);
+            TempLabel.setFont(new programFont());
+            TextPanel.add(TextPanel.add(TempLabel));
             TextPanel.add(TextRGB[i]);
             TextRGB[i].addActionListener(new ActionListener(){
                 @Override
@@ -49,23 +43,17 @@ public class colorTextPanel extends Panel{
                             TextRGB[j].setText("0");
                         } 
                     }
-                    PanAttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
+                    PenAttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
                                                     ,Integer.valueOf(TextRGB[2].getText()));
                 }
             });
         }
+        String Str1[]={"H:","S:","B:"};
         for(int i=0;i<3;i++){
             TextHSB[i]=new TextField("100");
-            switch (i) {
-                case 0:
-                    TextPanel.add(new Label("H:"));
-                    break;
-                case 1:
-                    TextPanel.add(new Label("S:"));
-                    break;
-                case 2:
-                    TextPanel.add(new Label("B:"));
-            }
+            Label TempLabel=new Label(Str1[i]);
+            TempLabel.setFont(new programFont());
+            TextPanel.add(TextPanel.add(TempLabel));
             TextPanel.add(TextHSB[i]);
             TextHSB[i].addActionListener(new ActionListener(){
                 @Override
@@ -82,7 +70,7 @@ public class colorTextPanel extends Panel{
                             TextHSB[j].setText("0.0");
                         } 
                     }
-                    PanAttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
+                    PenAttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
                                                     ,Float.valueOf(TextHSB[2].getText()));
                 }
             });
@@ -94,8 +82,8 @@ public class colorTextPanel extends Panel{
         
         
         for(Component a:this.getComponents())/**/
-            a.addKeyListener(new keyListener(PanAttributesBox.AtoolBat.parent));/**/
-        this.addKeyListener(new keyListener(PanAttributesBox.AtoolBat.parent));/**/
+            a.addKeyListener(new keyListener(PenAttributesBox.AtoolBat.parent));/**/
+        this.addKeyListener(new keyListener(PenAttributesBox.AtoolBat.parent));/**/
     }
     void setColor(Color c){
         ColorPanel.setBackground(c);

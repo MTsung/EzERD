@@ -118,7 +118,7 @@ public class topToolBar extends Panel{
                         PrintWriter pw   = new PrintWriter(selectedFile);
                         for(points p:parent.WorkSpace.activePage.Points){
                             pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + ","
-                                    + p.PanSize + "," + p.PanColor.getRGB() +"\r\n");
+                                    + p.PenSize + "," + p.PenColor.getRGB() +"\r\n");
                         }
                         pw.close();
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -171,24 +171,8 @@ public class topToolBar extends Panel{
                 parent.MainWin.requestFocusInWindow();
             }
         });
-       
-        
-        
-        
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
-        /*
-        
-        JSlider slider=new JSlider(1,50);
-        slider.setMajorTickSpacing(5);
-        slider.setPaintTicks(true);
-        slider.setValue(1);
-        slider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                parent.Ws.activePage.PanSize=slider.getValue();
-            }
-        });
-        this.add(slider);*/
     }
 
 }

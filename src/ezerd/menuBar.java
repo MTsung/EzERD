@@ -21,7 +21,7 @@ public class menuBar extends MenuBar{
     menuBar(ezERD p){
         super();
         parent=p;
-        
+        this.setFont(new programFont());
         menu1 = new Menu("File");
         newM = new MenuItem("New Page(Ctrl+N)");
         newM.addActionListener(new java.awt.event.ActionListener() {

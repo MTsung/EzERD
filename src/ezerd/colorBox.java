@@ -130,13 +130,13 @@ public class colorBox extends Panel{
         BufferedImage bufImg = (BufferedImage) bufferImage;
         //System.out.println(XX+","+X+","+Y);
         ColorInt=bufImg.getRGB(X,Y);
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextRGB[2].setText(""+new Color(ColorInt).getBlue());
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[0].setText(""+(float)(XX+4)/ColorBoxWidth*360);
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
-        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.TextRGB[2].setText(""+new Color(ColorInt).getBlue());
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.TextHSB[0].setText(""+(float)(XX+4)/ColorBoxWidth*360);
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
+        AttributesToolBar.PenAttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
         AttributesToolBar.parent.MainWin.requestFocusInWindow();
         
     } 

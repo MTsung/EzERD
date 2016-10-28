@@ -24,8 +24,8 @@ public class page extends Panel{
     Vector<points> Points,RePoints;
     Stack<Integer> undos,redos;
     int undo=0;
-    float PanSize=8;
-    Color PanColor=new Color(0,0,0);
+    float PenSize=8;
+    Color PenColor=new Color(0,0,0);
     rightClickMenu popupMenu1=new rightClickMenu();
     Image bufferImage;
     Graphics bufferGraphics;
@@ -43,14 +43,14 @@ public class page extends Panel{
             @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
-                PanColor=new Color(parent.AttributesToolBar.PanAttributesBox.ColorBox.getColorInt());
-                if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
+                PenColor=new Color(parent.AttributesToolBar.PenAttributesBox.ColorBox.getColorInt());
+                if(LineT && ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
-                    g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
-                    g.setColor(PanColor);
+                    g.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
+                    g.setColor(PenColor);
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                    Points.add(new points(Sp,Ep,PanSize,PanColor));
+                    Points.add(new points(Sp,Ep,PenSize,PenColor));
                     Sp=Ep;
                     undo++; 
                     if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*"))
@@ -72,7 +72,7 @@ public class page extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 //System.out.println("mousePressed");
-                if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
+                if(LineT && ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))){
                     Sp=e.getPoint();
                     undo=0;
                 }
@@ -81,7 +81,7 @@ public class page extends Panel{
             @Override
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
-                if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
+                if(LineT && ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))){
                     if(undo!=0)
                         undos.add(undo);
                     RePoints.removeAllElements();
@@ -113,8 +113,8 @@ public class page extends Panel{
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
         for(points p:Points){
-            g2.setColor(p.PanColor);
-            g2.setStroke(new BasicStroke(p.PanSize,CAP_ROUND,JOIN_ROUND));
+            g2.setColor(p.PenColor);
+            g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         }
         g.drawImage(bufferImage, 0, 0, this);

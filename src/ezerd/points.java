@@ -15,12 +15,12 @@ import javax.swing.event.*;
  */
 public class points {
     Point Sp,Ep;
-    float PanSize;
-    Color PanColor;
+    float PenSize;
+    Color PenColor;
     points(Point s,Point e,float Size,Color color){
         Sp=s;
         Ep=e;
-        PanSize=Size;
-        PanColor=color;
+        PenSize=Size;
+        PenColor=color;
     }
 }

@@ -17,7 +17,7 @@ import javax.swing.event.*;
 public class attributesToolBar extends Panel {
     ezERD parent;
     Panel SizePanel;
-    panAttributesBox PanAttributesBox=new panAttributesBox(this);
+    penAttributesBox PenAttributesBox=new penAttributesBox(this);
     
     public attributesToolBar(ezERD p) {
         super();
@@ -52,7 +52,7 @@ public class attributesToolBar extends Panel {
         });
         
         
-        this.add(PanAttributesBox,BorderLayout.CENTER);
+        this.add(PenAttributesBox,BorderLayout.CENTER);
         this.add(SizePanel,BorderLayout.WEST);
         
         for(Component a:this.getComponents())/**/
