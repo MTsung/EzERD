@@ -7,31 +7,32 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.image.BufferedImage;
 
 /**
  *
  * @author CMC
  */
 public class colorBox extends Panel{
-    attributesToolBar AtoolBat;                                                                                            
+    attributesToolBar AttributesToolBar;                                                                                            
     int ColorInt;
     Image bufferImage;
     Graphics bufferGraphics;
-    int X=240, Y=260,XX=246,CWidth=360;
+    int X=240, Y=260,XX=246,ColorBoxWidth=360;
     colorBox(attributesToolBar p) {
         super();
-        AtoolBat=p;
-        this.setPreferredSize(new Dimension(CWidth,CWidth+35));
+        AttributesToolBar=p;
+        this.setPreferredSize(new Dimension(ColorBoxWidth,ColorBoxWidth+35));
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
                 upPoint(e);
                 colorBox.this.repaint();
             }
             public void mouseMoved(MouseEvent e) {
-                AtoolBat.parent.Mb.XY=e.getPoint();
-                AtoolBat.parent.Mb.updateMessage();
+                AttributesToolBar.parent.MessageBar.XY=e.getPoint();
+                AttributesToolBar.parent.MessageBar.updateMessage();
             }
         });
         this.addMouseListener(new MouseAdapter(){
@@ -47,8 +48,8 @@ public class colorBox extends Panel{
         //setColor(0f,1f,1f);
         
         for(Component a:this.getComponents())/**/
-            a.addKeyListener(new keyListener(AtoolBat.parent));/**/
-        this.addKeyListener(new keyListener(AtoolBat.parent));/**/
+            a.addKeyListener(new keyListener(AttributesToolBar.parent));/**/
+        this.addKeyListener(new keyListener(AttributesToolBar.parent));/**/
         
     }
     int getColor(){
@@ -56,41 +57,41 @@ public class colorBox extends Panel{
     } 
     void setColor(int r,int g,int b){
         float f[]=Color.RGBtoHSB(r, g, b, null);
-        XX=(int) (f[0]*CWidth)-4;        
-        X=(int) (f[1]*CWidth);
-        Y=(int) (f[2]*CWidth)+35;
+        XX=(int) (f[0]*ColorBoxWidth)-4;        
+        X=(int) (f[1]*ColorBoxWidth);
+        Y=(int) (f[2]*ColorBoxWidth)+35;
         //System.out.println(f[0]+","+f[1]+","+f[2]);
         //System.out.println(XX+","+X+","+Y);
         this.repaint();
     }
     void setColor(float h,float s,float b){
-        XX=(int) (h*CWidth/360)-4;
-        X=(int) (s*CWidth/100);
-        Y=(int) (b*CWidth/100)+35;
+        XX=(int) (h*ColorBoxWidth/360)-4;
+        X=(int) (s*ColorBoxWidth/100);
+        Y=(int) (b*ColorBoxWidth/100)+35;
         this.repaint();
     }
     public void upPoint(MouseEvent e){
-        if (e.getPoint().y >= 35) {
+        if (e.getPoint().y >= 25) {
             if (e.getPoint().x < 0) {
                 X = 0;
-            } else if (e.getPoint().x > CWidth) {
-                X = CWidth;
+            } else if (e.getPoint().x > ColorBoxWidth) {
+                X = ColorBoxWidth;
             } else {
                 X = e.getPoint().x;
             }
 
             if (e.getPoint().y < 35) {
                 Y = 35;
-            } else if (e.getPoint().y > CWidth+35) {
-                Y = CWidth+35;
+            } else if (e.getPoint().y > ColorBoxWidth+35) {
+                Y = ColorBoxWidth+35;
             } else {
                 Y = e.getPoint().y;
             }
         }else if(e.getPoint().y < 20){
             if (e.getPoint().x < 0) {
                 XX = -4;
-            }else if(e.getPoint().x > CWidth){
-                XX = CWidth-4;
+            }else if(e.getPoint().x > ColorBoxWidth){
+                XX = ColorBoxWidth-4;
             }else{
                 XX = e.getPoint().x-4;    
             }
@@ -104,19 +105,19 @@ public class colorBox extends Panel{
     }
     public void paint(Graphics g){
         
-        bufferImage = createImage(CWidth+1, CWidth+36);
+        bufferImage = createImage(ColorBoxWidth+1, ColorBoxWidth+36);
         bufferGraphics = bufferImage.getGraphics();
         
-        for(int i=0;i<=CWidth;i++){
-            for(int j=0;j<=CWidth;j++){
+        for(int i=0;i<=ColorBoxWidth;i++){
+            for(int j=0;j<=ColorBoxWidth;j++){
                 //System.out.println((float)i/nnn );
-                bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)(XX+4)/CWidth , (float)i/CWidth , (float)j/CWidth)));
+                bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)(XX+4)/ColorBoxWidth , (float)i/ColorBoxWidth , (float)j/ColorBoxWidth)));
                 bufferGraphics.drawLine(i, j+35 , i , j+35);
                 
             }
         }
-        for (int j = 0; j <= CWidth; j++) {
-            bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)j/ CWidth, 1, 1)));
+        for (int j = 0; j <= ColorBoxWidth; j++) {
+            bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)j/ ColorBoxWidth, 1, 1)));
             bufferGraphics.drawLine(j, 0, j, 20);
         }
         bufferGraphics.setColor(Color.BLACK);
@@ -131,13 +132,13 @@ public class colorBox extends Panel{
         BufferedImage bufImg = (BufferedImage) bufferImage;
         //System.out.println(XX+","+X+","+Y);
         ColorInt=bufImg.getRGB(X,Y);
-        AtoolBat.ColorChooseBox.CTP.setColor(new Color(ColorInt));
-        AtoolBat.ColorChooseBox.CTP.Trgb[0].setText(""+new Color(ColorInt).getRed());
-        AtoolBat.ColorChooseBox.CTP.Trgb[1].setText(""+new Color(ColorInt).getGreen());
-        AtoolBat.ColorChooseBox.CTP.Trgb[2].setText(""+new Color(ColorInt).getBlue());
-        AtoolBat.ColorChooseBox.CTP.Thsb[0].setText(""+(float)(XX+4)/CWidth*360);
-        AtoolBat.ColorChooseBox.CTP.Thsb[1].setText(""+(float)X/CWidth*100);
-        AtoolBat.ColorChooseBox.CTP.Thsb[2].setText(""+(float)(Y-35)/CWidth*100);
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextRGB[2].setText(""+new Color(ColorInt).getBlue());
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[0].setText(""+(float)(XX+4)/ColorBoxWidth*360);
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
+        AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
         
     } 
 }

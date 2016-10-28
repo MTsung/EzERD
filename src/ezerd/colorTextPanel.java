@@ -7,68 +7,70 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
 /**
  *
  * @author CMC
  */
 public class colorTextPanel extends Panel{
-    colorChooseBox CCB;
-    TextField Trgb[]=new TextField[3];
-    TextField Thsb[]=new TextField[3];
-    Panel textPanel,colorPanel;
-    colorTextPanel(colorChooseBox c){
+    panAttributesBox PanAttributesBox;
+    TextField[] TextRGB=new TextField[3];
+    TextField[] TextHSB=new TextField[3];
+    Panel TextPanel,ColorPanel;
+    colorTextPanel(panAttributesBox c){
         super();
-        CCB=c;
-        textPanel=new Panel();
-        textPanel.setPreferredSize(new Dimension(270,60));
+        PanAttributesBox=c;
+        TextPanel=new Panel();
+        TextPanel.setPreferredSize(new Dimension(270,60));
         for(int i=0;i<3;i++){
-            Trgb[i]=new TextField("255");
+            TextRGB[i]=new TextField("255");
             switch (i) {
                 case 0:
-                    textPanel.add(new Label("R:"));
+                    TextPanel.add(new Label("R:"));
                     break;
                 case 1:
-                    textPanel.add(new Label("G:"));
+                    TextPanel.add(new Label("G:"));
                     break;
                 case 2:
-                    textPanel.add(new Label("B:"));
+                    TextPanel.add(new Label("B:"));
             }
-            textPanel.add(Trgb[i]);
-            Trgb[i].addActionListener(new ActionListener(){
+            TextPanel.add(TextRGB[i]);
+            TextRGB[i].addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    CCB.CB.setColor(Integer.valueOf(Trgb[0].getText()), Integer.valueOf(Trgb[1].getText())
-                                    ,Integer.valueOf(Trgb[2].getText()));
+                    PanAttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
+                                    ,Integer.valueOf(TextRGB[2].getText()));
                 }
             });
         }
         for(int i=0;i<3;i++){
-            Thsb[i]=new TextField("255");
+            TextHSB[i]=new TextField("255");
             switch (i) {
                 case 0:
-                    textPanel.add(new Label("H:"));
+                    TextPanel.add(new Label("H:"));
                     break;
                 case 1:
-                    textPanel.add(new Label("S:"));
+                    TextPanel.add(new Label("S:"));
                     break;
                 case 2:
-                    textPanel.add(new Label("B:"));
+                    TextPanel.add(new Label("B:"));
             }
-            textPanel.add(Thsb[i]);
-            Thsb[i].addActionListener(new ActionListener(){
+            TextPanel.add(TextHSB[i]);
+            TextHSB[i].addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    CCB.CB.setColor(Float.valueOf(Thsb[0].getText()),Float.valueOf(Thsb[1].getText())
-                                    ,Float.valueOf(Thsb[2].getText()));
+                    PanAttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
+                                    ,Float.valueOf(TextHSB[2].getText()));
                 }
             });
         }
-        colorPanel=new Panel();
-        colorPanel.setPreferredSize(new Dimension(80,50));
-        this.add(colorPanel);
-        this.add(textPanel);
+        ColorPanel=new Panel();
+        ColorPanel.setPreferredSize(new Dimension(80,50));
+        this.add(ColorPanel);
+        this.add(TextPanel);
     }
     void setColor(Color c){
-        colorPanel.setBackground(c);
+        ColorPanel.setBackground(c);
     }
 }

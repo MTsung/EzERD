@@ -7,6 +7,8 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
 import java.util.Vector;
 
 /**
@@ -26,7 +28,7 @@ public class workSpace extends Panel{
         
     }
     void addPage(page p,String s){
-        parent.Ptb.addBtton(count++,s);
+        parent.PageToolBar.addBtton(count++,s);
         if(activePage!=null){
             this.remove(activePage);
         }
@@ -37,7 +39,7 @@ public class workSpace extends Panel{
     }
     
     void cloPage(){
-        parent.Ptb.delButton();
+        parent.PageToolBar.delButton();
     }
     
     void addPageToolBar(pageToolBar p) {

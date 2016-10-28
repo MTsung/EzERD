@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 package ezerd;
+
 import java.awt.*;
-import static java.awt.BasicStroke.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
+import javax.swing.event.*;
+import static java.awt.BasicStroke.*;
 import java.util.Stack;
 import java.util.Vector;
-//import javafx.scene.image.Image;
-import javax.imageio.ImageIO;
-import javax.swing.*;
         
 /**
  *
@@ -46,7 +43,7 @@ public class page extends Panel{
             @Override
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
-                PanColor=new Color(parent.Atb.ColorChooseBox.CB.getColor());
+                PanColor=new Color(parent.AttributesToolBar.PanAttributesBox.ColorBox.getColor());
                 if(LineT && (e.getModifiers() == InputEvent.BUTTON1_MASK)){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PanSize,CAP_ROUND,JOIN_ROUND));
@@ -56,18 +53,18 @@ public class page extends Panel{
                     Points.add(new points(Sp,Ep,PanSize,PanColor));
                     Sp=Ep;
                     undo++; 
-                    if(!parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText().endsWith("*"))
-                        parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).setText(
-                                                 parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText()+"*");
+                    if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*"))
+                        parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
+                                                 parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
                 }
-                parent.Mb.XY=e.getPoint();
-                parent.Mb.updateMessage();
+                parent.MessageBar.XY=e.getPoint();
+                parent.MessageBar.updateMessage();
             }
             
             @Override
             public void mouseMoved(MouseEvent e) {
-                    parent.Mb.XY=e.getPoint();
-                    parent.Mb.updateMessage();
+                    parent.MessageBar.XY=e.getPoint();
+                    parent.MessageBar.updateMessage();
             }
         });
         
@@ -89,8 +86,8 @@ public class page extends Panel{
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
-                    parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
-                    parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);
+                    parent.TopToolBar.undoBtn.setEnabled(undos.size()==0 ? false:true);
+                    parent.TopToolBar.redoBtn.setEnabled(redos.size()==0 ? false:true);
                 }
                 else if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                     //popupMenu1.show(page.this, e.getX(), e.getY());
@@ -111,9 +108,9 @@ public class page extends Panel{
     }
     @Override
     public void paint(Graphics g) {
-        bufferImage = createImage(parent.Win.ScreenSize.width, parent.Win.ScreenSize.height);
+        bufferImage = createImage(parent.MainWin.ScreenSize.width, parent.MainWin.ScreenSize.height);
         bufferGraphics = bufferImage.getGraphics();
-        parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
         for(points p:Points){
             g2.setColor(p.PanColor);
@@ -121,10 +118,10 @@ public class page extends Panel{
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         }
         g.drawImage(bufferImage, 0, 0, this);
-        parent.Win.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        parent.Ttb.undoBtn.setEnabled(undos.size()==0 ? false:true);
-        parent.Ttb.redoBtn.setEnabled(redos.size()==0 ? false:true);  
-        parent.Win.setTitle("EzERD-" + parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
+        parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        parent.TopToolBar.undoBtn.setEnabled(undos.size()==0 ? false:true);
+        parent.TopToolBar.redoBtn.setEnabled(redos.size()==0 ? false:true);  
+        parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
         
     }     
 }

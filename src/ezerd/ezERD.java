@@ -4,44 +4,40 @@
  * and open the template in the editor.
  */
 package ezerd;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Vector;
-import javax.swing.*;
+
 /**
  *
  * @author CMC
  */
 public class ezERD {
-    mainWin Win;
-    topToolBar Ttb;
-    messageBar Mb;
-    workSpace Ws;
-    pageToolBar Ptb;
-    toolBar Tb;
-    attributesToolBar Atb;
-    int totalPages=1;
-    int curPage=0;
-    DefaultListModel<String> model = new DefaultListModel<>();
+    mainWin MainWin;
+    topToolBar TopToolBar;
+    messageBar MessageBar;
+    workSpace WorkSpace;
+    pageToolBar PageToolBar;
+    toolBar ToolBar;
+    attributesToolBar AttributesToolBar;
+    int TotalPages=1;
+    int CurPage=0;
     
     ezERD(){
-        Win =new mainWin(this);
-        Ttb=new topToolBar(this);
-        Mb=new messageBar(this);
-        Ws=new workSpace(this);
-        Tb=new toolBar(this);
-        Atb=new attributesToolBar(this);
-        Ptb=new pageToolBar(Ws);
+        MainWin =new mainWin(this);
+        TopToolBar=new topToolBar(this);
+        MessageBar=new messageBar(this);
+        WorkSpace=new workSpace(this);
+        ToolBar=new toolBar(this);
+        AttributesToolBar=new attributesToolBar(this);
+        PageToolBar=new pageToolBar(WorkSpace);
         
-        Win.addToolBar(Tb);
-        Win.addWorkSpace(Ws);
-        Win.addTopToolbar(Ttb);
-        Win.addMessagebar(Mb);
-        Ws.addPageToolBar(Ptb);
-        Ws.addPage(new page(this),"未命名.sss");
-        Win.addAttributesToolBar(Atb);
+        MainWin.addToolBar(ToolBar);
+        MainWin.addWorkSpace(WorkSpace);
+        MainWin.addTopToolbar(TopToolBar);
+        MainWin.addMessagebar(MessageBar);
+        WorkSpace.addPageToolBar(PageToolBar);
+        WorkSpace.addPage(new page(this),"未命名.sss");
+        MainWin.addAttributesToolBar(AttributesToolBar);
     }
     void run(){
-        Win.setVisible(true);
+        MainWin.setVisible(true);
     }
 }

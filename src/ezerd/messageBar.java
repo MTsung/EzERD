@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package ezerd;
+
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  *
@@ -26,7 +29,7 @@ public class messageBar extends Panel{
     public void updateMessage()
     {
         updatePageInfo();
-        parent.Win.setTitle("EzERD-" + parent.Ptb.Btns.elementAt(parent.Ptb.activeButton()).getText());
+        parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
     }
     
     public void showMessage()

@@ -7,8 +7,9 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 import javax.swing.*;
+import javax.swing.event.*;
+import java.util.Vector;
 
 /**
  *
@@ -42,8 +43,8 @@ public class pageToolBar extends Panel{
         Btns.elementAt(n).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(WorkSpace.parent.curPage != n){
-                    WorkSpace.parent.curPage = n;
+                if(WorkSpace.parent.CurPage != n){
+                    WorkSpace.parent.CurPage = n;
                     updatePage(n);
                     activeButtonColor(n);
                 }
@@ -73,8 +74,8 @@ public class pageToolBar extends Panel{
         updatePage(n);
         activeButtonColor(n);
         this.repaint();
-        WorkSpace.parent.curPage=n;
-        WorkSpace.parent.totalPages--;
+        WorkSpace.parent.CurPage=n;
+        WorkSpace.parent.TotalPages--;
         allPage();
     }
     
@@ -86,7 +87,7 @@ public class pageToolBar extends Panel{
         WorkSpace.add(ep, BorderLayout.CENTER);
         WorkSpace.validate();
         WorkSpace.activePage=ep;
-        WorkSpace.parent.curPage=n;
+        WorkSpace.parent.CurPage=n;
     }
     
     int activeButton(){

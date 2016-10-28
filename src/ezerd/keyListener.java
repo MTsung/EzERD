@@ -25,19 +25,19 @@ public class keyListener implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_N) {
-            parent.Ttb.newPageBtn.doClick();
+            parent.TopToolBar.newPageBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_W){
-            parent.Ttb.cloPageBtn.doClick();
+            parent.TopToolBar.cloPageBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z){
-            parent.Ttb.undoBtn.doClick();
+            parent.TopToolBar.undoBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Y){
-            parent.Ttb.redoBtn.doClick();
+            parent.TopToolBar.redoBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_O){
-            parent.Ttb.openBtn.doClick();
+            parent.TopToolBar.openBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_S){
-            parent.Ttb.saveBtn.doClick();
+            parent.TopToolBar.saveBtn.doClick();
         }
-        parent.Win.requestFocusInWindow();
+        parent.MainWin.requestFocusInWindow();
                
     }
 

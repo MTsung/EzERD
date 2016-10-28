@@ -7,6 +7,8 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  *
@@ -24,26 +26,26 @@ public class menuBar extends MenuBar{
         newM = new MenuItem("New Page(Ctrl+N)");
         newM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.Ttb.newPageBtn.doClick();
+                parent.TopToolBar.newPageBtn.doClick();
             }
         });
         cloM = new MenuItem("Close Page(Ctrl+W)");
         cloM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.Ttb.cloPageBtn.doClick();
+                parent.TopToolBar.cloPageBtn.doClick();
             }
         });
         
         openM = new MenuItem("Open File(Ctrl+O)");
         openM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.Ttb.openBtn.doClick();
+                parent.TopToolBar.openBtn.doClick();
             }
         });
         saveM = new MenuItem("Save File(Ctrl+S)");
         saveM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.Ttb.saveBtn.doClick();
+                parent.TopToolBar.saveBtn.doClick();
             }
         });
         
@@ -51,13 +53,13 @@ public class menuBar extends MenuBar{
         undoM = new MenuItem("Undo(Ctrl+Z)");
         undoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.Ttb.undoBtn.doClick();
+                parent.TopToolBar.undoBtn.doClick();
             }
         });
         redoM = new MenuItem("Redo(Ctrl+Y)");
         redoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.Ttb.redoBtn.doClick();
+                parent.TopToolBar.redoBtn.doClick();
             }
         });
         

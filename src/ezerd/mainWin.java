@@ -8,6 +8,7 @@ package ezerd;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 /**
  *
  * @author CMC
@@ -20,22 +21,22 @@ public class mainWin extends Frame{
     mainWin(ezERD p){
         super();
         parent=p;        
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         this.setLayout(new BorderLayout());
         this.setTitle("EzERD");
         this.setMenuBar(new menuBar(parent));
         mainWinWidth=(int) ((int) ScreenSize.getWidth()*0.8);
         mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
-        /*this.setSize(mainWinWidth, mainWinHeight);
-        this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); */
+        //this.setSize(mainWinWidth, mainWinHeight);
+        //this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); 
+        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         
         this.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e)
             {
                 Boolean B=false;
-                for(int i=0;i<parent.Ptb.Btns.size();i++)
-                    if(parent.Ptb.Btns.elementAt(i).getText().endsWith("*") && parent.Ptb.BtnJ.elementAt(i))
+                for(int i=0;i<parent.PageToolBar.Btns.size();i++)
+                    if(parent.PageToolBar.Btns.elementAt(i).getText().endsWith("*") && parent.PageToolBar.BtnJ.elementAt(i))
                         B=true;
                 if(B){
                     int n=JOptionPane.showConfirmDialog(null, "尚有頁面未儲存，是否關閉？","Message",2);
