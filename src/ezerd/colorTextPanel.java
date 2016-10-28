@@ -88,9 +88,14 @@ public class colorTextPanel extends Panel{
             });
         }
         ColorPanel=new Panel();
-        ColorPanel.setPreferredSize(new Dimension(80,50));
+        ColorPanel.setPreferredSize(new Dimension(70,50));
         this.add(ColorPanel);
         this.add(TextPanel);
+        
+        
+        for(Component a:this.getComponents())/**/
+            a.addKeyListener(new keyListener(PanAttributesBox.AtoolBat.parent));/**/
+        this.addKeyListener(new keyListener(PanAttributesBox.AtoolBat.parent));/**/
     }
     void setColor(Color c){
         ColorPanel.setBackground(c);

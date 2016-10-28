@@ -22,39 +22,32 @@ public class panAttributesBox extends Panel{
     attributesToolBar AtoolBat;   
     colorBox ColorBox;
     colorTextPanel ColorTextPanel;
-    JSlider slider;
-    Panel P;
+    JSlider PanSizeSlider;
     panAttributesBox(attributesToolBar p) {
         super();
         AtoolBat=p;
         //this.setLayout(new BorderLayout());
         ColorBox=new colorBox(AtoolBat);
         ColorTextPanel= new colorTextPanel(this);
-        slider=new JSlider(1,50);
-        slider.setPreferredSize(new Dimension(250,50));
-        slider.setBackground(new Color(205,205,200));
-        slider.setPaintTicks(true);
-        slider.setValue(8);
-        slider.addChangeListener(new ChangeListener() {
+        PanSizeSlider=new JSlider(1,25);
+        PanSizeSlider.setPreferredSize(new Dimension(250,50));
+        PanSizeSlider.setBackground(new Color(205,205,200));
+        PanSizeSlider.setMinorTickSpacing(1);
+        PanSizeSlider.setMajorTickSpacing(4);
+        PanSizeSlider.setPaintTicks(true);
+        PanSizeSlider.setPaintLabels(true);
+        PanSizeSlider.setSnapToTicks(true);
+        PanSizeSlider.setValue(8);
+        PanSizeSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-                AtoolBat.parent.WorkSpace.activePage.PanSize=slider.getValue();
-                P.repaint();
+                AtoolBat.parent.WorkSpace.activePage.PanSize=PanSizeSlider.getValue();
             }
         });
-        P=new Panel(){
-            public void paint(Graphics g){
-                Graphics2D g2 = (Graphics2D)g;  
-                //g2.setColor(new Color(ColorBox.getColor()));
-                g2.setStroke(new BasicStroke(slider.getValue(),CAP_ROUND,JOIN_ROUND));
-                g2.drawLine(P.getWidth()/2-15 , P.getHeight()/2 , P.getWidth()/2 , P.getHeight()/2);
-                AtoolBat.parent.MainWin.requestFocusInWindow();
-            }
-        };
-        P.setPreferredSize(new Dimension(90,50));
+        Label L=new Label("PanSize:");
         this.add(ColorBox);
         this.add(ColorTextPanel);
-        this.add(P);
-        this.add(slider);
+        this.add(L);
+        this.add(PanSizeSlider);
         
     }
 }

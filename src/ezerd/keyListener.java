@@ -36,6 +36,10 @@ public class keyListener implements KeyListener{
             parent.TopToolBar.openBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_S){
             parent.TopToolBar.saveBtn.doClick();
+        }else if(e.isControlDown() && e.getKeyCode() == 107){//ctrl + '+'
+            parent.AttributesToolBar.PanAttributesBox.PanSizeSlider.setValue(parent.AttributesToolBar.PanAttributesBox.PanSizeSlider.getValue()+1);
+        }else if(e.isControlDown() && e.getKeyCode() == 109){//ctrl + '-'
+            parent.AttributesToolBar.PanAttributesBox.PanSizeSlider.setValue(parent.AttributesToolBar.PanAttributesBox.PanSizeSlider.getValue()-1);
         }
         parent.MainWin.requestFocusInWindow();
                
