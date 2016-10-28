@@ -139,6 +139,7 @@ public class colorBox extends Panel{
         AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[0].setText(""+(float)(XX+4)/ColorBoxWidth*360);
         AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
         AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
+        AttributesToolBar.PanAttributesBox.P.repaint();
         
     } 
 }

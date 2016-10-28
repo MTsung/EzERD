@@ -18,7 +18,7 @@ public class messageBar extends Panel{
     ezERD parent;
     String message;
     Label pageInfo;
-    Point XY=new Point(1000,0);
+    Point XY=new Point(1000,1000);
     
     public void updatePageInfo()
     {
