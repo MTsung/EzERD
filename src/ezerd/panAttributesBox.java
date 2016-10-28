@@ -47,6 +47,7 @@ public class panAttributesBox extends Panel{
                 //g2.setColor(new Color(ColorBox.getColor()));
                 g2.setStroke(new BasicStroke(slider.getValue(),CAP_ROUND,JOIN_ROUND));
                 g2.drawLine(P.getWidth()/2-15 , P.getHeight()/2 , P.getWidth()/2 , P.getHeight()/2);
+                AtoolBat.parent.MainWin.requestFocusInWindow();
             }
         };
         P.setPreferredSize(new Dimension(90,50));
@@ -54,7 +55,6 @@ public class panAttributesBox extends Panel{
         this.add(ColorTextPanel);
         this.add(P);
         this.add(slider);
-        
         
     }
 }

@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 public class colorBox extends Panel{
     attributesToolBar AttributesToolBar;                                                                                            
     int ColorInt;
+    Color SelectColor;
     Image bufferImage;
     Graphics bufferGraphics;
     int X=240, Y=260,XX=246,ColorBoxWidth=360;
@@ -44,15 +45,13 @@ public class colorBox extends Panel{
                 
             }
         });
-        setColor(0,0,255);
-        //setColor(0f,1f,1f);
-        
+        setColor(0,211,214);
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(AttributesToolBar.parent));/**/
         this.addKeyListener(new keyListener(AttributesToolBar.parent));/**/
         
     }
-    int getColor(){
+    int getColorInt(){
         return ColorInt;
     } 
     void setColor(int r,int g,int b){
@@ -60,7 +59,7 @@ public class colorBox extends Panel{
         XX=(int) (f[0]*ColorBoxWidth)-4;        
         X=(int) (f[1]*ColorBoxWidth);
         Y=(int) (f[2]*ColorBoxWidth)+35;
-        //System.out.println(f[0]+","+f[1]+","+f[2]);
+        System.out.println(f[0]+","+f[1]+","+f[2]);
         //System.out.println(XX+","+X+","+Y);
         this.repaint();
     }
@@ -140,6 +139,7 @@ public class colorBox extends Panel{
         AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
         AttributesToolBar.PanAttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
         AttributesToolBar.PanAttributesBox.P.repaint();
+        AttributesToolBar.parent.MainWin.requestFocusInWindow();
         
     } 
 }

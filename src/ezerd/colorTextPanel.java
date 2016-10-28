@@ -39,13 +39,23 @@ public class colorTextPanel extends Panel{
             TextRGB[i].addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    for(int j=0;j<3;j++){
+                        try{
+                            if(Integer.valueOf(TextRGB[j].getText())<0)
+                                TextRGB[j].setText("0");
+                            else if(Integer.valueOf(TextRGB[j].getText())>255)
+                                TextRGB[j].setText("255");
+                        }catch (Exception ex){
+                            TextRGB[j].setText("0");
+                        } 
+                    }
                     PanAttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
-                                    ,Integer.valueOf(TextRGB[2].getText()));
+                                                    ,Integer.valueOf(TextRGB[2].getText()));
                 }
             });
         }
         for(int i=0;i<3;i++){
-            TextHSB[i]=new TextField("255");
+            TextHSB[i]=new TextField("100");
             switch (i) {
                 case 0:
                     TextPanel.add(new Label("H:"));
@@ -60,8 +70,20 @@ public class colorTextPanel extends Panel{
             TextHSB[i].addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    for(int j=0;j<3;j++){
+                        try{
+                            if(Float.valueOf(TextHSB[j].getText())<0)
+                                TextHSB[j].setText("0.0");
+                            else if(Float.valueOf(TextHSB[j].getText())>100 && j>0)
+                                TextHSB[j].setText("100.0");
+                            else if(Float.valueOf(TextHSB[j].getText())>360 && j==0)
+                                TextHSB[j].setText("360.0");
+                        }catch (Exception ex){
+                            TextHSB[j].setText("0.0");
+                        } 
+                    }
                     PanAttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
-                                    ,Float.valueOf(TextHSB[2].getText()));
+                                                    ,Float.valueOf(TextHSB[2].getText()));
                 }
             });
         }
