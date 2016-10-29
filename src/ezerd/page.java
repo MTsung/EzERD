@@ -112,8 +112,8 @@ public class page extends Panel{
     }
     @Override
     public void paint(Graphics g) {
-        //bufferImage = createImage(parent.MainWin.ScreenSize.width, parent.MainWin.ScreenSize.height);
-        bufferImage = createImage(500, 500);
+        bufferImage = createImage(parent.MainWin.ScreenSize.width, parent.MainWin.ScreenSize.height);
+        //bufferImage = createImage(500, 500);
         bufferGraphics = bufferImage.getGraphics();
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
