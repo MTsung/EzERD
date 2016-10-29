@@ -28,8 +28,6 @@ public class mainWin extends Frame{
         mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
         this.setSize(mainWinWidth, mainWinHeight);
         this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); 
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
-        
         this.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e)
@@ -39,7 +37,7 @@ public class mainWin extends Frame{
                     if(parent.PageToolBar.Btns.elementAt(i).getText().endsWith("*") && parent.PageToolBar.BtnJ.elementAt(i))
                         B=true;
                 if(B){
-                    int n=JOptionPane.showConfirmDialog(null, "尚有頁面未儲存，是否關閉？","Message",2);
+                    int n=JOptionPane.showConfirmDialog(null, "File is modified. Close？","Message",2);
                         if(n==0)
                             System.exit(0);
                 }else

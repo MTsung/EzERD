@@ -15,13 +15,24 @@ import javax.swing.event.*;
  * @author CMC
  */
 public class rightClickMenu extends PopupMenu{
-        MenuItem menuItem1 = new MenuItem();
-    rightClickMenu(){
-        menuItem1.setLabel(".........");
-        menuItem1.addActionListener(new java.awt.event.ActionListener() {
+    ezERD parent;
+    MenuItem UndoMenuItem,RedoMenuItem;
+    
+    rightClickMenu(ezERD p){
+        parent=p;
+        UndoMenuItem = new MenuItem("Undo(Ctrl+Z)");
+        UndoMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                parent.TopToolBar.UndoBtn.doClick();
             }
         });
-        this.add(menuItem1);
+        RedoMenuItem =new MenuItem("Rndo(Ctrl+Y)");
+        RedoMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.TopToolBar.RedoBtn.doClick();
+            }
+        });
+        this.add(UndoMenuItem);
+        this.add(RedoMenuItem);
     }
 }

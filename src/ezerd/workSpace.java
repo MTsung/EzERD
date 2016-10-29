@@ -24,6 +24,7 @@ public class workSpace extends Panel{
     workSpace(ezERD p){
         parent=p;
         this.setLayout(new BorderLayout());
+        this.setBackground(Color.LIGHT_GRAY);
         Pages = new Vector<page>();
         
     }
@@ -32,7 +33,7 @@ public class workSpace extends Panel{
         if(activePage!=null){
             this.remove(activePage);
         }
-        this.add(p, BorderLayout.CENTER);
+        this.add(p);
         this.validate();
         activePage=p;
         Pages.add(p);

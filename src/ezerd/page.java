@@ -26,18 +26,19 @@ public class page extends Panel{
     int undo=0;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
-    rightClickMenu popupMenu1=new rightClickMenu();
+    rightClickMenu popupMenu1;
     Image bufferImage;
     Graphics bufferGraphics;
     
     page(ezERD p){
         super();      
         parent=p;      
-        this.setBackground(Color.WHITE);
         Points=new Vector<points>();
         RePoints=new Vector<points>();
         undos=new Stack<Integer>();
         redos=new Stack<Integer>();
+        
+        this.setBackground(Color.WHITE);
         
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
@@ -86,16 +87,18 @@ public class page extends Panel{
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
-                    parent.TopToolBar.undoBtn.setEnabled(undos.size()==0 ? false:true);
-                    parent.TopToolBar.redoBtn.setEnabled(redos.size()==0 ? false:true);
+                    parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
+                    parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);
                 }
                 else if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                    //popupMenu1.show(page.this, e.getX(), e.getY());
+                    popupMenu1.show(page.this, e.getX(), e.getY());
                 }
             }
         });
-        
-        //this.add(popupMenu1);
+        popupMenu1 =new rightClickMenu(parent);
+        popupMenu1.setFont(new programFont());
+        this.add(popupMenu1);
+       
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
         this.addKeyListener(new keyListener(parent));/**/
@@ -119,8 +122,8 @@ public class page extends Panel{
         }
         g.drawImage(bufferImage, 0, 0, this);
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        parent.TopToolBar.undoBtn.setEnabled(undos.size()==0 ? false:true);
-        parent.TopToolBar.redoBtn.setEnabled(redos.size()==0 ? false:true);  
+        parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
+        parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
         parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
         
     }     

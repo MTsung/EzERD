@@ -5,6 +5,9 @@
  */
 package ezerd;
 
+import java.awt.Frame;
+import java.io.IOException;
+
 /**
  *
  * @author CMC
@@ -20,7 +23,7 @@ public class ezERD {
     int TotalPages=1;
     int CurPage=0;
     
-    ezERD(){
+    ezERD() {
         MainWin =new mainWin(this);
         TopToolBar=new topToolBar(this);
         MessageBar=new messageBar(this);
@@ -34,10 +37,11 @@ public class ezERD {
         MainWin.addTopToolbar(TopToolBar);
         MainWin.addMessagebar(MessageBar);
         WorkSpace.addPageToolBar(PageToolBar);
-        WorkSpace.addPage(new page(this),"未命名.sss");
+        WorkSpace.addPage(new page(this),"NewPage.sss");
         MainWin.addAttributesToolBar(AttributesToolBar);
     }
     void run(){
         MainWin.setVisible(true);
+        MainWin.setExtendedState(Frame.MAXIMIZED_BOTH);
     }
 }

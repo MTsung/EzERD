@@ -7,6 +7,8 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
 /**
@@ -15,16 +17,22 @@ import javax.swing.event.*;
  */
 public class toolBar extends Panel{
     ezERD parent;
-    
-    JButton ChoBtn = new JButton(new ImageIcon("Choose.png"));
-    JButton LineBtn = new JButton(new ImageIcon("Line.png"));
-    JButton RecBtn = new JButton(new ImageIcon("Rectangle.png"));
-    JButton CirBtn = new JButton(new ImageIcon("Circular.png"));
+    JButton ChoBtn,LineBtn,RecBtn,CirBtn;
     
     toolBar(ezERD p){
         super();
         parent=p;
         this.setBackground(new Color(205,205,200));
+        
+        try{
+            ChoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Choose.png"))));
+            LineBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Line.png"))));
+            RecBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Rectangle.png"))));
+            CirBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Circular.png"))));
+        }catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
         ChoBtn.setBackground(this.getBackground());
         ChoBtn.setBorder(null);
         ChoBtn.addMouseListener(new MouseAdapter(){

@@ -7,11 +7,14 @@ package ezerd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
+
 
 /**
  *
@@ -19,47 +22,51 @@ import javax.swing.event.*;
  */
 public class topToolBar extends Panel{
     ezERD parent;
+    JButton NewPageBtn,ClosePageBtn,OpenBtn,SaveBtn,UndoBtn,RedoBtn;
     
-    JButton newPageBtn = new JButton(new ImageIcon("Neww.png"));
-    JButton cloPageBtn = new JButton(new ImageIcon("Close.png"));
-    JButton openBtn = new JButton(new ImageIcon("Open.png"));
-    JButton saveBtn = new JButton(new ImageIcon("Save.png"));
-    JButton undoBtn = new JButton(new ImageIcon("Undo.png"));
-    JButton redoBtn = new JButton(new ImageIcon("Redo.png"));
-    
-    
-    topToolBar(ezERD p){
+    topToolBar(ezERD p) {
         super();
         parent=p;
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(new Color(205,205,205));
-        
-        newPageBtn.setBackground(this.getBackground());
-        newPageBtn.setToolTipText("New Page(Ctrl+N)");
-        newPageBtn.setActionCommand("New");
-        newPageBtn.setBorder(null);
-        this.add(newPageBtn);
-        newPageBtn.addActionListener(new ActionListener(){
+        try{
+            NewPageBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Neww.png"))));
+            ClosePageBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Close.png"))));
+            OpenBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Open.png"))));
+            SaveBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Save.png"))));
+            UndoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Undo.png"))));
+            RedoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Redo.png"))));
+        }catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        NewPageBtn.setBackground(this.getBackground());
+        NewPageBtn.setToolTipText("New Page(Ctrl+N)");
+        NewPageBtn.setActionCommand("New");
+        NewPageBtn.setBorder(null);
+        this.add(NewPageBtn);
+        NewPageBtn.addActionListener(new ActionListener(){
             int i=1;
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.CurPage=++parent.TotalPages;
-                parent.WorkSpace.addPage(new page(parent), "未命名(" + i++ + ").sss");
+                parent.WorkSpace.addPage(new page(parent), "NewPage(" + i++ + ").sss");
             }
         });
         
-        cloPageBtn.setBackground(this.getBackground());
-        cloPageBtn.setToolTipText("Close Page(Ctrl+W)");
-        cloPageBtn.setActionCommand("Close");
-        cloPageBtn.setBorder(null);
-        this.add(cloPageBtn);
-        cloPageBtn.addActionListener(new ActionListener(){
+        ClosePageBtn.setBackground(this.getBackground());
+        ClosePageBtn.setToolTipText("Close Page(Ctrl+W)");
+        ClosePageBtn.setActionCommand("Close");
+        ClosePageBtn.setBorder(null);
+        this.add(ClosePageBtn);
+        ClosePageBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(parent.TotalPages);
                 if(parent.TotalPages!=1)
                     if(parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")){
-                        if(0==JOptionPane.showConfirmDialog(null, "尚未儲存，是否關閉？","Message",2 ) )
+                        if(0==JOptionPane.showConfirmDialog(null, "File " + 
+                                                                parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace("*","") 
+                                                                + " is modified. Close？","Message",2 ) )
                             parent.WorkSpace.cloPage();
                     }else
                         parent.WorkSpace.cloPage();
@@ -67,12 +74,12 @@ public class topToolBar extends Panel{
             }
         });
         
-        openBtn.setBackground(this.getBackground());
-        openBtn.setToolTipText("Open File(Ctrl+O)");
-        openBtn.setActionCommand("New");
-        openBtn.setBorder(null);
-        this.add(openBtn);
-        openBtn.addActionListener(new ActionListener(){
+        OpenBtn.setBackground(this.getBackground());
+        OpenBtn.setToolTipText("Open File(Ctrl+O)");
+        OpenBtn.setActionCommand("New");
+        OpenBtn.setBorder(null);
+        this.add(OpenBtn);
+        OpenBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 FileDialog fileChooser=new FileDialog(topToolBar.this.parent.MainWin, "Open", FileDialog.LOAD);
@@ -101,12 +108,12 @@ public class topToolBar extends Panel{
             }
         });
         
-        saveBtn.setBackground(this.getBackground());
-        saveBtn.setToolTipText("Save File(Ctrl+S)");
-        saveBtn.setActionCommand("New");
-        saveBtn.setBorder(null);
-        this.add(saveBtn);
-        saveBtn.addActionListener(new ActionListener(){
+        SaveBtn.setBackground(this.getBackground());
+        SaveBtn.setToolTipText("Save File(Ctrl+S)");
+        SaveBtn.setActionCommand("New");
+        SaveBtn.setBorder(null);
+        this.add(SaveBtn);
+        SaveBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 FileDialog fileChooser=new FileDialog(topToolBar.this.parent.MainWin, "Save", FileDialog.SAVE);
@@ -127,15 +134,28 @@ public class topToolBar extends Panel{
                     } 
                     parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(selectedFile.getName());
                 }
+                
+                /*
+                BufferedImage img = new BufferedImage(parent.WorkSpace.activePage.getWidth(),
+                                                    parent.WorkSpace.activePage.getHeight(), BufferedImage.TYPE_INT_RGB);
+                parent.WorkSpace.activePage.paint(img.getGraphics());
+                try {
+                    ImageIO.write(img, "png", new File("D:\\Screen.png"));
+                    System.out.println("panel saved as image");
+
+                } catch (Exception ex) {
+                    System.out.println("panel not saved" + ex.getMessage());
+                }*/
+                
             }
         });
         
-        undoBtn.setBackground(this.getBackground());
-        undoBtn.setToolTipText("Undo(Ctrl+Z)");
-        undoBtn.setActionCommand("Undo");
-        undoBtn.setBorder(null);
-        this.add(undoBtn);
-        undoBtn.addActionListener(new ActionListener(){
+        UndoBtn.setBackground(this.getBackground());
+        UndoBtn.setToolTipText("Undo(Ctrl+Z)");
+        UndoBtn.setActionCommand("Undo");
+        UndoBtn.setBorder(null);
+        this.add(UndoBtn);
+        UndoBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(parent.WorkSpace.activePage.undos.size()!=0){
@@ -151,12 +171,12 @@ public class topToolBar extends Panel{
             }
         });
         
-        redoBtn.setBackground(this.getBackground());
-        redoBtn.setToolTipText("Redo(Ctrl+Y)");
-        redoBtn.setActionCommand("Redo");
-        redoBtn.setBorder(null);
-        this.add(redoBtn);
-        redoBtn.addActionListener(new ActionListener(){
+        RedoBtn.setBackground(this.getBackground());
+        RedoBtn.setToolTipText("Redo(Ctrl+Y)");
+        RedoBtn.setActionCommand("Redo");
+        RedoBtn.setBorder(null);
+        this.add(RedoBtn);
+        RedoBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(parent.WorkSpace.activePage.redos.size()!=0){

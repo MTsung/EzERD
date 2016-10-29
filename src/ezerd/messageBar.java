@@ -43,7 +43,7 @@ public class messageBar extends Panel{
         parent=p;
         message="(" + XY.x + "," + XY.y + ")";
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.setBackground(Color.LIGHT_GRAY);
+        this.setBackground(new Color(222,222,222));
         showMessage();
     }
             

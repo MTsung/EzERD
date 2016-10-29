@@ -14,5 +14,10 @@ import java.awt.Font;
 public class programFont extends Font{
     programFont(){
         super(Font.DIALOG,Font.PLAIN,20);
+    }programFont(int n){
+        super(Font.DIALOG,Font.PLAIN,n);
+    }
+    void setFontSize(int n){
+        this.size=n;
     }
 }

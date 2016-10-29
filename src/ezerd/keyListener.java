@@ -25,17 +25,17 @@ public class keyListener implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_N) {
-            parent.TopToolBar.newPageBtn.doClick();
+            parent.TopToolBar.NewPageBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_W){
-            parent.TopToolBar.cloPageBtn.doClick();
+            parent.TopToolBar.ClosePageBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z){
-            parent.TopToolBar.undoBtn.doClick();
+            parent.TopToolBar.UndoBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Y){
-            parent.TopToolBar.redoBtn.doClick();
+            parent.TopToolBar.RedoBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_O){
-            parent.TopToolBar.openBtn.doClick();
+            parent.TopToolBar.OpenBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_S){
-            parent.TopToolBar.saveBtn.doClick();
+            parent.TopToolBar.SaveBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == 107){//ctrl + '+'
             parent.AttributesToolBar.PenAttributesBox.PenSizeSlider.setValue(parent.AttributesToolBar.PenAttributesBox.PenSizeSlider.getValue()+1);
         }else if(e.isControlDown() && e.getKeyCode() == 109){//ctrl + '-'

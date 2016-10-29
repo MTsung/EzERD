@@ -32,8 +32,8 @@ public class colorBox extends Panel{
                 colorBox.this.repaint();
             }
             public void mouseMoved(MouseEvent e) {
-                AttributesToolBar.parent.MessageBar.XY=e.getPoint();
-                AttributesToolBar.parent.MessageBar.updateMessage();
+                //AttributesToolBar.parent.MessageBar.XY=e.getPoint();
+                //AttributesToolBar.parent.MessageBar.updateMessage();
             }
         });
         this.addMouseListener(new MouseAdapter(){
@@ -53,13 +53,14 @@ public class colorBox extends Panel{
     int getColorInt(){
         return ColorInt;
     } 
+    int R,G,B;
+    Boolean RGBJ=false;
     void setColor(int r,int g,int b){
+        R=r;G=g;B=b;RGBJ=true;
         float f[]=Color.RGBtoHSB(r, g, b, null);
         XX=(int) (f[0]*ColorBoxWidth)-4;        
         X=(int) (f[1]*ColorBoxWidth);
         Y=(int) (f[2]*ColorBoxWidth)+35;
-        System.out.println(f[0]+","+f[1]+","+f[2]);
-        //System.out.println(XX+","+X+","+Y);
         this.repaint();
     }
     void setColor(float h,float s,float b){
@@ -126,9 +127,13 @@ public class colorBox extends Panel{
         bufferGraphics.setColor(Color.WHITE);
         bufferGraphics.drawRect(XX+1, 1, 6, 18);
         bufferGraphics.drawOval(X - 5, Y - 5, 10, 10);
+        if(RGBJ){//RGB轉HSB會有誤差 輸入RGB時要用RGB
+            bufferGraphics.setColor(new Color(R,G,B));
+            bufferGraphics.drawLine(X, Y, X, Y);
+            RGBJ=false;
+        }
         g.drawImage(bufferImage, 0, 0, this);
         BufferedImage bufImg = (BufferedImage) bufferImage;
-        //System.out.println(XX+","+X+","+Y);
         ColorInt=bufImg.getRGB(X,Y);
         AttributesToolBar.PenAttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
         AttributesToolBar.PenAttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
