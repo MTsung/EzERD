@@ -40,7 +40,12 @@ public class keyListener implements KeyListener{
             parent.AttributesToolBar.PenAttributesBox.PenSizeSlider.setValue(parent.AttributesToolBar.PenAttributesBox.PenSizeSlider.getValue()+1);
         }else if(e.isControlDown() && e.getKeyCode() == 109){//ctrl + '-'
             parent.AttributesToolBar.PenAttributesBox.PenSizeSlider.setValue(parent.AttributesToolBar.PenAttributesBox.PenSizeSlider.getValue()-1);
+        }else if(e.isControlDown() && e.getKeyCode() == 33){//ctrl + PgUp
+            parent.WorkSpace.prevPage();
+        }else if(e.isControlDown() && e.getKeyCode() == 34){//ctrl + PgDn
+            parent.WorkSpace.nextPage();
         }
+        //System.out.println(e.getKeyCode());
         parent.MainWin.requestFocusInWindow();
                
     }

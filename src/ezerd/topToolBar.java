@@ -134,19 +134,6 @@ public class topToolBar extends Panel{
                     } 
                     parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(selectedFile.getName());
                 }
-                
-                /*
-                BufferedImage img = new BufferedImage(parent.WorkSpace.activePage.getWidth(),
-                                                    parent.WorkSpace.activePage.getHeight(), BufferedImage.TYPE_INT_RGB);
-                parent.WorkSpace.activePage.paint(img.getGraphics());
-                try {
-                    ImageIO.write(img, "png", new File("D:\\Screen.png"));
-                    System.out.println("panel saved as image");
-
-                } catch (Exception ex) {
-                    System.out.println("panel not saved" + ex.getMessage());
-                }*/
-                
             }
         });
         

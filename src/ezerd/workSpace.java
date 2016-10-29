@@ -43,6 +43,26 @@ public class workSpace extends Panel{
         parent.PageToolBar.delButton();
     }
     
+    void prevPage()
+    {
+        int i;
+        for(i=0;!parent.PageToolBar.BtnJ.elementAt(i);i++);
+        if(parent.CurPage!=i){
+            int n=parent.CurPage;
+            while(!parent.PageToolBar.BtnJ.elementAt(--n));
+            parent.PageToolBar.Btns.elementAt(n).doClick();
+        }
+    }
+
+    void nextPage()
+    {
+        if(parent.TotalPages-1!=parent.CurPage){
+            int n=parent.CurPage;
+            while(!parent.PageToolBar.BtnJ.elementAt(++n));
+            parent.PageToolBar.Btns.elementAt(n).doClick();
+        }
+    }
+    
     void addPageToolBar(pageToolBar p) {
         this.add(p,BorderLayout.NORTH);
     }

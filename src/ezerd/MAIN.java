@@ -5,6 +5,8 @@
  */
 package ezerd;
 
+import javax.swing.SwingUtilities;
+
 
 /**
  *
@@ -16,7 +18,6 @@ public class MAIN {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-
-        (new ezERD()).run();
+            (new ezERD()).run();
     }
 }

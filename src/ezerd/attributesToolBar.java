@@ -5,8 +5,10 @@
  */
 package ezerd;
 import java.awt.*;
+import static java.awt.ScrollPane.SCROLLBARS_AS_NEEDED;
 import java.awt.event.*;
 import javax.swing.*;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import javax.swing.event.*;
 
 /**
@@ -16,16 +18,16 @@ import javax.swing.event.*;
 
 public class attributesToolBar extends Panel {
     ezERD parent;
-    Panel SizePanel;
+    Panel SizePanel,TempPanel;
+    ScrollPane AttributesScrollPane;
     penAttributesBox PenAttributesBox=new penAttributesBox(this);
     
     public attributesToolBar(ezERD p) {
         super();
         parent = p;
-        this.setPreferredSize(new Dimension(380,0));
+        this.setPreferredSize(new Dimension(420,0));
         this.setBackground(new Color(205,205,200));
         this.setLayout(new BorderLayout());
-        
         SizePanel=new Panel(){
             public void paint(Graphics g){
                 g.setColor(Color.GRAY);
@@ -44,15 +46,18 @@ public class attributesToolBar extends Panel {
             @Override                   
             public void mousePressed(MouseEvent e){
                 if(attributesToolBar.this.getWidth()<21)
-                    attributesToolBar.this.setPreferredSize(new Dimension(380,0));
+                    attributesToolBar.this.setPreferredSize(new Dimension(420,0));
                 else
                     attributesToolBar.this.setPreferredSize(new Dimension(15,0));
                 parent.MainWin.validate();
+                parent.PageToolBar.resetButtonSize();
             }
         });
-        
-        
-        this.add(PenAttributesBox,BorderLayout.CENTER);
+        TempPanel=new Panel();
+        TempPanel.add(PenAttributesBox);
+        AttributesScrollPane=new ScrollPane();
+        AttributesScrollPane.add(TempPanel);
+        this.add(AttributesScrollPane,BorderLayout.CENTER);
         this.add(SizePanel,BorderLayout.WEST);
         
         for(Component a:this.getComponents())/**/

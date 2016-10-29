@@ -21,6 +21,7 @@ public class pageToolBar extends Panel{
     Vector<Boolean> BtnJ=new Vector<Boolean>();
     Color BtnC=new Color(200,255,255);
     int BtnSum=1;
+    rightClickMenu popupMenu1;
     
     pageToolBar(workSpace Ws){
         super();
@@ -36,10 +37,7 @@ public class pageToolBar extends Panel{
         BtnJ.add(true);
         
         BtnSum++;
-        int BtnWidth=(this.getWidth()-5*BtnSum)/BtnSum;
-        for(JButton Btn:Btns)
-            Btn.setPreferredSize(new Dimension(BtnWidth > 200 || BtnWidth < 0 ? 200 : BtnWidth ,25));
-
+        resetButtonSize();
         Btns.elementAt(n).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,9 +45,11 @@ public class pageToolBar extends Panel{
                     WorkSpace.parent.CurPage = n;
                     updatePage(n);
                     activeButtonColor(n);
+                    resetButtonSize();
                 }
             }
         });
+        WorkSpace.parent.CurPage = n;
         activeButtonColor(n);
         this.add(Btns.elementAt(n));
         Btns.elementAt(n).addKeyListener(new keyListener(WorkSpace.parent));/**/
@@ -60,10 +60,7 @@ public class pageToolBar extends Panel{
         int n=activeButton(),i;
         
         BtnSum--;
-        int BtnW=(this.getWidth()-5*BtnSum)/BtnSum;
-        for(JButton Btn:Btns)
-            Btn.setPreferredSize(new Dimension(BtnW > 200 ? 200 : BtnW ,25));
-        
+        resetButtonSize();
         this.remove(Btns.elementAt(n));
         BtnJ.set(n, false);
         for(i=0;!BtnJ.elementAt(i);i++);
@@ -75,7 +72,7 @@ public class pageToolBar extends Panel{
         activeButtonColor(n);
         this.repaint();
         WorkSpace.parent.CurPage=n;
-        WorkSpace.parent.TotalPages--;
+        //WorkSpace.parent.TotalPages--;
         allPage();
     }
     
@@ -88,6 +85,13 @@ public class pageToolBar extends Panel{
         WorkSpace.validate();
         WorkSpace.activePage=ep;
         WorkSpace.parent.CurPage=n;
+    }
+    void resetButtonSize(){
+        //System.out.println(this.getWidth());
+        int BtnWidth=(this.getWidth()-5*BtnSum)/BtnSum;
+        for(JButton Btn:Btns)
+            Btn.setPreferredSize(new Dimension(BtnWidth > 200 || BtnWidth < 0 ? 200 : BtnWidth ,25));
+        this.revalidate();
     }
     
     int activeButton(){
@@ -107,5 +111,4 @@ public class pageToolBar extends Panel{
                 System.out.print(i+" ");
         System.out.println();
     }
-    
 }

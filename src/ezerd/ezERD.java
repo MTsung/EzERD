@@ -6,7 +6,6 @@
 package ezerd;
 
 import java.awt.Frame;
-import java.io.IOException;
 
 /**
  *
