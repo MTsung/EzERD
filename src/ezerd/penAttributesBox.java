@@ -24,7 +24,7 @@ public class penAttributesBox extends Panel{
     colorTextPanel ColorTextPanel;
     JSlider PenSizeSlider;
     Panel PenSizePanel;
-    TextField PenSizeText;
+    TextField PenSizeText,PageW,PageH;
     penAttributesBox(attributesToolBar p) {
         super();
         AtoolBat=p;
@@ -75,9 +75,49 @@ public class penAttributesBox extends Panel{
         PenSizePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         PenSizePanel.add(PenSizeLabel);
         PenSizePanel.add(PenSizeText);
+        
+        PageW = new TextField("2000");
+        PageH = new TextField("900");
+        PageW.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try{
+                        if (Integer.valueOf(PageW.getText()) < 1){
+                            PageH.setText("1");
+                        }
+                        if (Integer.valueOf(PageH.getText()) < 1){
+                            PageH.setText("1");
+                        }
+                    } catch (Exception ex) {
+                            PageW.setText("2000");
+                            PageH.setText("900");
+                    }
+                    AtoolBat.parent.WorkSpace.activePage.setPageSize(Integer.valueOf(PageW.getText()), Integer.valueOf(PageH.getText()));
+                        
+                }
+        });
+        PageH.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try{
+                        if (Integer.valueOf(PageW.getText()) < 1){
+                            PageH.setText("1");
+                        }
+                        if (Integer.valueOf(PageH.getText()) < 1){
+                            PageH.setText("1");
+                        }
+                    } catch (Exception ex) {
+                            PageW.setText("2000");
+                            PageH.setText("900");
+                    }
+                    AtoolBat.parent.WorkSpace.activePage.setPageSize(Integer.valueOf(PageW.getText()), Integer.valueOf(PageH.getText()));
+                }
+        });
         this.add(ColorBox);
         this.add(ColorTextPanel);
         this.add(PenSizePanel);
         this.add(PenSizeSlider);
+        this.add(PageW);
+        this.add(PageH);
     }
 }

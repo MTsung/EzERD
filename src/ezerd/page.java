@@ -133,4 +133,13 @@ public class page extends Panel{
         }
         return bufferImage;
     }
+    void setPageSize(int W,int H){
+        PageWidth=W;
+        PageHeight=H;
+        this.setPreferredSize(new Dimension(PageWidth,PageHeight));
+        this.revalidate();
+    }
+     Point getPageSize(){
+        return new Point(PageWidth,PageHeight);
+    }
 }

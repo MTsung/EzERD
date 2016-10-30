@@ -92,11 +92,16 @@ public class topToolBar extends Panel{
                         parent.CurPage=++parent.TotalPages;
                         parent.PageScrollPane.addPage(new page(parent),selectedFile.getName());
                         while((newLine=br.readLine()) != null){
-                            String[] L = newLine.split(",");
-                            parent.WorkSpace.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
-                                                                    ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
-                                                                    ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
-                                                                    ));
+                            if(!newLine.startsWith("pageSize,")){
+                                String[] L = newLine.split(",");
+                                parent.WorkSpace.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
+                                                                        ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
+                                                                        ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
+                                                                        ));
+                            }else{
+                                String[] L = newLine.split(",");
+                                parent.WorkSpace.activePage.setPageSize(Integer.parseInt(L[1]), Integer.parseInt(L[2]));
+                            }
                         }
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
                     } catch (IOException ex) {
@@ -120,7 +125,9 @@ public class topToolBar extends Panel{
                 if(fileChooser.getDirectory() != null && fileChooser.getFile() != null){
                     File selectedFile = new File(fileChooser.getDirectory() + fileChooser.getFile());
                     try {
+                        Point P=parent.WorkSpace.activePage.getPageSize();
                         PrintWriter pw   = new PrintWriter(selectedFile);
+                        pw.write("pageSize," + P.x + "," + P.y + "\r\n");
                         for(points p:parent.WorkSpace.activePage.Points){
                             pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + ","
                                     + p.PenSize + "," + p.PenColor.getRGB() +"\r\n");
