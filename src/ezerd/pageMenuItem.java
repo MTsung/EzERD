@@ -11,9 +11,9 @@ import java.awt.*;
  *
  * @author CMC
  */
-public class stagingPageMenuItem extends MenuItem{
+public class pageMenuItem extends MenuItem{
     int BtnN;
-    stagingPageMenuItem(String s,int n){
+    pageMenuItem(String s,int n){
         super();
         this.setLabel(s);
         BtnN=n;

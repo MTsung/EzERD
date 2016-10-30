@@ -54,6 +54,7 @@ public class pageToolBar extends Panel{
         this.add(Btns.elementAt(n));
         Btns.elementAt(n).addKeyListener(new keyListener(WorkSpace.parent));/**/
         allPage();
+        resetStagingPageMenu();
     }
     
     void delButton(){
@@ -71,7 +72,7 @@ public class pageToolBar extends Panel{
         activeButtonColor(n);
         this.repaint();
         WorkSpace.parent.CurPage=n;
-        //WorkSpace.parent.TotalPages--;
+        WorkSpace.parent.TotalPages--;
         allPage();
         resetStagingPageMenu();
     }
@@ -106,6 +107,7 @@ public class pageToolBar extends Panel{
         Btns.elementAt(n).setBackground(BtnC);
     }
     void allPage(){
+        System.out.print("All Page:");
         for(int i=0;i<BtnJ.size();i++)
             if(BtnJ.elementAt(i))
                 System.out.print(i+" ");
@@ -113,10 +115,10 @@ public class pageToolBar extends Panel{
     }
     void resetStagingPageMenu(){
         WorkSpace.parent.MainWin.MenuBar.StagingPageMenu.removeAll();
+        WorkSpace.parent.MainWin.MenuBar.AllPageMenu.removeAll();
         for(i=0;i<BtnJ.size();i++){
             if(!BtnJ.elementAt(i)){
-                System.out.println(i);
-                stagingPageMenuItem temp=new stagingPageMenuItem(Btns.elementAt(i).getText(),i);
+                pageMenuItem temp=new pageMenuItem(Btns.elementAt(i).getText(),i);
                 temp.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         WorkSpace.parent.PageToolBar.removeAll();
@@ -127,11 +129,23 @@ public class pageToolBar extends Panel{
                             }
                         }
                         Btns.elementAt(temp.BtnN).doClick();
+                        WorkSpace.parent.TotalPages++;
+                        BtnSum++;
+                        resetButtonSize();
+                        allPage();
                         pageToolBar.this.resetStagingPageMenu();
                     }
                 });
                 WorkSpace.parent.MainWin.MenuBar.StagingPageMenu.add(temp);
-            }
+            }else{
+                pageMenuItem temp=new pageMenuItem(Btns.elementAt(i).getText(),i);
+                temp.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Btns.elementAt(temp.BtnN).doClick();
+                    }
+                });
+                WorkSpace.parent.MainWin.MenuBar.AllPageMenu.add(temp);
+            }           
         } 
     }
     

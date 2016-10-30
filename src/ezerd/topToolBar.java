@@ -61,7 +61,6 @@ public class topToolBar extends Panel{
         ClosePageBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.out.println(parent.TotalPages);
                 if(parent.TotalPages!=1)
                     if(parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")){
                         if(0==JOptionPane.showConfirmDialog(null, "File " + 

@@ -20,9 +20,8 @@ import javax.swing.event.*;
  */
 public class menuBar extends MenuBar{
     ezERD parent;
-    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,StagingPageMenu;
+    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,StagingPageMenu,AllPageMenu;
     MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,PngM;
-    Vector<stagingPageMenuItem> Spms=new Vector<stagingPageMenuItem>();
     menuBar(ezERD p){
         super();
         parent=p;
@@ -79,7 +78,7 @@ public class menuBar extends MenuBar{
             }
         });
         StagingPageMenu = new Menu("Staging Page");
-        
+        AllPageMenu=new Menu("All Page");
         
         EditMenu = new Menu("Edit");
         undoM = new MenuItem("Undo(Ctrl+Z)");
@@ -110,6 +109,7 @@ public class menuBar extends MenuBar{
         FileMenu.add(saveM);
         FileMenu.add(ExportFileMenu);
         FileMenu.add(StagingPageMenu);
+        FileMenu.add(AllPageMenu);
         ExportFileMenu.add(PngM);
         EditMenu.add(undoM);
         EditMenu.add(redoM);
