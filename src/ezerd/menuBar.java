@@ -20,7 +20,7 @@ import javax.swing.event.*;
  */
 public class menuBar extends MenuBar{
     ezERD parent;
-    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,CachingPageMenu,AllPageMenu;
+    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
     MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,PngM;
     menuBar(ezERD p){
         super();
@@ -94,13 +94,17 @@ public class menuBar extends MenuBar{
             }
         });
         
+        PageMenu = new  Menu("Page");
+        
         LanguageMenu = new Menu("Language");
         TW= new MenuItem("中文(Taiwan)");
         JP= new MenuItem("日本語(Japanese)");
         EN= new MenuItem("English");
+        
         HelpMenu = new Menu("Help");
         this.add(FileMenu);
         this.add(EditMenu);
+        this.add(PageMenu);
         this.add(LanguageMenu);
         this.add(HelpMenu);
         FileMenu.add(newM);
@@ -108,11 +112,11 @@ public class menuBar extends MenuBar{
         FileMenu.add(openM);
         FileMenu.add(saveM);
         FileMenu.add(ExportFileMenu);
-        FileMenu.add(AllPageMenu);
-        FileMenu.add(CachingPageMenu);
         ExportFileMenu.add(PngM);
         EditMenu.add(undoM);
         EditMenu.add(redoM);
+        PageMenu.add(AllPageMenu);
+        PageMenu.add(CachingPageMenu);
         LanguageMenu.add(TW);
         LanguageMenu.add(JP);
         LanguageMenu.add(EN);

@@ -49,7 +49,7 @@ public class topToolBar extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.CurPage=++parent.TotalPages;
-                parent.WorkSpace.addPage(new page(parent), "NewPage(" + i++ + ").sss");
+                parent.PageScrollPane.addPage(new page(parent), "NewPage(" + i++ + ").sss");
             }
         });
         
@@ -90,7 +90,7 @@ public class topToolBar extends Panel{
                         int i=0;
                         BufferedReader br = new BufferedReader(new FileReader(selectedFile));
                         parent.CurPage=++parent.TotalPages;
-                        parent.WorkSpace.addPage(new page(parent),selectedFile.getName());
+                        parent.PageScrollPane.addPage(new page(parent),selectedFile.getName());
                         while((newLine=br.readLine()) != null){
                             String[] L = newLine.split(",");
                             parent.WorkSpace.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))

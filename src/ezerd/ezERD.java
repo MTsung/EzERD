@@ -17,6 +17,7 @@ public class ezERD {
     messageBar MessageBar;
     workSpace WorkSpace;
     pageToolBar PageToolBar;
+    pageScrollPane PageScrollPane;
     toolBar ToolBar;
     attributesToolBar AttributesToolBar;
     int TotalPages=1;
@@ -30,13 +31,15 @@ public class ezERD {
         ToolBar=new toolBar(this);
         AttributesToolBar=new attributesToolBar(this);
         PageToolBar=new pageToolBar(WorkSpace);
+        PageScrollPane=new pageScrollPane(this);
         
         MainWin.addToolBar(ToolBar);
         MainWin.addWorkSpace(WorkSpace);
         MainWin.addTopToolbar(TopToolBar);
         MainWin.addMessagebar(MessageBar);
         WorkSpace.addPageToolBar(PageToolBar);
-        WorkSpace.addPage(new page(this),"NewPage.sss");
+        WorkSpace.addPageScrollPane(PageScrollPane);
+        PageScrollPane.addPage(new page(this),"NewPage.sss");
         MainWin.addAttributesToolBar(AttributesToolBar);
     }
     void run(){

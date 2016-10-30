@@ -79,10 +79,11 @@ public class pageToolBar extends Panel{
     
     void updatePage(int n){
         page ep =WorkSpace.Pages.elementAt(n);
+        WorkSpace.parent.PageScrollPane.TempPanel.removeAll();
         if(WorkSpace.activePage!=null){
-            WorkSpace.remove(WorkSpace.activePage);
+            WorkSpace.parent.PageScrollPane.TempPanel.remove(WorkSpace.activePage);
         }
-        WorkSpace.add(ep, BorderLayout.CENTER);
+        WorkSpace.parent.PageScrollPane.TempPanel.add(ep, BorderLayout.CENTER);
         WorkSpace.validate();
         WorkSpace.activePage=ep;
         WorkSpace.parent.CurPage=n;

@@ -23,7 +23,7 @@ public class page extends Panel{
     Point Sp,Ep;
     Vector<points> Points,RePoints;
     Stack<Integer> undos,redos;
-    int undo=0;
+    int undo=0,PageWidth=2000,PageHeight=900;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
     rightClickMenu popupMenu1;
@@ -39,8 +39,7 @@ public class page extends Panel{
         redos=new Stack<Integer>();
         
         this.setBackground(Color.WHITE);
-        //this.setPreferredSize(new Dimension(500,500));
-        
+        this.setPreferredSize(new Dimension(PageWidth,PageHeight));
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
@@ -112,8 +111,18 @@ public class page extends Panel{
     }
     @Override
     public void paint(Graphics g) {
-        bufferImage = createImage(parent.MainWin.ScreenSize.width, parent.MainWin.ScreenSize.height);
-        //bufferImage = createImage(500, 500);
+        
+        //bufferImage.getGraphics().drawImage(bufferImage, 0, 0, parent.MainWin.ScreenSize.width/4, parent.MainWin.ScreenSize.height/4, null);  
+        g.drawImage(paintPage(), 0, 0, this);
+        parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
+        parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
+        parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
+        
+    }     
+    
+    Image paintPage(){
+        bufferImage = createImage(PageWidth, PageHeight);
         bufferGraphics = bufferImage.getGraphics();
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
@@ -122,11 +131,6 @@ public class page extends Panel{
             g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
             g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
         }
-        g.drawImage(bufferImage, 0, 0, this);
-        parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
-        parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
-        parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
-        
-    }     
+        return bufferImage;
+    }
 }

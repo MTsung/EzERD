@@ -20,6 +20,7 @@ public class workSpace extends Panel{
     Vector<page> Pages;
     page activePage=null;
     static int count=0;
+    Panel P;
     
     workSpace(ezERD p){
         parent=p;
@@ -27,16 +28,6 @@ public class workSpace extends Panel{
         this.setBackground(Color.LIGHT_GRAY);
         Pages = new Vector<page>();
         
-    }
-    void addPage(page p,String s){
-        parent.PageToolBar.addBtton(count++,s);
-        if(activePage!=null){
-            this.remove(activePage);
-        }
-        this.add(p);
-        this.validate();
-        activePage=p;
-        Pages.add(p);
     }
     
     void cloPage(){
@@ -65,5 +56,8 @@ public class workSpace extends Panel{
     
     void addPageToolBar(pageToolBar p) {
         this.add(p,BorderLayout.NORTH);
+    }
+    void addPageScrollPane(pageScrollPane p) {
+        this.add(p,BorderLayout.CENTER);
     }
 }
