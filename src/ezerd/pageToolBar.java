@@ -20,7 +20,7 @@ public class pageToolBar extends Panel{
     Vector<JButton> Btns=new Vector<JButton>();
     Vector<Boolean> BtnJ=new Vector<Boolean>();
     Color BtnC=new Color(200,255,255);
-    int BtnSum=1;
+    int BtnSum=1,i;
     rightClickMenu popupMenu1;
     
     pageToolBar(workSpace Ws){
@@ -58,7 +58,6 @@ public class pageToolBar extends Panel{
     
     void delButton(){
         int n=activeButton(),i;
-        
         BtnSum--;
         resetButtonSize();
         this.remove(Btns.elementAt(n));
@@ -74,6 +73,7 @@ public class pageToolBar extends Panel{
         WorkSpace.parent.CurPage=n;
         //WorkSpace.parent.TotalPages--;
         allPage();
+        resetStagingPageMenu();
     }
     
     void updatePage(int n){
@@ -111,4 +111,28 @@ public class pageToolBar extends Panel{
                 System.out.print(i+" ");
         System.out.println();
     }
+    void resetStagingPageMenu(){
+        WorkSpace.parent.MainWin.MenuBar.StagingPageMenu.removeAll();
+        for(i=0;i<BtnJ.size();i++){
+            if(!BtnJ.elementAt(i)){
+                System.out.println(i);
+                stagingPageMenuItem temp=new stagingPageMenuItem(Btns.elementAt(i).getText(),i);
+                temp.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        WorkSpace.parent.PageToolBar.removeAll();
+                        BtnJ.set(temp.BtnN, true);
+                        for (int j = 0; j < Btns.size(); j++) {
+                            if (BtnJ.elementAt(j)) {
+                                WorkSpace.parent.PageToolBar.add(Btns.elementAt(j));
+                            }
+                        }
+                        Btns.elementAt(temp.BtnN).doClick();
+                        pageToolBar.this.resetStagingPageMenu();
+                    }
+                });
+                WorkSpace.parent.MainWin.MenuBar.StagingPageMenu.add(temp);
+            }
+        } 
+    }
+    
 }

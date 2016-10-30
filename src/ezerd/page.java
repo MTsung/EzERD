@@ -39,7 +39,7 @@ public class page extends Panel{
         redos=new Stack<Integer>();
         
         this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(500,500));
+        //this.setPreferredSize(new Dimension(500,500));
         
         this.addMouseMotionListener(new MouseAdapter(){
             @Override

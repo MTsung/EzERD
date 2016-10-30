@@ -17,13 +17,13 @@ public class mainWin extends Frame{
     ezERD parent; 
     int mainWinWidth=1500,mainWinHeight=900;
     Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
-    
+    menuBar MenuBar=new menuBar(parent);
     mainWin(ezERD p){
         super();
         parent=p;        
         this.setLayout(new BorderLayout());
         this.setTitle("EzERD");
-        this.setMenuBar(new menuBar(parent));
+        this.setMenuBar(MenuBar);
         mainWinWidth=(int) ((int) ScreenSize.getWidth()*0.8);
         mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
         this.setSize(mainWinWidth, mainWinHeight);

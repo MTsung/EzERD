@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -19,41 +20,42 @@ import javax.swing.event.*;
  */
 public class menuBar extends MenuBar{
     ezERD parent;
-    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu;
+    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,StagingPageMenu;
     MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,PngM;
+    Vector<stagingPageMenuItem> Spms=new Vector<stagingPageMenuItem>();
     menuBar(ezERD p){
         super();
         parent=p;
         this.setFont(new programFont());
         FileMenu = new Menu("File");
         newM = new MenuItem("New Page(Ctrl+N)");
-        newM.addActionListener(new java.awt.event.ActionListener() {
+        newM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.NewPageBtn.doClick();
             }
         });
         cloM = new MenuItem("Close Page(Ctrl+W)");
-        cloM.addActionListener(new java.awt.event.ActionListener() {
+        cloM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.ClosePageBtn.doClick();
             }
         });
         
         openM = new MenuItem("Open File(Ctrl+O)");
-        openM.addActionListener(new java.awt.event.ActionListener() {
+        openM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.OpenBtn.doClick();
             }
         });
         saveM = new MenuItem("Save File(Ctrl+S)");
-        saveM.addActionListener(new java.awt.event.ActionListener() {
+        saveM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.SaveBtn.doClick();
             }
         });
         ExportFileMenu=new Menu("Export File");
         PngM = new MenuItem("PNG");
-        PngM.addActionListener(new java.awt.event.ActionListener() {
+        PngM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 FileDialog fileChooser=new FileDialog(menuBar.this.parent.MainWin, "Save", FileDialog.SAVE);
                 String temp;
@@ -76,16 +78,18 @@ public class menuBar extends MenuBar{
                 }
             }
         });
+        StagingPageMenu = new Menu("Staging Page");
+        
         
         EditMenu = new Menu("Edit");
         undoM = new MenuItem("Undo(Ctrl+Z)");
-        undoM.addActionListener(new java.awt.event.ActionListener() {
+        undoM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.UndoBtn.doClick();
             }
         });
         redoM = new MenuItem("Redo(Ctrl+Y)");
-        redoM.addActionListener(new java.awt.event.ActionListener() {
+        redoM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.RedoBtn.doClick();
             }
@@ -105,6 +109,7 @@ public class menuBar extends MenuBar{
         FileMenu.add(openM);
         FileMenu.add(saveM);
         FileMenu.add(ExportFileMenu);
+        FileMenu.add(StagingPageMenu);
         ExportFileMenu.add(PngM);
         EditMenu.add(undoM);
         EditMenu.add(redoM);

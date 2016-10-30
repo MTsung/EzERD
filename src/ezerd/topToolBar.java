@@ -61,7 +61,7 @@ public class topToolBar extends Panel{
         ClosePageBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(parent.TotalPages);
+                //System.out.println(parent.TotalPages);
                 if(parent.TotalPages!=1)
                     if(parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")){
                         if(0==JOptionPane.showConfirmDialog(null, "File " + 
@@ -70,7 +70,6 @@ public class topToolBar extends Panel{
                             parent.WorkSpace.cloPage();
                     }else
                         parent.WorkSpace.cloPage();
-                        
             }
         });
         
@@ -178,6 +177,7 @@ public class topToolBar extends Panel{
                 parent.MainWin.requestFocusInWindow();
             }
         });
+        
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
     }
