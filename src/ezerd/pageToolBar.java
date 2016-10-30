@@ -54,7 +54,7 @@ public class pageToolBar extends Panel{
         this.add(Btns.elementAt(n));
         Btns.elementAt(n).addKeyListener(new keyListener(WorkSpace.parent));/**/
         allPage();
-        resetStagingPageMenu();
+        resetPageMenu();
     }
     
     void delButton(){
@@ -74,7 +74,7 @@ public class pageToolBar extends Panel{
         WorkSpace.parent.CurPage=n;
         WorkSpace.parent.TotalPages--;
         allPage();
-        resetStagingPageMenu();
+        resetPageMenu();
     }
     
     void updatePage(int n){
@@ -113,8 +113,8 @@ public class pageToolBar extends Panel{
                 System.out.print(i+" ");
         System.out.println();
     }
-    void resetStagingPageMenu(){
-        WorkSpace.parent.MainWin.MenuBar.StagingPageMenu.removeAll();
+    void resetPageMenu(){
+        WorkSpace.parent.MainWin.MenuBar.CachingPageMenu.removeAll();
         WorkSpace.parent.MainWin.MenuBar.AllPageMenu.removeAll();
         for(i=0;i<BtnJ.size();i++){
             if(!BtnJ.elementAt(i)){
@@ -133,10 +133,10 @@ public class pageToolBar extends Panel{
                         BtnSum++;
                         resetButtonSize();
                         allPage();
-                        pageToolBar.this.resetStagingPageMenu();
+                        pageToolBar.this.resetPageMenu();
                     }
                 });
-                WorkSpace.parent.MainWin.MenuBar.StagingPageMenu.add(temp);
+                WorkSpace.parent.MainWin.MenuBar.CachingPageMenu.add(temp);
             }else{
                 pageMenuItem temp=new pageMenuItem(Btns.elementAt(i).getText(),i);
                 temp.addActionListener(new ActionListener() {
