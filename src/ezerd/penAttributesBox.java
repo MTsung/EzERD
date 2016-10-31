@@ -76,8 +76,8 @@ public class penAttributesBox extends Panel{
         PenSizePanel.add(PenSizeLabel);
         PenSizePanel.add(PenSizeText);
         
-        PageW = new TextField("2000");
-        PageH = new TextField("900");
+        PageW = new TextField();
+        PageH = new TextField();
         PageW.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {

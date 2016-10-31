@@ -38,6 +38,7 @@ public class page extends Panel{
         undos=new Stack<Integer>();
         redos=new Stack<Integer>();
         
+        
         this.setBackground(Color.WHITE);
         this.setPreferredSize(new Dimension(PageWidth,PageHeight));
         this.addMouseMotionListener(new MouseAdapter(){
@@ -64,8 +65,8 @@ public class page extends Panel{
             
             @Override
             public void mouseMoved(MouseEvent e) {
-                    parent.MessageBar.XY=e.getPoint();
-                    parent.MessageBar.updateMessage();
+                parent.MessageBar.XY=e.getPoint();
+                parent.MessageBar.updateMessage();
             }
         });
         
@@ -111,13 +112,12 @@ public class page extends Panel{
     }
     @Override
     public void paint(Graphics g) {
-        
-        //bufferImage.getGraphics().drawImage(bufferImage, 0, 0, parent.MainWin.ScreenSize.width/4, parent.MainWin.ScreenSize.height/4, null);  
         g.drawImage(paintPage(), 0, 0, this);
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
         parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
-        parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
+        parent.AttributesToolBar.PenAttributesBox.PageW.setText(""+PageWidth);
+        parent.AttributesToolBar.PenAttributesBox.PageH.setText(""+PageHeight);
         
     }     
     

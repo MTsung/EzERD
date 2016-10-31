@@ -26,6 +26,7 @@ public class pageScrollPane extends ScrollPane{
         if(parent.WorkSpace.activePage!=null){
             this.remove(parent.WorkSpace.activePage);
         }
+        parent.MainWin.setTitle("EzERD-" + parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText());
         TempPanel.removeAll();
         TempPanel.add(p);
         this.add(TempPanel);

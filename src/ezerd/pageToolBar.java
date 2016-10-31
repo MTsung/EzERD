@@ -87,6 +87,8 @@ public class pageToolBar extends Panel{
         WorkSpace.validate();
         WorkSpace.activePage=ep;
         WorkSpace.parent.CurPage=n;
+        WorkSpace.parent.MainWin.setTitle("EzERD-" + WorkSpace.parent.PageToolBar.Btns.elementAt(
+                                                     WorkSpace.parent.PageToolBar.activeButton()).getText());
     }
     void resetButtonSize(){
         //System.out.println(this.getWidth());
