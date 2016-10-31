@@ -17,19 +17,21 @@ public class colorTextPanel extends Panel{
     penAttributesBox PenAttributesBox;
     TextField[] TextRGB=new TextField[3];
     TextField[] TextHSB=new TextField[3];
-    Panel TextPanel,ColorPanel;
+    Panel TextPanel,ColorPanel,TempPanel1,TempPanel2;
     colorTextPanel(penAttributesBox c){
         super();
         PenAttributesBox=c;
         TextPanel=new Panel();
         TextPanel.setPreferredSize(new Dimension(270,80));
+        TempPanel1=new Panel();
+        TempPanel2=new Panel();
         String Str[]={"R:","G:","B:"};
         for(int i=0;i<3;i++){
-            TextRGB[i]=new TextField("255");
+            TextRGB[i]=new TextField(3);
             Label TempLabel=new Label(Str[i]);
             TempLabel.setFont(new programFont());
-            TextPanel.add(TextPanel.add(TempLabel));
-            TextPanel.add(TextRGB[i]);
+            TempPanel1.add(TextPanel.add(TempLabel));
+            TempPanel1.add(TextRGB[i]);
             TextRGB[i].addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -50,11 +52,11 @@ public class colorTextPanel extends Panel{
         }
         String Str1[]={"H:","S:","B:"};
         for(int i=0;i<3;i++){
-            TextHSB[i]=new TextField("100");
+            TextHSB[i]=new TextField(3);
             Label TempLabel=new Label(Str1[i]);
             TempLabel.setFont(new programFont());
-            TextPanel.add(TextPanel.add(TempLabel));
-            TextPanel.add(TextHSB[i]);
+            TempPanel2.add(TextPanel.add(TempLabel));
+            TempPanel2.add(TextHSB[i]);
             TextHSB[i].addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -75,6 +77,8 @@ public class colorTextPanel extends Panel{
                 }
             });
         }
+        TextPanel.add(TempPanel1);
+        TextPanel.add(TempPanel2);
         ColorPanel=new Panel();
         ColorPanel.setPreferredSize(new Dimension(70,50));
         this.add(ColorPanel);

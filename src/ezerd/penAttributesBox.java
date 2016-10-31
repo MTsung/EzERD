@@ -18,6 +18,7 @@ import javax.swing.event.*;
  *
  * @author CMC
  */
+
 public class penAttributesBox extends Panel{
     attributesToolBar AtoolBat;   
     colorBox ColorBox;
@@ -52,7 +53,7 @@ public class penAttributesBox extends Panel{
         Label PenSizeLabel=new Label("PenSize :");
         PenSizeLabel.setFont(new programFont());
         
-        PenSizeText=new TextField("8");
+        PenSizeText=new TextField("8",3);
         PenSizeText.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -76,8 +77,8 @@ public class penAttributesBox extends Panel{
         PenSizePanel.add(PenSizeLabel);
         PenSizePanel.add(PenSizeText);
         
-        PageW = new TextField();
-        PageH = new TextField();
+        PageW = new TextField(5);
+        PageH = new TextField(5);
         PageW.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {

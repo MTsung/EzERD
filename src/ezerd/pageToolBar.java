@@ -38,6 +38,8 @@ public class pageToolBar extends Panel{
         
         BtnSum++;
         resetButtonSize();
+        Btns.elementAt(n).setOpaque(true);
+        Btns.elementAt(n).setBorderPainted(false);
         Btns.elementAt(n).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

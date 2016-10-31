@@ -21,7 +21,7 @@ import javax.swing.event.*;
 public class menuBar extends MenuBar{
     ezERD parent;
     Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
-    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,PngM;
+    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,JpgM,PngM,GifM,BmpM;
     menuBar(ezERD p){
         super();
         parent=p;
@@ -53,28 +53,28 @@ public class menuBar extends MenuBar{
             }
         });
         ExportFileMenu=new Menu("Export File");
+        JpgM = new MenuItem("JPG");
+        JpgM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                savePageToImage("jpg");
+            }
+        });
         PngM = new MenuItem("PNG");
         PngM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FileDialog fileChooser=new FileDialog(menuBar.this.parent.MainWin, "Save", FileDialog.SAVE);
-                String temp;
-                if(parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().indexOf("*")>-1)
-                    temp=parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace(".sss*","");
-                else
-                    temp=parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace(".sss","");
-                fileChooser.setFile(temp+".png");
-                fileChooser.setVisible(true);
-                if(fileChooser.getDirectory() != null && fileChooser.getFile() != null){
-                    BufferedImage img = new BufferedImage(parent.WorkSpace.activePage.getWidth(),
-                                                           parent.WorkSpace.activePage.getHeight(), BufferedImage.TYPE_INT_RGB);
-                    parent.WorkSpace.activePage.paint(img.getGraphics());
-                    try {
-                        ImageIO.write(img, "png", new File(fileChooser.getDirectory() + fileChooser.getFile()));
-
-                    } catch (Exception ex) {
-                        System.out.println("panel not saved" + ex.getMessage());
-                    }
-                }
+                savePageToImage("png");
+            }
+        });
+        GifM = new MenuItem("GIF");
+        GifM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                savePageToImage("gif");
+            }
+        });
+        BmpM = new MenuItem("BMP");
+        BmpM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                savePageToImage("bmp");
             }
         });
         CachingPageMenu = new Menu("Caching Page");
@@ -112,7 +112,10 @@ public class menuBar extends MenuBar{
         FileMenu.add(openM);
         FileMenu.add(saveM);
         FileMenu.add(ExportFileMenu);
+        ExportFileMenu.add(JpgM);
         ExportFileMenu.add(PngM);
+        ExportFileMenu.add(GifM);
+        ExportFileMenu.add(BmpM);
         EditMenu.add(undoM);
         EditMenu.add(redoM);
         PageMenu.add(AllPageMenu);
@@ -120,5 +123,27 @@ public class menuBar extends MenuBar{
         LanguageMenu.add(TW);
         LanguageMenu.add(JP);
         LanguageMenu.add(EN);
+    }
+    void savePageToImage(String S){
+        FileDialog fileChooser = new FileDialog(parent.MainWin, "Save", FileDialog.SAVE);
+        String temp;
+        if (parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().indexOf("*") > -1) {
+            temp = parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace(".sss*", "");
+        } else {
+            temp = parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace(".sss", "");
+        }
+        fileChooser.setFile(temp + "."+ S);
+        fileChooser.setVisible(true);
+        if (fileChooser.getDirectory() != null && fileChooser.getFile() != null) {
+            BufferedImage img = new BufferedImage(parent.WorkSpace.activePage.getWidth(),
+                                                    parent.WorkSpace.activePage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            parent.WorkSpace.activePage.paint(img.getGraphics());
+            try {
+                ImageIO.write(img,S, new File(fileChooser.getDirectory() + fileChooser.getFile()));
+
+            } catch (Exception ex) {
+                System.out.println("panel not saved" + ex.getMessage());
+            }
+        }
     }
 }
