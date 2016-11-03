@@ -13,11 +13,11 @@ import javax.swing.event.*;
  *
  * @author CMC
  */
-public class points {
+public class object {
     Point Sp,Ep;
     float PenSize;
     Color PenColor;
-    points(Point s,Point e,float Size,Color color){
+    object(Point s,Point e,float Size,Color color){
         Sp=s;
         Ep=e;
         PenSize=Size;

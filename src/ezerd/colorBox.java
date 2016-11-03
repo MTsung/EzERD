@@ -21,10 +21,11 @@ public class colorBox extends Panel{
     Color SelectColor;
     Image bufferImage;
     Graphics bufferGraphics;
-    int X=360, Y=395,XX=-4,ColorBoxWidth=360;
-    colorBox(attributesToolBar p) {
+    int X=0, Y=35,XX=-4,ColorBoxWidth=360,pressY;
+    colorBox(attributesToolBar p,int w) {
         super();
         AttributesToolBar=p;
+        ColorBoxWidth=w;
         this.setPreferredSize(new Dimension(ColorBoxWidth,ColorBoxWidth+35));
         this.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
@@ -38,6 +39,7 @@ public class colorBox extends Panel{
         });
         this.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
+                pressY=e.getY();
                 upPoint(e);
                 colorBox.this.repaint();
             }
@@ -70,7 +72,7 @@ public class colorBox extends Panel{
         this.repaint();
     }
     public void upPoint(MouseEvent e){
-        if (e.getPoint().y >= 25) {
+        if ((e.getPoint().y >= 35 && pressY>35)||(e.getPoint().y < 35 && pressY > 35)) {
             if (e.getPoint().x < 0) {
                 X = 0;
             } else if (e.getPoint().x > ColorBoxWidth) {
@@ -86,7 +88,7 @@ public class colorBox extends Panel{
             } else {
                 Y = e.getPoint().y;
             }
-        }else if(e.getPoint().y < 20){
+        }else if((e.getPoint().y < 21 && pressY < 21)||(e.getPoint().y > 21 && pressY < 21)){
             if (e.getPoint().x < 0) {
                 XX = -4;
             }else if(e.getPoint().x > ColorBoxWidth){
@@ -112,7 +114,6 @@ public class colorBox extends Panel{
                 //System.out.println((float)i/nnn );
                 bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)(XX+4)/ColorBoxWidth , (float)i/ColorBoxWidth , (float)j/ColorBoxWidth)));
                 bufferGraphics.drawLine(i, j+35 , i , j+35);
-                
             }
         }
         for (int j = 0; j <= ColorBoxWidth; j++) {
@@ -135,6 +136,7 @@ public class colorBox extends Panel{
         g.drawImage(bufferImage, 0, 0, this);
         BufferedImage bufImg = (BufferedImage) bufferImage;
         ColorInt=bufImg.getRGB(X,Y);
+        AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
         AttributesToolBar.PenAttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
         AttributesToolBar.PenAttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
         AttributesToolBar.PenAttributesBox.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
@@ -143,6 +145,7 @@ public class colorBox extends Panel{
         AttributesToolBar.PenAttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
         AttributesToolBar.PenAttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
         AttributesToolBar.parent.MainWin.requestFocusInWindow();
+        
         
     } 
 }

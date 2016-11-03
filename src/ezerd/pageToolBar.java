@@ -28,7 +28,6 @@ public class pageToolBar extends Panel{
         WorkSpace=Ws;
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(Color.LIGHT_GRAY);
-        
     }
     
     void addBtton(int n,String s){    

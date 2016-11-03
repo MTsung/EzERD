@@ -94,7 +94,7 @@ public class topToolBar extends Panel{
                         while((newLine=br.readLine()) != null){
                             if(!newLine.startsWith("pageSize,")){
                                 String[] L = newLine.split(",");
-                                parent.WorkSpace.activePage.Points.add(new points(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
+                                parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                         ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
                                                                         ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
                                                                         ));
@@ -128,7 +128,7 @@ public class topToolBar extends Panel{
                         Point P=parent.WorkSpace.activePage.getPageSize();
                         PrintWriter pw   = new PrintWriter(selectedFile);
                         pw.write("pageSize," + P.x + "," + P.y + "\r\n");
-                        for(points p:parent.WorkSpace.activePage.Points){
+                        for(object p:parent.WorkSpace.activePage.Points){
                             pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + ","
                                     + p.PenSize + "," + p.PenColor.getRGB() +"\r\n");
                         }

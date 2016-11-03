@@ -30,7 +30,7 @@ public class penAttributesBox extends Panel{
         super();
         AtoolBat=p;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        ColorBox=new colorBox(AtoolBat);
+        ColorBox=new colorBox(AtoolBat,360);
         ColorTextPanel= new colorTextPanel(this);
         PenSizePanel=new Panel();
         PenSizeSlider=new JSlider(1,40);

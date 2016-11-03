@@ -61,6 +61,7 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                creatingObj(objEnum.rectangle);
             }
         });
         
@@ -82,5 +83,15 @@ public class toolBar extends Panel{
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
         
+    }
+    
+    void creatingObj(objEnum obj)
+    {
+        if(parent.WorkSpace.activePage!=null){ 
+            if(parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
+                parent.WorkSpace.activePage.PageActionEnum=pageActionEnum.ready2createObject;
+                parent.WorkSpace.activePage.ObjEnum = obj;
+            }
+        }
     }
 }
