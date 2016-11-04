@@ -97,6 +97,7 @@ public class topToolBar extends Panel{
                                 parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                         ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
                                                                         ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
+                                                                        ,objEnum.valueOf(L[6])
                                                                         ));
                             }else{
                                 String[] L = newLine.split(",");
@@ -130,7 +131,7 @@ public class topToolBar extends Panel{
                         pw.write("pageSize," + P.x + "," + P.y + "\r\n");
                         for(object p:parent.WorkSpace.activePage.Points){
                             pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + ","
-                                    + p.PenSize + "," + p.PenColor.getRGB() +"\r\n");
+                                    + p.PenSize + "," + p.PenColor.getRGB() + "," + p.ObjEnum +"\r\n");
                         }
                         pw.close();
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -157,6 +158,8 @@ public class topToolBar extends Panel{
                         parent.WorkSpace.activePage.RePoints.add(parent.WorkSpace.activePage.Points.elementAt(parent.WorkSpace.activePage.Points.size()-i));
                         parent.WorkSpace.activePage.Points.remove(parent.WorkSpace.activePage.Points.size()-i);
                     }
+                    parent.WorkSpace.activePage.PaintObj=true;
+                    parent.WorkSpace.activePage.removeAll();
                     parent.WorkSpace.activePage.repaint();
                 }
                 parent.MainWin.requestFocusInWindow();
@@ -178,6 +181,8 @@ public class topToolBar extends Panel{
                         parent.WorkSpace.activePage.Points.add(parent.WorkSpace.activePage.RePoints.elementAt(parent.WorkSpace.activePage.RePoints.size()-i));
                         parent.WorkSpace.activePage.RePoints.remove(parent.WorkSpace.activePage.RePoints.size()-i);
                     }
+                    parent.WorkSpace.activePage.PaintObj=true;
+                    parent.WorkSpace.activePage.removeAll();
                     parent.WorkSpace.activePage.repaint();
                 }
                 parent.MainWin.requestFocusInWindow();

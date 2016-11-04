@@ -14,11 +14,11 @@ import java.awt.event.*;
  *
  * @author CMC
  */
-public class objRectangle extends obj{
-    objRectangle(){
+public class objCircular extends obj{
+    objCircular(){
         super();
     }
-    objRectangle(Color c,float s){
+    objCircular(Color c,float s){
         super(c,s);
     }
 
@@ -27,6 +27,6 @@ public class objRectangle extends obj{
         Graphics2D g2 = (Graphics2D)g;
         g2.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
         g2.setColor(this.PenColor);
-        g2.drawRect((int)PenSize/2, (int)PenSize/2, this.getWidth()-(int)PenSize,this.getHeight()-(int)PenSize);
+        g2.drawOval((int)PenSize/2, (int)PenSize/2, this.getWidth()-(int)PenSize,this.getHeight()-(int)PenSize);
    }
 }

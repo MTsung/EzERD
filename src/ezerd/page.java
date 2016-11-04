@@ -19,7 +19,7 @@ import java.util.Vector;
  */
 
 public class page extends Panel{
-    Boolean LineT=false;
+    Boolean LineT=false,PaintObj=true;
     ezERD parent;
     Point Sp,Ep;
     Vector<object> Points,RePoints;
@@ -49,18 +49,16 @@ public class page extends Panel{
             public void mouseDragged(MouseEvent e){
                 //System.out.println("mouseReleased");
                 //PenColor=new Color(parent.AttributesToolBar.PenAttributesBox.ColorBox.getColorInt());
-                if(LineT && ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))){
+                if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                }else if(ObjEnum == ObjEnum.line){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
                     g.setColor(PenColor);
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                    Points.add(new object(Sp,Ep,PenSize,PenColor));
+                    Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum.line));
                     Sp=Ep;
                     undo++; 
-                    if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*"))
-                        parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
-                                                 parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
                 }else if(PageActionEnum==PageActionEnum.creatingObject){
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
@@ -81,15 +79,16 @@ public class page extends Panel{
                 parent.MessageBar.updateMessage();
             }
         });
-        
+        //&& ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))
         this.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
                 //System.out.println("mousePressed");
-                if(LineT && ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))){
+                if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                }else if(ObjEnum == ObjEnum.line){
                     Sp=e.getPoint();
                     undo=0;
-                }else if(PageActionEnum == PageActionEnum.ready2createObject)
+                }else if(PageActionEnum == PageActionEnum.ready2createObject )
                 {
                     Sp = e.getPoint();
                     PageActionEnum = PageActionEnum.creatingObject;
@@ -99,32 +98,45 @@ public class page extends Panel{
             @Override
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
-                if(LineT && ((e.getModifiers() == InputEvent.BUTTON1_MASK+2) || (e.getModifiers() == InputEvent.BUTTON1_MASK))){
+                if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                    popupMenu1.show(page.this, e.getX(), e.getY());
+                }else if(ObjEnum == ObjEnum.line){
                     if(undo!=0)
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
                     parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
                     parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);
-                    LineT=false;
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
+                        undos.add(1);
+                        RePoints.removeAllElements();
+                        redos.removeAllElements();
                         g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y, Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                    
+                        obj o = null;
+                        if (ObjEnum == ObjEnum.rectangle) {
+                            o = new objRectangle(PenColor, PenSize);
+                            page.this.add(o,0);
+                            o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
+                            o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                            //o.setBackground(PenColor);
+                        } else if (ObjEnum == ObjEnum.circular) {
+                            o = new objCircular(PenColor, PenSize);
+                            page.this.add(o,0);
+                            o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
+                            o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        }
+                        Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum));
                     }
-                    obj o=null;
-                    if(ObjEnum == ObjEnum.rectangle){
-                        o=new objRectangle(PenColor,PenSize);
-                        page.this.add(o);
-                        o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
-                        o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
-                        o.setBackground(PenColor);
-                    }
-                    PageActionEnum=PageActionEnum.idle;
-                } else if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                    popupMenu1.show(page.this, e.getX(), e.getY());
-                }
+                    PageActionEnum=PageActionEnum.ready2createObject;
+                }  
+                if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")&&Ep!=null)
+                    parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
+                                                        parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
+                //page.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 Ep=Sp=null;
             }
         });
@@ -150,9 +162,8 @@ public class page extends Panel{
         parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
         parent.AttributesToolBar.PenAttributesBox.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.PenAttributesBox.PageH.setText(""+PageHeight);
-        super.paintComponents(g);
+        
     }
-    
     Image paintPage(){
         bufferImage = createImage(PageWidth, PageHeight);
         bufferGraphics = bufferImage.getGraphics();
@@ -161,8 +172,23 @@ public class page extends Panel{
         for(object p:Points){
             g2.setColor(p.PenColor);
             g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
-            g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
+            obj o = null;
+            if(p.ObjEnum==ObjEnum.line){
+                g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
+            }else if(p.ObjEnum==ObjEnum.rectangle&&PaintObj){
+                o = new objRectangle(p.PenColor, p.PenSize);
+                this.add(o, 0);
+                o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
+                o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+            } else if (p.ObjEnum == ObjEnum.circular && PaintObj) {
+                o = new objCircular(p.PenColor, p.PenSize);
+                this.add(o, 0);
+                o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
+                o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+            }
         }
+        PaintObj=false;
+        super.paintComponents(g2);
         return bufferImage;
     }
     void setPageSize(int W,int H){

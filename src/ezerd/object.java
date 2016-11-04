@@ -14,13 +14,15 @@ import javax.swing.event.*;
  * @author CMC
  */
 public class object {
+    objEnum ObjEnum;
     Point Sp,Ep;
     float PenSize;
     Color PenColor;
-    object(Point s,Point e,float Size,Color color){
+    object(Point s,Point e,float Size,Color color,objEnum O){
         Sp=s;
         Ep=e;
         PenSize=Size;
         PenColor=color;
+        ObjEnum=O;
     }
 }
