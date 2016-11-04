@@ -14,19 +14,23 @@ public abstract class obj extends Component {
     Color PenColor;
     float PenSize;
     page parent;
-    int x,y;
     Point Sp,Ep;
-    obj(){
+    Point ArrSp,ArrEp;
+    obj(){  
     }
-    obj(Color c,float s){
+    obj(page p,Point Sp,Point Ep,Color c){
+        parent=p;
+        ArrSp=Sp;
+        ArrEp=Ep;
         PenColor=c;
-        PenSize=s;
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
-                Ep=e.getPoint();
-                obj.this.setLocation(obj.this.getLocation().x + (Ep.x-Sp.x),
-                                     obj.this.getLocation().y + (Ep.y-Sp.y));
+                if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                    obj.this.Ep = e.getPoint();
+                    obj.this.setLocation(obj.this.getLocation().x + (obj.this.Ep.x - obj.this.Sp.x),
+                                         obj.this.getLocation().y + (obj.this.Ep.y - obj.this.Sp.y));
+                }
             } 
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -37,7 +41,40 @@ public abstract class obj extends Component {
         this.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                Sp=e.getPoint();
+                if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                    obj.this.Sp=e.getPoint();
+                }
+            }
+            public void mouseReleased(MouseEvent e){
+                
+            }
+        });
+    }
+    obj(page p,Color c,float s){
+        parent=p;
+        PenColor=c;
+        PenSize=s>8?8:s;
+        this.addMouseMotionListener(new MouseAdapter(){
+            @Override
+            public void mouseDragged(MouseEvent e){
+                if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                    Ep = e.getPoint();
+                    obj.this.setLocation(obj.this.getLocation().x + (Ep.x - Sp.x),
+                                         obj.this.getLocation().y + (Ep.y - Sp.y));
+                }
+            } 
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                //parent.parent.MessageBar.XY=new Point(parent.parent.MessageBar.XY.x-e.getX(),parent.parent.MessageBar.XY.y-e.getY());
+                //parent.parent.MessageBar.updateMessage();
+            }
+        });
+        this.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                    Sp=e.getPoint();
+                }
             }
             public void mouseReleased(MouseEvent e){
                 

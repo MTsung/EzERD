@@ -10,5 +10,5 @@ package ezerd;
  * @author CMC
  */
 public enum objEnum {
-    rectangle, circular, diamond,line
-}//矩形,圓形,菱形
+    rectangle, circular, diamond,graffiti,arrow
+}//矩形,圓形,菱形,塗鴉,箭頭

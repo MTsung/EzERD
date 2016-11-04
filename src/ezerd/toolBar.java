@@ -17,7 +17,7 @@ import javax.swing.event.*;
  */
 public class toolBar extends Panel{
     ezERD parent;
-    JButton ChoBtn,LineBtn,RecBtn,CirBtn;
+    JButton ChoBtn,GraffitiBtn,RecBtn,CirBtn,DiaBtn,ArrBtn;
     
     toolBar(ezERD p){
         super();
@@ -26,8 +26,10 @@ public class toolBar extends Panel{
         
         try{
             ChoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Choose.png"))));
-            LineBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Line.png"))));
+            GraffitiBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Graffiti.png"))));
+            ArrBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Arrow.png"))));
             RecBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Rectangle.png"))));
+            DiaBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Diamond.png"))));
             CirBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Circular.png"))));
         }catch (IOException ex) {
             System.err.println(ex.getMessage());
@@ -38,22 +40,30 @@ public class toolBar extends Panel{
         ChoBtn.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                parent.WorkSpace.activePage.LineT=false;
+                parent.WorkSpace.activePage.PageActionEnum=pageActionEnum.idle;
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         });
         
         
-        LineBtn.setBackground(this.getBackground());
-        LineBtn.setBorder(null);
-        LineBtn.addMouseListener(new MouseAdapter(){
+        GraffitiBtn.setBackground(this.getBackground());
+        GraffitiBtn.setBorder(null);
+        GraffitiBtn.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                parent.WorkSpace.activePage.LineT=true;
-                creatingObj(objEnum.line);
+                creatingObj(objEnum.graffiti);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 //Cursor cusTand = toolBar.this.getToolkit().createCustomCursor( new ImageIcon("Line.png").getImage(),new Point(5,40),"Pan");  
                 //parent.Ws.activePage.setCursor(cusTand);
+            }
+        });
+        ArrBtn.setBackground(this.getBackground());
+        ArrBtn.setBorder(null);
+        ArrBtn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                creatingObj(objEnum.arrow);
             }
         });
         RecBtn.setBackground(this.getBackground());
@@ -65,7 +75,15 @@ public class toolBar extends Panel{
                 creatingObj(objEnum.rectangle);
             }
         });
-        
+        DiaBtn.setBackground(this.getBackground());
+        DiaBtn.setBorder(null);
+        DiaBtn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                creatingObj(objEnum.diamond);
+            }
+        });
         CirBtn.setBackground(this.getBackground());
         CirBtn.setBorder(null);
         CirBtn.addMouseListener(new MouseAdapter(){
@@ -78,8 +96,10 @@ public class toolBar extends Panel{
         
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(ChoBtn);
-        this.add(LineBtn);
+        this.add(GraffitiBtn);
+        this.add(ArrBtn);
         this.add(RecBtn);
+        this.add(DiaBtn);
         this.add(CirBtn);
         
         for(Component a:this.getComponents())/**/
