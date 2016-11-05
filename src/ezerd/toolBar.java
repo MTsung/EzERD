@@ -41,6 +41,7 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.WorkSpace.activePage.PageActionEnum=pageActionEnum.idle;
+                parent.WorkSpace.activePage.ObjEnum=objEnum.N;
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         });

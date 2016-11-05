@@ -33,9 +33,9 @@ public class objDiamond extends obj{
         g2.drawLine(0,this.getHeight()/2,this.getWidth()/2,0);
         g2.drawLine(0,this.getHeight()/2,this.getWidth()/2,this.getHeight());
         g2.drawLine(this.getWidth()/2,this.getHeight(),this.getWidth(),this.getHeight()/2);*/
-        g2.drawLine(this.getWidth()-(int)PenSize/2,this.getHeight()/2,this.getWidth()/2,(int)PenSize/2);
+        g2.drawLine(this.getWidth()-(int)PenSize/2-2,this.getHeight()/2,this.getWidth()/2,(int)PenSize/2);
         g2.drawLine((int)PenSize/2,this.getHeight()/2,this.getWidth()/2,(int)PenSize/2);
         g2.drawLine((int)PenSize/2,this.getHeight()/2,this.getWidth()/2,this.getHeight()-(int)PenSize/2);
-        g2.drawLine(this.getWidth()/2,this.getHeight()-(int)PenSize/2,this.getWidth()-(int)PenSize/2,this.getHeight()/2);
+        g2.drawLine(this.getWidth()/2,this.getHeight()-(int)PenSize/2,this.getWidth()-(int)PenSize/2-2,this.getHeight()/2);
    }
 }

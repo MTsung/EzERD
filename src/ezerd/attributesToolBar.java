@@ -20,7 +20,7 @@ public class attributesToolBar extends Panel {
     ezERD parent;
     Panel SizePanel,TempPanel;
     ScrollPane AttributesScrollPane;
-    penAttributesBox PenAttributesBox=new penAttributesBox(this);
+    attributesBox AttributesBox=new attributesBox(this);
     
     public attributesToolBar(ezERD p) {
         super();
@@ -54,7 +54,7 @@ public class attributesToolBar extends Panel {
             }
         });
         TempPanel=new Panel();
-        TempPanel.add(PenAttributesBox);
+        TempPanel.add(AttributesBox);
         AttributesScrollPane=new ScrollPane();
         AttributesScrollPane.add(TempPanel);
         this.add(AttributesScrollPane,BorderLayout.CENTER);

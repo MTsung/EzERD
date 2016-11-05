@@ -43,6 +43,7 @@ public abstract class obj extends Component {
             public void mousePressed(MouseEvent e){
                 if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
                     obj.this.Sp=e.getPoint();
+                    parent.activeObj=obj.this;
                 }
             }
             public void mouseReleased(MouseEvent e){
@@ -74,6 +75,7 @@ public abstract class obj extends Component {
             public void mousePressed(MouseEvent e){
                 if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
                     Sp=e.getPoint();
+                    parent.activeObj=obj.this;
                 }
             }
             public void mouseReleased(MouseEvent e){

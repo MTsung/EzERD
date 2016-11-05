@@ -14,13 +14,13 @@ import javax.swing.event.*;
  * @author CMC
  */
 public class colorTextPanel extends Panel{
-    penAttributesBox PenAttributesBox;
+    attributesToolBar AttributesToolBox;
     TextField[] TextRGB=new TextField[3];
     TextField[] TextHSB=new TextField[3];
     Panel TextPanel,ColorPanel,TempPanel1,TempPanel2;
-    colorTextPanel(penAttributesBox c){
+    colorTextPanel(attributesToolBar p){
         super();
-        PenAttributesBox=c;
+        AttributesToolBox=p;
         TextPanel=new Panel();
         TextPanel.setPreferredSize(new Dimension(270,80));
         TempPanel1=new Panel();
@@ -45,7 +45,7 @@ public class colorTextPanel extends Panel{
                             TextRGB[j].setText("0");
                         } 
                     }
-                    PenAttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
+                    AttributesToolBox.AttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
                                                     ,Integer.valueOf(TextRGB[2].getText()));
                 }
             });
@@ -72,7 +72,7 @@ public class colorTextPanel extends Panel{
                             TextHSB[j].setText("0.0");
                         } 
                     }
-                    PenAttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
+                    AttributesToolBox.AttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
                                                     ,Float.valueOf(TextHSB[2].getText()));
                 }
             });
@@ -86,8 +86,8 @@ public class colorTextPanel extends Panel{
         
         
         for(Component a:this.getComponents())/**/
-            a.addKeyListener(new keyListener(PenAttributesBox.AtoolBat.parent));/**/
-        this.addKeyListener(new keyListener(PenAttributesBox.AtoolBat.parent));/**/
+            a.addKeyListener(new keyListener(AttributesToolBox.parent));/**/
+        this.addKeyListener(new keyListener(AttributesToolBox.parent));/**/
     }
     void setColor(Color c){
         ColorPanel.setBackground(c);

@@ -24,7 +24,7 @@ public class page extends Panel{
     Point Sp,Ep;
     Vector<object> Points,RePoints;
     Stack<Integer> undos,redos;
-    int undo=0,PageWidth=2000,PageHeight=900;
+    int undo=0,PageWidth=1400,PageHeight=800;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
     rightClickMenu popupMenu1;
@@ -32,6 +32,7 @@ public class page extends Panel{
     Graphics bufferGraphics;
     pageActionEnum PageActionEnum;
     objEnum ObjEnum;
+    obj activeObj;
     
     page(ezERD p){
         super();      
@@ -41,6 +42,7 @@ public class page extends Panel{
         undos=new Stack<Integer>();
         redos=new Stack<Integer>();
         PageActionEnum=PageActionEnum.idle;
+        activeObj=null;
         this.setBackground(Color.WHITE);
         this.setLayout(null);
         this.setPreferredSize(new Dimension(PageWidth,PageHeight));
@@ -120,25 +122,19 @@ public class page extends Panel{
                         if (ObjEnum == ObjEnum.rectangle) {
                             o = new objRectangle(page.this,PenColor, PenSize);
                             page.this.add(o,0);
-                            o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
-                            o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
-                            //o.setBackground(PenColor);
                         } else if (ObjEnum == ObjEnum.circular) {
                             o = new objCircular(page.this,PenColor, PenSize);
                             page.this.add(o,0);
-                            o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
-                            o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         } else if (ObjEnum == ObjEnum.diamond) {
                             o = new objDiamond(page.this,PenColor, PenSize);
                             page.this.add(o,0);
-                            o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
-                            o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         } else if (ObjEnum == ObjEnum.arrow) {
                             o = new objArrow(page.this,Sp,Ep,PenColor);
-                            page.this.add(o,0);
-                            o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
-                            o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         }
+                        page.this.add(o, 0);
+                        o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
+                        o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum));
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
@@ -170,8 +166,12 @@ public class page extends Panel{
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
         parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
-        parent.AttributesToolBar.PenAttributesBox.PageW.setText(""+PageWidth);
-        parent.AttributesToolBar.PenAttributesBox.PageH.setText(""+PageHeight);
+        parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
+        parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
+        if(activeObj!=null){
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
+        }
         
     }
     Image paintPage(){
@@ -182,26 +182,19 @@ public class page extends Panel{
         for(object p:Points){
             g2.setColor(p.PenColor);
             g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
-            obj o = null;
             if(p.ObjEnum==ObjEnum.graffiti){
                 g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
-            }else if(p.ObjEnum==ObjEnum.rectangle&&PaintObj){
-                o = new objRectangle(this,p.PenColor, p.PenSize);
-                this.add(o, 0);
-                o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
-                o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-            } else if (p.ObjEnum == ObjEnum.circular && PaintObj) {
-                o = new objCircular(this,p.PenColor, p.PenSize);
-                this.add(o, 0);
-                o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
-                o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-            } else if (p.ObjEnum == ObjEnum.diamond && PaintObj) {
-                o = new objDiamond(this,p.PenColor, p.PenSize);
-                this.add(o, 0);
-                o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
-                o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-            } else if (p.ObjEnum == ObjEnum.arrow && PaintObj) {
-                o = new objArrow(this,p.Sp,p.Ep,p.PenColor);
+            }else if(p.ObjEnum!=ObjEnum.graffiti&&PaintObj){
+                obj o = null;
+                if (p.ObjEnum == ObjEnum.rectangle) {
+                    o = new objRectangle(this, p.PenColor, p.PenSize);
+                } else if (p.ObjEnum == ObjEnum.circular) {
+                    o = new objCircular(this, p.PenColor, p.PenSize);
+                } else if (p.ObjEnum == ObjEnum.diamond) {
+                    o = new objDiamond(this, p.PenColor, p.PenSize);
+                } else if (p.ObjEnum == ObjEnum.arrow) {
+                    o = new objArrow(this, p.Sp, p.Ep, p.PenColor);
+                }
                 this.add(o, 0);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
