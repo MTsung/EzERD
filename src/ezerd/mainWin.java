@@ -18,6 +18,7 @@ public class mainWin extends Frame{
     int mainWinWidth=1500,mainWinHeight=900;
     Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
     menuBar MenuBar;
+    String ClosingMessage,Mess;
     mainWin(ezERD p){
         super();
         parent=p;        
@@ -27,6 +28,8 @@ public class mainWin extends Frame{
         this.setMenuBar(MenuBar);
         mainWinWidth=(int) ((int) ScreenSize.getWidth()*0.8);
         mainWinHeight=(int) ((int) ScreenSize.getHeight()*0.8);
+        Mess="Message";
+        ClosingMessage="File is modified. Close？";
         this.setSize(mainWinWidth, mainWinHeight);
         this.setLocation((ScreenSize.width-mainWinWidth)/2,(ScreenSize.height-mainWinHeight)/2); 
         this.addWindowListener(new WindowAdapter(){
@@ -38,7 +41,7 @@ public class mainWin extends Frame{
                     if(parent.PageToolBar.Btns.elementAt(i).getText().endsWith("*") && parent.PageToolBar.BtnJ.elementAt(i))
                         B=true;
                 if(B){
-                    int n=JOptionPane.showConfirmDialog(null, "File is modified. Close？","Message",2);
+                    int n=JOptionPane.showConfirmDialog(null, ClosingMessage,Mess,2,JOptionPane.PLAIN_MESSAGE);
                         if(n==0)
                             System.exit(0);
                 }else

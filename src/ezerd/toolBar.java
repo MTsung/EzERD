@@ -40,8 +40,8 @@ public class toolBar extends Panel{
         ChoBtn.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
+                creatingObj(objEnum.N,ChoBtn);
                 parent.WorkSpace.activePage.PageActionEnum=pageActionEnum.idle;
-                parent.WorkSpace.activePage.ObjEnum=objEnum.N;
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -52,7 +52,7 @@ public class toolBar extends Panel{
         GraffitiBtn.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                creatingObj(objEnum.graffiti);
+                creatingObj(objEnum.graffiti,GraffitiBtn);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 //Cursor cusTand = toolBar.this.getToolkit().createCustomCursor( new ImageIcon("Line.png").getImage(),new Point(5,40),"Pan");  
                 //parent.Ws.activePage.setCursor(cusTand);
@@ -64,7 +64,7 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(objEnum.arrow);
+                creatingObj(objEnum.arrow,ArrBtn);
             }
         });
         RecBtn.setBackground(this.getBackground());
@@ -73,7 +73,7 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(objEnum.rectangle);
+                creatingObj(objEnum.rectangle,RecBtn);
             }
         });
         DiaBtn.setBackground(this.getBackground());
@@ -82,7 +82,7 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(objEnum.diamond);
+                creatingObj(objEnum.diamond,DiaBtn);
             }
         });
         CirBtn.setBackground(this.getBackground());
@@ -91,7 +91,7 @@ public class toolBar extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(objEnum.circular);
+                creatingObj(objEnum.circular,CirBtn);
             }
         });
         
@@ -108,8 +108,15 @@ public class toolBar extends Panel{
         
     }
     
-    void creatingObj(objEnum obj)
+    void creatingObj(objEnum obj,JButton Btn)
     {
+        for (Component b : this.getComponents()) {
+            if (b == Btn) {
+                b.setBackground(new Color(150,150,150));
+            }else{
+                b.setBackground(this.getBackground());
+            }
+        }
         if(parent.WorkSpace.activePage!=null){ 
             //if(parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle)
             {

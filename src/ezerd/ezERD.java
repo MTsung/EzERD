@@ -6,6 +6,7 @@
 package ezerd;
 
 import java.awt.Frame;
+import java.io.*;
 
 /**
  *
@@ -45,5 +46,13 @@ public class ezERD {
     void run(){
         MainWin.setVisible(true);
         MainWin.setExtendedState(Frame.MAXIMIZED_BOTH);
+        setLanguage();
+    }
+    void setLanguage(){
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("Language.ini")));
+            new ezerdLanguage(this,in.readLine());
+        } catch (Exception ex) {
+        }
     }
 }

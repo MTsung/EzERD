@@ -23,10 +23,14 @@ import javax.swing.event.*;
 public class topToolBar extends Panel{
     ezERD parent;
     JButton NewPageBtn,ClosePageBtn,OpenBtn,SaveBtn,UndoBtn,RedoBtn;
+    String ClosingMessage,ClosingMessage1,Mess;
     
     topToolBar(ezERD p) {
         super();
         parent=p;
+        Mess="Message";
+        ClosingMessage="File";
+        ClosingMessage1=" is modified. Close？";
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(new Color(205,205,205));
         try{
@@ -63,9 +67,9 @@ public class topToolBar extends Panel{
             public void actionPerformed(ActionEvent e) {
                 if(parent.TotalPages!=1)
                     if(parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")){
-                        if(0==JOptionPane.showConfirmDialog(null, "File " + 
+                        if(0==JOptionPane.showConfirmDialog(null, ClosingMessage + 
                                                                 parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace("*","") 
-                                                                + " is modified. Close？","Message",2 ) )
+                                                                + ClosingMessage1,Mess,2,JOptionPane.PLAIN_MESSAGE ) )
                             parent.WorkSpace.cloPage();
                     }else
                         parent.WorkSpace.cloPage();

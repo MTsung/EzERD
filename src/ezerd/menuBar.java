@@ -8,8 +8,10 @@ package ezerd;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -98,8 +100,41 @@ public class menuBar extends MenuBar{
         
         LanguageMenu = new Menu("Language");
         TW= new MenuItem("中文(Taiwan)");
-        JP= new MenuItem("日本語(Japanese)");
+        TW.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    PrintWriter out = new PrintWriter(new File(menuBar.this.parent.getClass().getResource("Language.ini").getPath()));
+                    out.println("Taiwan");     
+                    out.close();
+                    menuBar.this.parent.setLanguage();
+                } catch (FileNotFoundException ex) {
+                }
+            }
+        });
+        JP= new MenuItem("日本語(Japan)");
+        JP.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    PrintWriter out = new PrintWriter(new File(menuBar.this.parent.getClass().getResource("Language.ini").getPath()));
+                    out.println("Japan");     
+                    out.close();
+                    menuBar.this.parent.setLanguage();
+                } catch (FileNotFoundException ex) {
+                }
+            }
+        });
         EN= new MenuItem("English");
+        EN.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    PrintWriter out = new PrintWriter(new File(menuBar.this.parent.getClass().getResource("Language.ini").getPath()));
+                    out.println("English");     
+                    out.close();
+                    menuBar.this.parent.setLanguage();
+                } catch (FileNotFoundException ex) {
+                }
+            }
+        });
         
         HelpMenu = new Menu("Help");
         this.add(FileMenu);

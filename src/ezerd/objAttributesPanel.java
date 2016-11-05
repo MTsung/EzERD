@@ -18,6 +18,7 @@ public class objAttributesPanel extends Panel{
     TextField[] TextSize=new TextField[2];
     TextField[] TextLocation=new TextField[2];
     Panel TextPanel,TempPanel1,TempPanel2;
+    Label LabelW,LabelH;
     objAttributesPanel(attributesToolBar p){
         super();
         AtoolBar=p;
@@ -25,8 +26,8 @@ public class objAttributesPanel extends Panel{
         TextPanel.setPreferredSize(new Dimension(270,80));
         TempPanel1=new Panel();
         TempPanel2=new Panel();
-        Label LabelW=new Label("Width:");
-        Label LabelH=new Label("Height:");
+        LabelW=new Label("Width:");
+        LabelH=new Label("Height:");
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
         TextSize[0]=new TextField(3);
