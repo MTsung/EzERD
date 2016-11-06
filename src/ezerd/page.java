@@ -10,6 +10,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import static java.awt.BasicStroke.*;
+import java.awt.geom.GeneralPath;
 import java.util.Stack;
 import java.util.Vector;
         
@@ -19,11 +20,12 @@ import java.util.Vector;
  */
 
 public class page extends Panel{
-    Boolean PaintObj=true;
+    Boolean PaintObj=true,ObjArrowJ=false,ArrowPaint=true;
     ezERD parent;
     Point Sp,Ep;
     Vector<object> Points,RePoints;
     Stack<Integer> undos,redos;
+    Vector<obj> Objs;
     int undo=0,PageWidth=1400,PageHeight=800;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
@@ -32,11 +34,11 @@ public class page extends Panel{
     Graphics bufferGraphics;
     pageActionEnum PageActionEnum;
     objEnum ObjEnum;
-    obj activeObj;
-    
+    obj activeObj,SObj,EObj;
     page(ezERD p){
         super();      
         parent=p;      
+        Objs=new Vector<obj>();
         Points=new Vector<object>();
         RePoints=new Vector<object>();
         undos=new Stack<Integer>();
@@ -61,6 +63,14 @@ public class page extends Panel{
                     Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum.graffiti));
                     Sp=Ep;
                     undo++; 
+                }else if(ObjEnum==ObjEnum.arrow){
+                    Graphics2D g = (Graphics2D)page.this.getGraphics();
+                    g.setXORMode(Color.yellow);
+                    if (Ep != null) {
+                        drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                    }
+                    Ep = e.getPoint();
+                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
                 }else if(PageActionEnum==PageActionEnum.creatingObject){
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
@@ -77,6 +87,15 @@ public class page extends Panel{
             
             @Override
             public void mouseMoved(MouseEvent e) {
+                if(ObjEnum==ObjEnum.arrow&&ObjArrowJ){
+                    Graphics2D g = (Graphics2D)page.this.getGraphics();
+                    g.setXORMode(Color.yellow);
+                    if (Ep != null) {
+                        drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                    }
+                    Ep = e.getPoint();
+                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                }
                 parent.MessageBar.XY=e.getPoint();
                 parent.MessageBar.updateMessage();
             }
@@ -90,8 +109,9 @@ public class page extends Panel{
                 }else if(ObjEnum == ObjEnum.graffiti){
                     Sp=e.getPoint();
                     undo=0;
-                }else if(PageActionEnum == PageActionEnum.ready2createObject )
-                {
+                }else if(ObjEnum==ObjEnum.arrow){
+                    Sp=e.getPoint();
+                }else if(PageActionEnum == PageActionEnum.ready2createObject ){
                     Sp = e.getPoint();
                     PageActionEnum = PageActionEnum.creatingObject;
                 }
@@ -102,13 +122,18 @@ public class page extends Panel{
                 //System.out.println("mouseReleased");
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                     popupMenu1.show(page.this, e.getX(), e.getY());
-                }else if(ObjEnum == ObjEnum.graffiti){
+                } else if(ObjEnum == ObjEnum.graffiti){
                     if(undo!=0)
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
                     parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
                     parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);
+                } else if(ObjEnum == ObjEnum.arrow){
+                    Graphics2D g = (Graphics2D)page.this.getGraphics();
+                    g.setColor(PenColor);
+                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                    Points.add(new object(Sp,Ep,1,PenColor,ObjEnum));
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
@@ -128,12 +153,11 @@ public class page extends Panel{
                         } else if (ObjEnum == ObjEnum.diamond) {
                             o = new objDiamond(page.this,PenColor, PenSize);
                             page.this.add(o,0);
-                        } else if (ObjEnum == ObjEnum.arrow) {
-                            o = new objArrow(page.this,Sp,Ep,PenColor);
                         }
                         page.this.add(o, 0);
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        Objs.add(o);
                         activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum));
                     }
@@ -177,14 +201,22 @@ public class page extends Panel{
     Image paintPage(){
         bufferImage = createImage(PageWidth, PageHeight);
         bufferGraphics = bufferImage.getGraphics();
-        parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        //parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
+        super.paintComponents(g2);
         for(object p:Points){
             g2.setColor(p.PenColor);
             g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
             if(p.ObjEnum==ObjEnum.graffiti){
                 g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
-            }else if(p.ObjEnum!=ObjEnum.graffiti&&PaintObj){
+            }else if(p.ObjEnum==ObjEnum.arrow){
+                g2.drawLine(SObj.getX()+SObj.getWidth()/2,SObj.getY()+SObj.getHeight()/2,
+                            EObj.getX()+EObj.getWidth()/2,EObj.getY()+EObj.getHeight()/2);
+                if(ArrowPaint){
+                    repaint();
+                    ArrowPaint=false;
+                }
+            } else if(p.ObjEnum!=ObjEnum.graffiti&&PaintObj){
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
                     o = new objRectangle(this, p.PenColor, p.PenSize);
@@ -192,16 +224,14 @@ public class page extends Panel{
                     o = new objCircular(this, p.PenColor, p.PenSize);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
                     o = new objDiamond(this, p.PenColor, p.PenSize);
-                } else if (p.ObjEnum == ObjEnum.arrow) {
-                    o = new objArrow(this, p.Sp, p.Ep, p.PenColor);
                 }
                 this.add(o, 0);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
             }
         }
-        PaintObj=false;
         super.paintComponents(g2);
+        PaintObj=false;
         return bufferImage;
     }
     void setPageSize(int W,int H){
@@ -213,4 +243,63 @@ public class page extends Panel{
      Point getPageSize(){
         return new Point(PageWidth,PageHeight);
     }
+     
+     /*http://blog.csdn.net/wqjsir/article/details/6095277*/
+    public static void drawAL(int sx, int sy, int ex, int ey, Graphics2D g2) {
+        double H = 20; // 箭头高度  
+        double L = 10; // 底边的一半  
+        int x3 = 0;
+        int y3 = 0;
+        int x4 = 0;
+        int y4 = 0;
+        double awrad = Math.atan(L / H); // 箭头角度  
+        double arraow_len = Math.sqrt(L * L + H * H); // 箭头的长度  
+        double[] arrXY_1 = rotateVec(ex - sx, ey - sy, awrad, true, arraow_len);
+        double[] arrXY_2 = rotateVec(ex - sx, ey - sy, -awrad, true, arraow_len);
+        double x_3 = ex - arrXY_1[0]; // (x3,y3)是第一端点  
+        double y_3 = ey - arrXY_1[1];
+        double x_4 = ex - arrXY_2[0]; // (x4,y4)是第二端点  
+        double y_4 = ey - arrXY_2[1];
+
+        Double X3 = new Double(x_3);
+        x3 = X3.intValue();
+        Double Y3 = new Double(y_3);
+        y3 = Y3.intValue();
+        Double X4 = new Double(x_4);
+        x4 = X4.intValue();
+        Double Y4 = new Double(y_4);
+        y4 = Y4.intValue();
+        // 画线  
+        g2.drawLine(sx, sy, ex, ey);
+        //  
+        GeneralPath triangle = new GeneralPath();
+        triangle.moveTo(ex, ey);
+        triangle.lineTo(x3, y3);
+        triangle.lineTo(x4, y4);
+        //triangle.closePath();  
+        //实心箭头  
+        g2.fill(triangle);
+        //非实心箭头  
+        //g2.draw(triangle);  
+
+    }
+
+    // 计算  
+    public static double[] rotateVec(int px, int py, double ang,
+            boolean isChLen, double newLen) {
+
+        double mathstr[] = new double[2];
+        // 矢量旋转函数，参数含义分别是x分量、y分量、旋转角、是否改变长度、新长度  
+        double vx = px * Math.cos(ang) - py * Math.sin(ang);
+        double vy = px * Math.sin(ang) + py * Math.cos(ang);
+        if (isChLen) {
+            double d = Math.sqrt(vx * vx + vy * vy);
+            vx = vx / d * newLen;
+            vy = vy / d * newLen;
+            mathstr[0] = vx;
+            mathstr[1] = vy;
+        }
+        return mathstr;
+    }  
+    /*http://blog.csdn.net/wqjsir/article/details/6095277*/
 }

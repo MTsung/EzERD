@@ -103,11 +103,13 @@ public class menuBar extends MenuBar{
         TW.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    PrintWriter out = new PrintWriter(new File(menuBar.this.parent.getClass().getResource("Language.ini").getPath()));
-                    out.println("Taiwan");     
-                    out.close();
+                    File selectedFile = new File("Language.ini");
+                    PrintWriter pw   = new PrintWriter(selectedFile);
+                    pw.write("Taiwan");     
+                    pw.close();
                     menuBar.this.parent.setLanguage();
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
+                    Logger.getLogger(menuBar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -115,11 +117,13 @@ public class menuBar extends MenuBar{
         JP.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    PrintWriter out = new PrintWriter(new File(menuBar.this.parent.getClass().getResource("Language.ini").getPath()));
-                    out.println("Japan");     
-                    out.close();
+                    File selectedFile = new File("Language.ini");
+                    PrintWriter pw   = new PrintWriter(selectedFile);
+                    pw.write("Japan");     
+                    pw.close();
                     menuBar.this.parent.setLanguage();
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
+                    Logger.getLogger(menuBar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -127,11 +131,13 @@ public class menuBar extends MenuBar{
         EN.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    PrintWriter out = new PrintWriter(new File(menuBar.this.parent.getClass().getResource("Language.ini").getPath()));
-                    out.println("English");     
-                    out.close();
+                    File selectedFile = new File("Language.ini");
+                    PrintWriter pw   = new PrintWriter(selectedFile);
+                    pw.write("English");     
+                    pw.close();
                     menuBar.this.parent.setLanguage();
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
+                    Logger.getLogger(menuBar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

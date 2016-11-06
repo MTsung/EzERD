@@ -50,8 +50,9 @@ public class ezERD {
     }
     void setLanguage(){
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("Language.ini")));
-            new ezerdLanguage(this,in.readLine());
+            File selectedFile = new File("Language.ini");
+            BufferedReader br = new BufferedReader(new FileReader(selectedFile));
+            new ezerdLanguage(this,br.readLine());
         } catch (Exception ex) {
         }
     }
