@@ -18,8 +18,8 @@ public class objCircular extends obj{
     objCircular(){
         super();
     }
-    objCircular(page p,Color c,float s){
-        super(p,c,s);
+    objCircular(page p,Color c,float s,int id){
+        super(p,c,s,id);
     }
 
     @Override

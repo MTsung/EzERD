@@ -20,12 +20,14 @@ public abstract class obj extends Component {
     Point Sp,Ep;
     Point ArrSp,ArrEp;
     obj EndObj;
+    int ID;
     obj(){  
     }
-    obj(page p,Color c,float s){
+    obj(page p,Color c,float s,int id){
         parent=p;
         PenColor=c;
         PenSize = s > 8 ? 8 : s;
+        ID=id;
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
@@ -79,11 +81,31 @@ public abstract class obj extends Component {
                 }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
                     Sp=e.getPoint();
                     parent.activeObj=obj.this;
+                    for(object o:obj.this.parent.Points){
+                        if(o.ObjID==ID){
+                            o.Sp=obj.this.getLocation();
+                            o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
+                            obj.this.parent.ObjPoints.add(new objPoint(o.Sp,o.Ep,ID));
+                            
+                            obj.this.parent.ReObjPoints.removeAllElements();
+                            obj.this.parent.redos.removeAllElements();
+                            obj.this.parent.parent.TopToolBar.UndoBtn.setEnabled(obj.this.parent.undos.size() == 0 ? false : true);
+                            obj.this.parent.parent.TopToolBar.RedoBtn.setEnabled(obj.this.parent.redos.size() == 0 ? false : true);
+                            obj.this.parent.undos.add(0);
+                        }
+                    }
                 }
             }
             @Override
             public void mouseReleased(MouseEvent e){
                 if(obj.this.parent.ObjEnum==objEnum.arrow){
+                }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                    for(object o:obj.this.parent.Points){
+                        if(o.ObjID==ID){
+                            o.Sp=obj.this.getLocation();
+                            o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
+                        }
+                    }
                 }
             }
             @Override
@@ -108,4 +130,5 @@ public abstract class obj extends Component {
     {
         paintObj(g);
     }
+
 }

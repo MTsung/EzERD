@@ -18,8 +18,8 @@ public class objRectangle extends obj{
     objRectangle(){
         super();
     }
-    objRectangle(page p,Color c,float s){
-        super(p,c,s);
+    objRectangle(page p,Color c,float s,int id){
+        super(p,c,s,id);
     }
 
     @Override

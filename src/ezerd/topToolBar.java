@@ -101,7 +101,7 @@ public class topToolBar extends Panel{
                                 parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                         ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
                                                                         ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
-                                                                        ,objEnum.valueOf(L[6])
+                                                                        ,objEnum.valueOf(L[6]),0
                                                                         ));
                             }else{
                                 String[] L = newLine.split(",");
@@ -158,9 +158,25 @@ public class topToolBar extends Panel{
                 if(parent.WorkSpace.activePage.undos.size()!=0){
                     int temp=parent.WorkSpace.activePage.undos.pop();
                     parent.WorkSpace.activePage.redos.add(temp);
-                    for(int i=temp;i>0;i--){
-                        parent.WorkSpace.activePage.RePoints.add(parent.WorkSpace.activePage.Points.elementAt(parent.WorkSpace.activePage.Points.size()-i));
-                        parent.WorkSpace.activePage.Points.remove(parent.WorkSpace.activePage.Points.size()-i);
+                    if(temp==0){
+                        int id=parent.WorkSpace.activePage.ObjPoints.elementAt(parent.WorkSpace.activePage.ObjPoints.size()-1).ID;
+                        for (object o : topToolBar.this.parent.WorkSpace.activePage.Points) {
+                            if (o.ObjID == id) {
+                                parent.WorkSpace.activePage.ReObjPoints.add(new objPoint(o.Sp,o.Ep,id));
+                                o.Sp = parent.WorkSpace.activePage.ObjPoints.elementAt(
+                                                            parent.WorkSpace.activePage.ObjPoints.size() - 1).Sp;
+                                o.Ep = parent.WorkSpace.activePage.ObjPoints.elementAt(
+                                                            parent.WorkSpace.activePage.ObjPoints.size() - 1).Ep;
+                                
+                            }
+                        }
+                        parent.WorkSpace.activePage.ObjPoints.remove(parent.WorkSpace.activePage.ObjPoints.size()-1);
+                    }else{
+                        for(int i=temp;i>0;i--){
+                            parent.WorkSpace.activePage.RePoints.add(parent.WorkSpace.activePage.Points.elementAt(
+                                    parent.WorkSpace.activePage.Points.size() - i));
+                            parent.WorkSpace.activePage.Points.remove(parent.WorkSpace.activePage.Points.size() - i);
+                        }
                     }
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.removeAll();
@@ -181,9 +197,24 @@ public class topToolBar extends Panel{
                 if(parent.WorkSpace.activePage.redos.size()!=0){
                     int temp=parent.WorkSpace.activePage.redos.pop();
                     parent.WorkSpace.activePage.undos.add(temp);
-                    for(int i=temp;i>0;i--){
-                        parent.WorkSpace.activePage.Points.add(parent.WorkSpace.activePage.RePoints.elementAt(parent.WorkSpace.activePage.RePoints.size()-i));
-                        parent.WorkSpace.activePage.RePoints.remove(parent.WorkSpace.activePage.RePoints.size()-i);
+                    if(temp==0){
+                        int id=parent.WorkSpace.activePage.ReObjPoints.elementAt(parent.WorkSpace.activePage.ReObjPoints.size()-1).ID;
+                        for (object o : topToolBar.this.parent.WorkSpace.activePage.Points) {
+                            if (o.ObjID == id) {
+                                parent.WorkSpace.activePage.ObjPoints.add(new objPoint(o.Sp,o.Ep,id));
+                                o.Sp = parent.WorkSpace.activePage.ReObjPoints.elementAt(
+                                                            parent.WorkSpace.activePage.ReObjPoints.size() - 1).Sp;
+                                o.Ep = parent.WorkSpace.activePage.ReObjPoints.elementAt(
+                                                            parent.WorkSpace.activePage.ReObjPoints.size() - 1).Ep;
+                            }
+                        }
+                        parent.WorkSpace.activePage.ReObjPoints.remove(parent.WorkSpace.activePage.ReObjPoints.size()-1);
+                    }else{
+                        for(int i=temp;i>0;i--){
+                            parent.WorkSpace.activePage.Points.add(parent.WorkSpace.activePage.RePoints.elementAt(
+                                                            parent.WorkSpace.activePage.RePoints.size() - i));
+                            parent.WorkSpace.activePage.RePoints.remove(parent.WorkSpace.activePage.RePoints.size() - i);
+                        }
                     }
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.removeAll();

@@ -20,8 +20,8 @@ public class objDiamond extends obj{
     objDiamond(){
         super();
     }
-    objDiamond(page p,Color c,float s){
-        super(p,c,s);
+    objDiamond(page p,Color c,float s,int id){
+        super(p,c,s,id);
     }
 
     @Override

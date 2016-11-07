@@ -24,10 +24,11 @@ public class page extends Panel{
     ezERD parent;
     Point Sp,Ep;
     Vector<object> Points,RePoints;
+    Vector<objPoint> ObjPoints,ReObjPoints;
     Vector<obj> Objs,ReObjs;
     Stack<Integer> undos,redos;
     Vector<objArrowXY> ObjArrowXYs;
-    int undo=0,PageWidth=1400,PageHeight=800;
+    int undo=0,PageWidth=1400,PageHeight=800,ObjID=1;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
     rightClickMenu popupMenu1;
@@ -40,6 +41,8 @@ public class page extends Panel{
         super();      
         parent=p;      
         Objs=new Vector<obj>();
+        ObjPoints=new Vector<objPoint>();
+        ReObjPoints=new Vector<objPoint>();
         ObjArrowXYs=new Vector<objArrowXY>();
         Points=new Vector<object>();
         RePoints=new Vector<object>();
@@ -62,7 +65,7 @@ public class page extends Panel{
                     g.setColor(PenColor);
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                    Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum.graffiti));
+                    Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum.graffiti,0));
                     Sp=Ep;
                     undo++; 
                 }else if(ObjEnum==ObjEnum.arrow){
@@ -139,7 +142,7 @@ public class page extends Panel{
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setColor(PenColor);
                     drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
-                    Points.add(new object(Sp,Ep,1,PenColor,ObjEnum));
+                    Points.add(new object(Sp,Ep,1,PenColor,ObjEnum,0));
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
@@ -147,17 +150,18 @@ public class page extends Panel{
                         undos.add(1);
                         RePoints.removeAllElements();
                         redos.removeAllElements();
-                        g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y, Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y
+                                , Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                     
                         obj o = null;
                         if (ObjEnum == ObjEnum.rectangle) {
-                            o = new objRectangle(page.this,PenColor, PenSize);
+                            o = new objRectangle(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         } else if (ObjEnum == ObjEnum.circular) {
-                            o = new objCircular(page.this,PenColor, PenSize);
+                            o = new objCircular(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         } else if (ObjEnum == ObjEnum.diamond) {
-                            o = new objDiamond(page.this,PenColor, PenSize);
+                            o = new objDiamond(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         }
                         page.this.add(o, 0);
@@ -165,7 +169,7 @@ public class page extends Panel{
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         Objs.add(o);
                         activeObj=o;
-                        Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum));
+                        Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum,ObjID++));
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
                 }  
@@ -174,7 +178,7 @@ public class page extends Panel{
                                                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
                 //page.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 Ep=Sp=null;
-                    page.this.repaint();
+                page.this.repaint();
             }
         });
         popupMenu1 =new rightClickMenu(parent);
@@ -212,19 +216,19 @@ public class page extends Panel{
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
         for(object p:Points){
             g2.setColor(p.PenColor);
-            g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
-            if(p.ObjEnum==ObjEnum.graffiti){
+            g2.setStroke(new BasicStroke(p.PenSize, CAP_ROUND, JOIN_ROUND));
+            if (p.ObjEnum == ObjEnum.graffiti) {
                 g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
-            }else if(p.ObjEnum==ObjEnum.arrow){
-                drawAL(p.Sp.x,p.Sp.y,p.Ep.x,p.Ep.y,g2);
-            } else if(p.ObjEnum!=ObjEnum.graffiti&&PaintObj){
+            } else if (p.ObjEnum == ObjEnum.arrow) {
+                drawAL(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y, g2);
+            } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
-                    o = new objRectangle(this, p.PenColor, p.PenSize);
+                    o = new objRectangle(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.circular) {
-                    o = new objCircular(this, p.PenColor, p.PenSize);
+                    o = new objCircular(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
-                    o = new objDiamond(this, p.PenColor, p.PenSize);
+                    o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
                 }
                 this.add(o, 0);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);

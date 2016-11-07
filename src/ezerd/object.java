@@ -18,18 +18,14 @@ public class object {
     Point Sp,Ep;
     float PenSize;
     Color PenColor;
-    Boolean MoveB;
-    object(Point s,Point e,float Size,Color color,objEnum O){
+    int ObjID;
+    object(Point s,Point e,float Size,Color color,objEnum O,int id){
         Sp=s;
         Ep=e;
         PenSize=Size;
         PenColor=color;
         ObjEnum=O;
-        MoveB=false;
+        ObjID=id;
     }
-    object(Point s,Point e,Boolean B){
-        Sp=s;
-        Ep=e;
-        MoveB=B;
-    }
+    
 }
