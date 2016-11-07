@@ -37,9 +37,9 @@ public class toolBar extends Panel{
         
         ChoBtn.setBackground(this.getBackground());
         ChoBtn.setBorder(null);
-        ChoBtn.addMouseListener(new MouseAdapter(){
+        ChoBtn.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent e){
+            public void actionPerformed(ActionEvent e) {
                 creatingObj(objEnum.N,ChoBtn);
                 parent.WorkSpace.activePage.PageActionEnum=pageActionEnum.idle;
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -49,9 +49,9 @@ public class toolBar extends Panel{
         
         GraffitiBtn.setBackground(this.getBackground());
         GraffitiBtn.setBorder(null);
-        GraffitiBtn.addMouseListener(new MouseAdapter(){
+        GraffitiBtn.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent e){
+            public void actionPerformed(ActionEvent e) {
                 creatingObj(objEnum.graffiti,GraffitiBtn);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 //Cursor cusTand = toolBar.this.getToolkit().createCustomCursor( new ImageIcon("Line.png").getImage(),new Point(5,40),"Pan");  
@@ -60,36 +60,36 @@ public class toolBar extends Panel{
         });
         ArrBtn.setBackground(this.getBackground());
         ArrBtn.setBorder(null);
-        ArrBtn.addMouseListener(new MouseAdapter(){
+        ArrBtn.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent e){
+            public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 creatingObj(objEnum.arrow,ArrBtn);
             }
         });
         RecBtn.setBackground(this.getBackground());
         RecBtn.setBorder(null);
-        RecBtn.addMouseListener(new MouseAdapter(){
+        RecBtn.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent e){
+            public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 creatingObj(objEnum.rectangle,RecBtn);
             }
         });
         DiaBtn.setBackground(this.getBackground());
         DiaBtn.setBorder(null);
-        DiaBtn.addMouseListener(new MouseAdapter(){
+        DiaBtn.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent e){
+            public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 creatingObj(objEnum.diamond,DiaBtn);
             }
         });
         CirBtn.setBackground(this.getBackground());
         CirBtn.setBorder(null);
-        CirBtn.addMouseListener(new MouseAdapter(){
+        CirBtn.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent e){
+            public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 creatingObj(objEnum.circular,CirBtn);
             }

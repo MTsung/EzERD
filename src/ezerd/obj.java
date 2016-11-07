@@ -6,6 +6,8 @@
 package ezerd;
 import static ezerd.page.drawAL;
 import java.awt.*;
+import static java.awt.BasicStroke.CAP_ROUND;
+import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
 /**
  *
@@ -34,11 +36,26 @@ public abstract class obj extends Component {
                     obj.this.setLocation(obj.this.getLocation().x + (Ep.x - Sp.x),
                                          obj.this.getLocation().y + (Ep.y - Sp.y));
                 }
-                    obj.this.parent.ArrowPaint=true;
+                obj.this.parent.ArrowPaint=true;
             } 
             @Override
             public void mouseMoved(MouseEvent e) {
-                
+                if (obj.this.parent.ObjArrowJ) {
+                    Graphics2D g = (Graphics2D) obj.this.parent.getGraphics();
+                    g.setColor(Color.BLUE);
+                    g.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
+                    g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
+                                obj.this.getWidth() + 6, obj.this.getHeight() + 6);
+                    
+                    Graphics2D g2 = (Graphics2D)obj.this.parent.getGraphics();
+                    g2.setXORMode(Color.yellow);
+                    if (obj.this.parent.Ep != null) {
+                        drawAL(obj.this.parent.Sp.x,obj.this.parent.Sp.y,obj.this.parent.Ep.x,obj.this.parent.Ep.y,g2);
+                    }
+                    obj.this.parent.Ep=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
+                    drawAL(obj.this.parent.Sp.x,obj.this.parent.Sp.y,obj.this.parent.Ep.x,obj.this.parent.Ep.y,g2);
+                    
+                }
             }
         });
         this.addMouseListener(new MouseAdapter(){
@@ -47,35 +64,41 @@ public abstract class obj extends Component {
                 parent.activeObj=obj.this;
                 if(obj.this.parent.ObjEnum==objEnum.arrow&&!obj.this.parent.ObjArrowJ){
                     obj.this.parent.ObjArrowJ=true;
-                    obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2,obj.this.getY()+obj.this.getHeight()/2);
-                    for(obj ob:obj.this.parent.Objs){
-                        if(ob==obj.this){
-                            obj.this.parent.SObj=ob;
-                        }
-                    }
+                    obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
+                                                ,obj.this.getY()+obj.this.getHeight()/2);
+                    obj.this.parent.SObj=obj.this;
                 }else if(obj.this.parent.ObjEnum==objEnum.arrow&&obj.this.parent.ObjArrowJ){
                     obj.this.parent.ObjArrowJ=false;
                     obj.this.parent.Ep=new Point(obj.this.getX()+obj.this.getWidth()/2,obj.this.getY()+obj.this.getHeight()/2);
-                    Graphics g = obj.this.parent.getGraphics();
-                    g.setColor(PenColor);
-                    //System.out.println(obj.this.parent.Sp.x+","+obj.this.parent.Sp.y+","+obj.this.parent.Ep.x+","+obj.this.parent.Ep.y);
-                    g.drawLine(obj.this.parent.Sp.x,obj.this.parent.Sp.y,obj.this.parent.Ep.x,obj.this.parent.Ep.y);
-                    //drawAL(obj.this.parent.Sp.x,obj.this.parent.Sp.y,obj.this.parent.Ep.x,obj.this.parent.Ep.y,g);
-                    obj.this.parent.Points.add(new object(obj.this.parent.Sp,obj.this.parent.Ep
-                                                ,1,PenColor,obj.this.parent.ObjEnum));
-                    for(obj ob:obj.this.parent.Objs){
-                        if(ob==obj.this){
-                            obj.this.parent.EObj=ob;
-                        }
-                    }
+                    obj.this.parent.EObj=obj.this;
+                    obj.this.parent.ObjArrowXYs.add(new objArrowXY(obj.this.parent.SObj,obj.this.parent.EObj));
+                    obj.this.parent.SObj=null;
+                    obj.this.parent.EObj=null;
                     obj.this.parent.repaint();
+                    obj.this.parent.Ep=null;
                 }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
                     Sp=e.getPoint();
                     parent.activeObj=obj.this;
                 }
             }
+            @Override
             public void mouseReleased(MouseEvent e){
                 if(obj.this.parent.ObjEnum==objEnum.arrow){
+                }
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (obj.this.parent.ObjArrowJ) {
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (obj.this.parent.ObjArrowJ) {
+                    Graphics2D g=(Graphics2D)obj.this.parent.getGraphics();
+                    g.setXORMode(new Color(255,255,0));
+                    g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
+                    g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
+                                obj.this.getWidth() + 6, obj.this.getHeight() + 6);
                 }
             }
         });

@@ -24,8 +24,9 @@ public class page extends Panel{
     ezERD parent;
     Point Sp,Ep;
     Vector<object> Points,RePoints;
+    Vector<obj> Objs,ReObjs;
     Stack<Integer> undos,redos;
-    Vector<obj> Objs;
+    Vector<objArrowXY> ObjArrowXYs;
     int undo=0,PageWidth=1400,PageHeight=800;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
@@ -39,6 +40,7 @@ public class page extends Panel{
         super();      
         parent=p;      
         Objs=new Vector<obj>();
+        ObjArrowXYs=new Vector<objArrowXY>();
         Points=new Vector<object>();
         RePoints=new Vector<object>();
         undos=new Stack<Integer>();
@@ -87,7 +89,7 @@ public class page extends Panel{
             
             @Override
             public void mouseMoved(MouseEvent e) {
-                if(ObjEnum==ObjEnum.arrow&&ObjArrowJ){
+                if (ObjEnum == ObjEnum.arrow && ObjArrowJ) {
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
@@ -109,12 +111,16 @@ public class page extends Panel{
                 }else if(ObjEnum == ObjEnum.graffiti){
                     Sp=e.getPoint();
                     undo=0;
+                }else if(SObj!=null||EObj!=null){
+                    SObj=EObj=null;
+                    ObjArrowJ=false;
                 }else if(ObjEnum==ObjEnum.arrow){
                     Sp=e.getPoint();
                 }else if(PageActionEnum == PageActionEnum.ready2createObject ){
                     Sp = e.getPoint();
                     PageActionEnum = PageActionEnum.creatingObject;
                 }
+                
             }
             
             @Override
@@ -129,7 +135,7 @@ public class page extends Panel{
                     redos.removeAllElements();
                     parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
                     parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);
-                } else if(ObjEnum == ObjEnum.arrow){
+                } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null) {
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setColor(PenColor);
                     drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
@@ -168,6 +174,7 @@ public class page extends Panel{
                                                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
                 //page.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 Ep=Sp=null;
+                    page.this.repaint();
             }
         });
         popupMenu1 =new rightClickMenu(parent);
@@ -201,21 +208,15 @@ public class page extends Panel{
     Image paintPage(){
         bufferImage = createImage(PageWidth, PageHeight);
         bufferGraphics = bufferImage.getGraphics();
-        //parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
-        super.paintComponents(g2);
         for(object p:Points){
             g2.setColor(p.PenColor);
             g2.setStroke(new BasicStroke(p.PenSize,CAP_ROUND,JOIN_ROUND));
             if(p.ObjEnum==ObjEnum.graffiti){
                 g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
             }else if(p.ObjEnum==ObjEnum.arrow){
-                g2.drawLine(SObj.getX()+SObj.getWidth()/2,SObj.getY()+SObj.getHeight()/2,
-                            EObj.getX()+EObj.getWidth()/2,EObj.getY()+EObj.getHeight()/2);
-                if(ArrowPaint){
-                    repaint();
-                    ArrowPaint=false;
-                }
+                drawAL(p.Sp.x,p.Sp.y,p.Ep.x,p.Ep.y,g2);
             } else if(p.ObjEnum!=ObjEnum.graffiti&&PaintObj){
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
@@ -228,6 +229,39 @@ public class page extends Panel{
                 this.add(o, 0);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+            }
+        }
+        for(objArrowXY obja:ObjArrowXYs){
+            int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
+            if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {
+                SX += obja.SObj.getWidth();
+                SY += obja.SObj.getHeight() / 2;
+                EY += obja.EObj.getHeight() / 2;
+            } else if (obja.SObj.getX() > obja.EObj.getX() + obja.EObj.getWidth()) {
+                SY += obja.SObj.getHeight() / 2;
+                EX += obja.EObj.getWidth();
+                EY += obja.EObj.getHeight() / 2;
+            } else {
+                if (obja.SObj.getY() + obja.SObj.getHeight() < obja.EObj.getY()) {
+                    SX += obja.SObj.getWidth() / 2;
+                    SY += obja.SObj.getHeight();
+                    EX += obja.EObj.getWidth() / 2;
+                } else if (obja.SObj.getY() > obja.EObj.getY() + obja.EObj.getHeight()) {
+                    SX += obja.SObj.getWidth() / 2;
+                    EX += obja.EObj.getWidth() / 2;
+                    EY += obja.EObj.getHeight();
+                } else {
+                    SX += obja.SObj.getWidth() / 2;
+                    SY += obja.SObj.getHeight() / 2;
+                    EX += obja.EObj.getWidth() / 2;
+                    EY += obja.EObj.getHeight() / 2;
+                }
+            }
+            g2.setStroke(new BasicStroke(1,CAP_ROUND,JOIN_ROUND));
+            drawAL(SX, SY, EX, EY, g2);
+            if (ArrowPaint) {
+                repaint();
+                ArrowPaint = false;
             }
         }
         super.paintComponents(g2);
