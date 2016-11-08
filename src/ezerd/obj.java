@@ -65,10 +65,6 @@ public abstract class obj extends Component {
             @Override
             public void mousePressed(MouseEvent e){
                 parent.activeObj=obj.this;
-                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(),obj.this.getY());
-                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(),obj.this.getHeight());
-                parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
-                parent.parent.AttributesToolBar.AttributesBox.ColorBox.setColor(PenColor);
                 if(obj.this.parent.ObjEnum==objEnum.arrow&&!obj.this.parent.ObjArrowJ){
                     obj.this.parent.ObjArrowJ=true;
                     obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
@@ -90,6 +86,10 @@ public abstract class obj extends Component {
                 }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
                     Sp=e.getPoint();
                     parent.activeObj=obj.this;
+                    parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(), obj.this.getY());
+                    parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
+                    parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
+                    parent.parent.AttributesToolBar.AttributesBox.ColorBox.setColor(PenColor);
                     for(object o:obj.this.parent.Points){
                         if(o.ObjID==ID){
                             o.Sp=obj.this.getLocation();

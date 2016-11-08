@@ -159,13 +159,13 @@ public class page extends Panel{
                     
                         obj o = null;
                         if (ObjEnum == ObjEnum.rectangle) {
-                            o = new objRectangle(page.this,PenColor, PenSize,ObjID);
+                            o = new ObjRectangle(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         } else if (ObjEnum == ObjEnum.circular) {
-                            o = new objCircular(page.this,PenColor, PenSize,ObjID);
+                            o = new ObjCircular(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         } else if (ObjEnum == ObjEnum.diamond) {
-                            o = new objDiamond(page.this,PenColor, PenSize,ObjID);
+                            o = new ObjDiamond(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         }
                         page.this.add(o, 0);
@@ -232,11 +232,11 @@ public class page extends Panel{
             } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
-                    o = new objRectangle(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new ObjRectangle(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.circular) {
-                    o = new objCircular(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new ObjCircular(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
-                    o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new ObjDiamond(this, p.PenColor, p.PenSize,p.ObjID);
                 }
                 activeObj=o;
                 this.add(o, 0);
