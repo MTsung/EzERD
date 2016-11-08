@@ -57,6 +57,9 @@ public class pageToolBar extends Panel{
         Btns.elementAt(n).addKeyListener(new keyListener(WorkSpace.parent));/**/
         allPage();
         resetPageMenu();
+        for (Component b : WorkSpace.parent.ToolBar.getComponents()) {
+            b.setBackground(WorkSpace.parent.ToolBar.getBackground());
+        }
     }
     
     void delButton(){

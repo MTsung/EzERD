@@ -18,7 +18,6 @@ import java.awt.image.BufferedImage;
 public class colorBox extends Panel{
     attributesToolBar AttributesToolBar;                                                                                            
     int ColorInt;
-    Color SelectColor;
     Image bufferImage;
     Graphics bufferGraphics;
     int X=0, Y=35,XX=-4,ColorBoxWidth=360,pressY;
@@ -55,6 +54,9 @@ public class colorBox extends Panel{
     int getColorInt(){
         return ColorInt;
     } 
+    Color getColor(){
+        return new Color(ColorInt);
+    }
     int R,G,B;
     Boolean RGBJ=false;
     void setColor(int r,int g,int b){

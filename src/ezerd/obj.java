@@ -37,6 +37,7 @@ public abstract class obj extends Component {
                     Ep = e.getPoint();
                     obj.this.setLocation(obj.this.getLocation().x + (Ep.x - Sp.x),
                                          obj.this.getLocation().y + (Ep.y - Sp.y));
+                    
                 }
                 obj.this.parent.ArrowPaint=true;
             } 
@@ -64,6 +65,8 @@ public abstract class obj extends Component {
             @Override
             public void mousePressed(MouseEvent e){
                 parent.activeObj=obj.this;
+                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(),obj.this.getY());
+                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(),obj.this.getHeight());
                 if(obj.this.parent.ObjEnum==objEnum.arrow&&!obj.this.parent.ObjArrowJ){
                     obj.this.parent.ObjArrowJ=true;
                     obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
@@ -108,13 +111,6 @@ public abstract class obj extends Component {
                         if(o.ObjID==ID){
                             o.Sp=obj.this.getLocation();
                             o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
-                            /*for(objArrowXY obja:parent.ObjArrowXYs){
-                                if (obja.SObjID == o.ObjID) {
-                                    obja.SObj=obj.this;
-                                }else if (obja.EObjID == o.ObjID) {
-                                    obja.EObj=obj.this;
-                                }
-                            }*/
                         }
                     }
                 }
@@ -141,6 +137,17 @@ public abstract class obj extends Component {
     public void paint(Graphics g)
     {
         paintObj(g);
+        for (object o : obj.this.parent.Points) {
+            if (o.ObjID == ID) {
+                for (objArrowXY obja : parent.ObjArrowXYs) {
+                    if (obja.SObjID == o.ObjID) {
+                        obja.SObj = obj.this;
+                    } else if (obja.EObjID == o.ObjID) {
+                        obja.EObj = obj.this;
+                    }
+                }
+            }
+        }
     }
 
 }

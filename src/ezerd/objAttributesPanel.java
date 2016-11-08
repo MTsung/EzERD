@@ -30,70 +30,100 @@ public class objAttributesPanel extends Panel{
         LabelH=new Label("Height:");
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
-        TextSize[0]=new TextField(3);
+        TextSize[0]=new TextField("0",3);
         TempPanel1.add(LabelW);
         TempPanel1.add(TextSize[0]);
         TextSize[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    AtoolBar.parent.WorkSpace.activePage.activeObj.setSize(Integer.valueOf(TextSize[0].getText())
-                                                                    , Integer.valueOf(TextSize[1].getText()));
-                } catch (Exception ex) {
-                    TextSize[0].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getWidth());
-                    TextSize[1].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getHeight());
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                    try {
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setSize(Integer.valueOf(TextSize[0].getText()),
+                                 Integer.valueOf(TextSize[1].getText()));
+                    } catch (Exception ex) {
+                        TextSize[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getWidth());
+                        TextSize[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getHeight());
+                    }
+                }else{
+                    TextSize[0].setText("0");
+                    TextSize[1].setText("0");
+                    TextLocation[0].setText("0");
+                    TextLocation[1].setText("0");
                 }
             }
         });
-        TextSize[1]=new TextField(3);
+        TextSize[1]=new TextField("0",3);
         TempPanel1.add(LabelH);
         TempPanel1.add(TextSize[1]);
         TextSize[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    AtoolBar.parent.WorkSpace.activePage.activeObj.setSize(Integer.valueOf(TextSize[0].getText())
-                                                                    , Integer.valueOf(TextSize[1].getText()));
-                } catch (Exception ex) {
-                    TextSize[0].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getWidth());
-                    TextSize[1].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getHeight());
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                    try {
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setSize(Integer.valueOf(TextSize[0].getText()),
+                                 Integer.valueOf(TextSize[1].getText()));
+                    } catch (Exception ex) {
+                        TextSize[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getWidth());
+                        TextSize[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getHeight());
+                    }
+                }else{
+                    TextSize[0].setText("0");
+                    TextSize[1].setText("0");
+                    TextLocation[0].setText("0");
+                    TextLocation[1].setText("0");
                 }
             }
         });
-        Label LabelX=new Label("X:");
-        Label LabelY=new Label("Y:");
+        Label LabelX=new Label("X       :");
+        Label LabelY=new Label("Y        :");
         LabelX.setFont(new programFont());
         LabelY.setFont(new programFont());
-        TextLocation[0]=new TextField(3);
+        TextLocation[0]=new TextField("0",3);
         TempPanel2.add(LabelX);
         TempPanel2.add(TextLocation[0]);
         TextLocation[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    AtoolBar.parent.WorkSpace.activePage.activeObj.setLocation(Integer.valueOf(TextLocation[0].getText())
-                                                                    , Integer.valueOf(TextLocation[1].getText()));
-                } catch (Exception ex) {
-                    TextLocation[0].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getX());
-                    TextLocation[1].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getY());
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                    try {
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setLocation(Integer.valueOf(TextLocation[0].getText()),
+                                 Integer.valueOf(TextLocation[1].getText()));
+                    } catch (Exception ex) {
+                        TextLocation[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getX());
+                        TextLocation[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getY());
+                    }
+                }else{
+                    TextSize[0].setText("0");
+                    TextSize[1].setText("0");
+                    TextLocation[0].setText("0");
+                    TextLocation[1].setText("0");
                 }
             }
         });
-        TextLocation[1]=new TextField(3);
+        TextLocation[1]=new TextField("0",3);
         TempPanel2.add(LabelY);
         TempPanel2.add(TextLocation[1]);
         TextLocation[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    AtoolBar.parent.WorkSpace.activePage.activeObj.setLocation(Integer.valueOf(TextLocation[0].getText())
-                                                                    , Integer.valueOf(TextLocation[1].getText()));
-                } catch (Exception ex) {
-                    TextLocation[0].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getX());
-                    TextLocation[1].setText(""+AtoolBar.parent.WorkSpace.activePage.activeObj.getY());
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                    try {
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setLocation(Integer.valueOf(TextLocation[0].getText()),
+                                 Integer.valueOf(TextLocation[1].getText()));
+                    } catch (Exception ex) {
+                        TextLocation[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getX());
+                        TextLocation[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getY());
+                    }
+                }else{
+                    TextSize[0].setText("0");
+                    TextSize[1].setText("0");
+                    TextLocation[0].setText("0");
+                    TextLocation[1].setText("0");
                 }
             }
         });
+                
+        TextPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         TextPanel.add(TempPanel1);
         TextPanel.add(TempPanel2);
         this.add(TextPanel);

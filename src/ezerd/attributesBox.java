@@ -133,12 +133,12 @@ public class attributesBox extends Panel{
         
         this.add(PageSizeLabel);
         this.add(PageSizePanel);
+        this.add(ObjectLabel);
+        this.add(ObjAttributesPanel);
         this.add(ColorChooserLabel);
         this.add(ColorBox);
         this.add(ColorTextPanel);
         this.add(PenSizeLabel);
         this.add(PenSizePanel);
-        this.add(ObjectLabel);
-        this.add(ObjAttributesPanel);
     }
 }

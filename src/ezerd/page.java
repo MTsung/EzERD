@@ -207,9 +207,13 @@ public class page extends Panel{
         parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
+        PenColor=parent.AttributesToolBar.AttributesBox.ColorBox.getColor();
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
+        }else{
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(0,0);
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(0,0);
         }
         
     }
