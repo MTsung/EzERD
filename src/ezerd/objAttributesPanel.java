@@ -36,6 +36,7 @@ public class objAttributesPanel extends Panel{
         TextSize[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setSize(Integer.valueOf(TextSize[0].getText()),
@@ -58,6 +59,7 @@ public class objAttributesPanel extends Panel{
         TextSize[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setSize(Integer.valueOf(TextSize[0].getText()),
@@ -84,6 +86,7 @@ public class objAttributesPanel extends Panel{
         TextLocation[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setLocation(Integer.valueOf(TextLocation[0].getText()),
@@ -106,6 +109,7 @@ public class objAttributesPanel extends Panel{
         TextLocation[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setLocation(Integer.valueOf(TextLocation[0].getText()),

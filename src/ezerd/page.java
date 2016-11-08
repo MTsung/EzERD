@@ -238,6 +238,7 @@ public class page extends Panel{
                 } else if (p.ObjEnum == ObjEnum.diamond) {
                     o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
                 }
+                activeObj=o;
                 this.add(o, 0);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));

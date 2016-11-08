@@ -59,6 +59,9 @@ public class colorBox extends Panel{
     }
     int R,G,B;
     Boolean RGBJ=false;
+    void setColor(Color c){
+        setColor(c.getRed(),c.getGreen(),c.getBlue());
+    }
     void setColor(int r,int g,int b){
         R=r;G=g;B=b;RGBJ=true;
         float f[]=Color.RGBtoHSB(r, g, b, null);
@@ -138,6 +141,16 @@ public class colorBox extends Panel{
         g.drawImage(bufferImage, 0, 0, this);
         BufferedImage bufImg = (BufferedImage) bufferImage;
         ColorInt=bufImg.getRGB(X,Y);
+        if(AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null
+                &&AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
+            AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
+            for (object o : AttributesToolBar.parent.WorkSpace.activePage.Points) {
+                if(o.ObjID==AttributesToolBar.parent.WorkSpace.activePage.activeObj.ID){
+                    o.PenColor=new Color(ColorInt);
+                }
+            }
+            AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
+        }
         AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
         AttributesToolBar.AttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
         AttributesToolBar.AttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());

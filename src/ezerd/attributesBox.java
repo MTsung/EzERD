@@ -53,6 +53,16 @@ public class attributesBox extends Panel{
             public void stateChanged(ChangeEvent event) {
                 AtoolBar.parent.WorkSpace.activePage.PenSize=PenSizeSlider.getValue();
                 PenSizeText.setText(""+PenSizeSlider.getValue());
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null
+                        &&AtoolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
+                    AtoolBar.parent.WorkSpace.activePage.activeObj.PenSize=PenSizeSlider.getValue()>8?8:PenSizeSlider.getValue();
+                    for (object o : AtoolBar.parent.WorkSpace.activePage.Points) {
+                        if (o.ObjID == AtoolBar.parent.WorkSpace.activePage.activeObj.ID) {
+                            o.PenSize = PenSizeSlider.getValue()>8?8:PenSizeSlider.getValue();
+                        }
+                    }
+                    AtoolBar.parent.WorkSpace.activePage.repaint();
+                }
                 AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });

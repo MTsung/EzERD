@@ -67,6 +67,8 @@ public abstract class obj extends Component {
                 parent.activeObj=obj.this;
                 parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(),obj.this.getY());
                 parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(),obj.this.getHeight());
+                parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
+                parent.parent.AttributesToolBar.AttributesBox.ColorBox.setColor(PenColor);
                 if(obj.this.parent.ObjEnum==objEnum.arrow&&!obj.this.parent.ObjArrowJ){
                     obj.this.parent.ObjArrowJ=true;
                     obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
@@ -142,7 +144,8 @@ public abstract class obj extends Component {
                 for (objArrowXY obja : parent.ObjArrowXYs) {
                     if (obja.SObjID == o.ObjID) {
                         obja.SObj = obj.this;
-                    } else if (obja.EObjID == o.ObjID) {
+                    }
+                    if (obja.EObjID == o.ObjID) {
                         obja.EObj = obj.this;
                     }
                 }
