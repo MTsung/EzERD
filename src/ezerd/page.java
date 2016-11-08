@@ -25,9 +25,9 @@ public class page extends Panel{
     Point Sp,Ep;
     Vector<object> Points,RePoints;
     Vector<objPoint> ObjPoints,ReObjPoints;
+    Vector<objArrowXY> ObjArrowXYs,ReObjArrowXYs;
     Vector<obj> Objs,ReObjs;
     Stack<Integer> undos,redos;
-    Vector<objArrowXY> ObjArrowXYs;
     int undo=0,PageWidth=1400,PageHeight=800,ObjID=1;
     float PenSize=8;
     Color PenColor=new Color(0,0,0);
@@ -44,6 +44,7 @@ public class page extends Panel{
         ObjPoints=new Vector<objPoint>();
         ReObjPoints=new Vector<objPoint>();
         ObjArrowXYs=new Vector<objArrowXY>();
+        ReObjArrowXYs=new Vector<objArrowXY>();
         Points=new Vector<object>();
         RePoints=new Vector<object>();
         undos=new Stack<Integer>();
@@ -139,6 +140,9 @@ public class page extends Panel{
                     parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
                     parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);
                 } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null) {
+                    undos.add(1);
+                    RePoints.removeAllElements();
+                    redos.removeAllElements();
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setColor(PenColor);
                     drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
@@ -235,6 +239,7 @@ public class page extends Panel{
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
             }
         }
+        
         for(objArrowXY obja:ObjArrowXYs){
             int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
             if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {

@@ -73,7 +73,11 @@ public abstract class obj extends Component {
                     obj.this.parent.ObjArrowJ=false;
                     obj.this.parent.Ep=new Point(obj.this.getX()+obj.this.getWidth()/2,obj.this.getY()+obj.this.getHeight()/2);
                     obj.this.parent.EObj=obj.this;
-                    obj.this.parent.ObjArrowXYs.add(new objArrowXY(obj.this.parent.SObj,obj.this.parent.EObj));
+                    obj.this.parent.ObjArrowXYs.add(new objArrowXY(obj.this.parent.SObj,obj.this.parent.EObj
+                                                    ,obj.this.parent.SObj.ID,obj.this.parent.EObj.ID));
+                    obj.this.parent.undos.add(-1);
+                    obj.this.parent.ReObjPoints.removeAllElements();
+                    obj.this.parent.redos.removeAllElements();
                     obj.this.parent.SObj=null;
                     obj.this.parent.EObj=null;
                     obj.this.parent.repaint();
@@ -87,11 +91,11 @@ public abstract class obj extends Component {
                             o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
                             obj.this.parent.ObjPoints.add(new objPoint(o.Sp,o.Ep,ID));
                             
+                            obj.this.parent.undos.add(0);
                             obj.this.parent.ReObjPoints.removeAllElements();
                             obj.this.parent.redos.removeAllElements();
                             obj.this.parent.parent.TopToolBar.UndoBtn.setEnabled(obj.this.parent.undos.size() == 0 ? false : true);
                             obj.this.parent.parent.TopToolBar.RedoBtn.setEnabled(obj.this.parent.redos.size() == 0 ? false : true);
-                            obj.this.parent.undos.add(0);
                         }
                     }
                 }
@@ -104,6 +108,13 @@ public abstract class obj extends Component {
                         if(o.ObjID==ID){
                             o.Sp=obj.this.getLocation();
                             o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
+                            /*for(objArrowXY obja:parent.ObjArrowXYs){
+                                if (obja.SObjID == o.ObjID) {
+                                    obja.SObj=obj.this;
+                                }else if (obja.EObjID == o.ObjID) {
+                                    obja.EObj=obj.this;
+                                }
+                            }*/
                         }
                     }
                 }
@@ -125,6 +136,7 @@ public abstract class obj extends Component {
             }
         });
     }
+    
     public abstract void paintObj(Graphics g);
     public void paint(Graphics g)
     {

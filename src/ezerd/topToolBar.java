@@ -160,24 +160,29 @@ public class topToolBar extends Panel{
                     parent.WorkSpace.activePage.redos.add(temp);
                     if(temp==0){
                         int id=parent.WorkSpace.activePage.ObjPoints.elementAt(parent.WorkSpace.activePage.ObjPoints.size()-1).ID;
-                        for (object o : topToolBar.this.parent.WorkSpace.activePage.Points) {
+                        for (object o :parent.WorkSpace.activePage.Points) {
                             if (o.ObjID == id) {
                                 parent.WorkSpace.activePage.ReObjPoints.add(new objPoint(o.Sp,o.Ep,id));
                                 o.Sp = parent.WorkSpace.activePage.ObjPoints.elementAt(
                                                             parent.WorkSpace.activePage.ObjPoints.size() - 1).Sp;
                                 o.Ep = parent.WorkSpace.activePage.ObjPoints.elementAt(
                                                             parent.WorkSpace.activePage.ObjPoints.size() - 1).Ep;
-                                
                             }
                         }
                         parent.WorkSpace.activePage.ObjPoints.remove(parent.WorkSpace.activePage.ObjPoints.size()-1);
-                    }else{
+                    }else if(temp>0){
                         for(int i=temp;i>0;i--){
                             parent.WorkSpace.activePage.RePoints.add(parent.WorkSpace.activePage.Points.elementAt(
                                     parent.WorkSpace.activePage.Points.size() - i));
                             parent.WorkSpace.activePage.Points.remove(parent.WorkSpace.activePage.Points.size() - i);
                         }
+                    }else if(temp==-1){
+                        parent.WorkSpace.activePage.ReObjArrowXYs.add(parent.WorkSpace.activePage.ObjArrowXYs.elementAt(
+                                                                parent.WorkSpace.activePage.ObjArrowXYs.size()-1));
+                        parent.WorkSpace.activePage.ObjArrowXYs.remove(parent.WorkSpace.activePage.ObjArrowXYs.size()-1);
                     }
+                    
+                    
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.removeAll();
                     parent.WorkSpace.activePage.repaint();
@@ -209,12 +214,16 @@ public class topToolBar extends Panel{
                             }
                         }
                         parent.WorkSpace.activePage.ReObjPoints.remove(parent.WorkSpace.activePage.ReObjPoints.size()-1);
-                    }else{
+                    }else if(temp>0){
                         for(int i=temp;i>0;i--){
                             parent.WorkSpace.activePage.Points.add(parent.WorkSpace.activePage.RePoints.elementAt(
                                                             parent.WorkSpace.activePage.RePoints.size() - i));
                             parent.WorkSpace.activePage.RePoints.remove(parent.WorkSpace.activePage.RePoints.size() - i);
                         }
+                    }else if(temp==-1){
+                        parent.WorkSpace.activePage.ObjArrowXYs.add(parent.WorkSpace.activePage.ReObjArrowXYs.elementAt(
+                                                                parent.WorkSpace.activePage.ReObjArrowXYs.size()-1));
+                        parent.WorkSpace.activePage.ReObjArrowXYs.remove(parent.WorkSpace.activePage.ReObjArrowXYs.size()-1);
                     }
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.removeAll();
