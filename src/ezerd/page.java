@@ -81,10 +81,24 @@ public class page extends Panel{
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
-                        g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y, Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y,
+                                        Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                     }
-                    Ep = e.getPoint();
+                    if (e.getModifiers() == 17) {
+                        if(e.getX() < Sp.x && e.getY() < Sp.y){
+                            Ep = Sp.x - e.getX() > Sp.y - e.getY()
+                                    ?new Point(e.getX(),Sp.y-Sp.x + e.getX())
+                                    : new Point(Sp.x-Sp.y + e.getY(),e.getY());
+                        }else{
+                            Ep = e.getX() - Sp.x > e.getY() - Sp.y
+                                    ? new Point(e.getX(), e.getY() > Sp.y ? Sp.y + e.getX() - Sp.x : Sp.y - e.getX() + Sp.x)
+                                    : new Point(e.getX() > Sp.x ? Sp.x + e.getY() - Sp.y : Sp.x - e.getY() + Sp.y, e.getY());
+                        }
+                    } else {
+                        Ep = e.getPoint();
+                    }
                     g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y, Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                    
                 }
                 
                 parent.MessageBar.XY=e.getPoint();
