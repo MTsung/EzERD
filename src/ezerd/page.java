@@ -173,13 +173,13 @@ public class page extends Panel{
                     
                         obj o = null;
                         if (ObjEnum == ObjEnum.rectangle) {
-                            o = new ObjRectangle(page.this,PenColor, PenSize,ObjID);
+                            o = new objRectangle(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         } else if (ObjEnum == ObjEnum.circular) {
-                            o = new ObjCircular(page.this,PenColor, PenSize,ObjID);
+                            o = new objCircular(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         } else if (ObjEnum == ObjEnum.diamond) {
-                            o = new ObjDiamond(page.this,PenColor, PenSize,ObjID);
+                            o = new objDiamond(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
                         }
                         page.this.add(o, 0);
@@ -191,9 +191,6 @@ public class page extends Panel{
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
                 }  
-                if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")&&Ep!=null)
-                    parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
-                                                        parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
                 //page.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 Ep=Sp=null;
                 page.this.repaint();
@@ -218,6 +215,9 @@ public class page extends Panel{
         g.drawImage(paintPage(), 0, 0, this);
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
+        if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")&&undos.size()!=0)
+                    parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
+                                                        parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
         parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
@@ -246,11 +246,11 @@ public class page extends Panel{
             } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
-                    o = new ObjRectangle(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new objRectangle(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.circular) {
-                    o = new ObjCircular(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new objCircular(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
-                    o = new ObjDiamond(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
                 }
                 activeObj=o;
                 this.add(o, 0);
@@ -260,36 +260,38 @@ public class page extends Panel{
         }
         
         for(objArrowXY obja:ObjArrowXYs){
-            int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
-            if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {
-                SX += obja.SObj.getWidth();
-                SY += obja.SObj.getHeight() / 2;
-                EY += obja.EObj.getHeight() / 2;
-            } else if (obja.SObj.getX() > obja.EObj.getX() + obja.EObj.getWidth()) {
-                SY += obja.SObj.getHeight() / 2;
-                EX += obja.EObj.getWidth();
-                EY += obja.EObj.getHeight() / 2;
-            } else {
-                if (obja.SObj.getY() + obja.SObj.getHeight() < obja.EObj.getY()) {
-                    SX += obja.SObj.getWidth() / 2;
-                    SY += obja.SObj.getHeight();
-                    EX += obja.EObj.getWidth() / 2;
-                } else if (obja.SObj.getY() > obja.EObj.getY() + obja.EObj.getHeight()) {
-                    SX += obja.SObj.getWidth() / 2;
-                    EX += obja.EObj.getWidth() / 2;
-                    EY += obja.EObj.getHeight();
-                } else {
-                    SX += obja.SObj.getWidth() / 2;
+            if(obja.SObj!=null&&obja.EObj!=null){
+                int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
+                if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {
+                    SX += obja.SObj.getWidth();
                     SY += obja.SObj.getHeight() / 2;
-                    EX += obja.EObj.getWidth() / 2;
                     EY += obja.EObj.getHeight() / 2;
+                } else if (obja.SObj.getX() > obja.EObj.getX() + obja.EObj.getWidth()) {
+                    SY += obja.SObj.getHeight() / 2;
+                    EX += obja.EObj.getWidth();
+                    EY += obja.EObj.getHeight() / 2;
+                } else {
+                    if (obja.SObj.getY() + obja.SObj.getHeight() < obja.EObj.getY()) {
+                        SX += obja.SObj.getWidth() / 2;
+                        SY += obja.SObj.getHeight();
+                        EX += obja.EObj.getWidth() / 2;
+                    } else if (obja.SObj.getY() > obja.EObj.getY() + obja.EObj.getHeight()) {
+                        SX += obja.SObj.getWidth() / 2;
+                        EX += obja.EObj.getWidth() / 2;
+                        EY += obja.EObj.getHeight();
+                    } else {
+                        SX += obja.SObj.getWidth() / 2;
+                        SY += obja.SObj.getHeight() / 2;
+                        EX += obja.EObj.getWidth() / 2;
+                        EY += obja.EObj.getHeight() / 2;
+                    }
                 }
-            }
-            g2.setStroke(new BasicStroke(1,CAP_ROUND,JOIN_ROUND));
-            drawAL(SX, SY, EX, EY, g2);
-            if (ArrowPaint) {
-                repaint();
-                ArrowPaint = false;
+                g2.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
+                drawAL(SX, SY, EX, EY, g2);
+                if (ArrowPaint) {
+                    repaint();
+                    ArrowPaint = false;
+                }
             }
         }
         super.paintComponents(g2);
