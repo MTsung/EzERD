@@ -184,6 +184,7 @@ public class page extends Panel{
                         }
                         page.this.add(o, 0);
                         parent.AttributesToolBar.ObjList.addObj(ObjID);
+                        parent.AttributesToolBar.ObjList.setActiveObj(ObjID);
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         Objs.add(o);
@@ -226,6 +227,13 @@ public class page extends Panel{
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
+            if(PageActionEnum!=PageActionEnum.moving){
+                Graphics2D g2 = (Graphics2D) this.getGraphics();
+                g2.setColor(Color.BLUE);
+                g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
+                g2.drawRect(activeObj.getX() - 3, activeObj.getY() - 3,
+                        activeObj.getWidth() + 6, activeObj.getHeight() + 6);
+            }
         }else{
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(0,0);
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(0,0);
@@ -310,6 +318,11 @@ public class page extends Panel{
     }
      Point getPageSize(){
         return new Point(PageWidth,PageHeight);
+    }
+    void setActiveObj(obj o){
+        activeObj=o;
+        parent.AttributesToolBar.ObjList.setActiveObj(o.ID);
+        this.repaint();
     }
      
      /*http://blog.csdn.net/wqjsir/article/details/6095277*/

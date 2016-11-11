@@ -6,6 +6,8 @@
 package ezerd;
 
 import java.awt.*;
+import static java.awt.BasicStroke.CAP_ROUND;
+import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -29,6 +31,16 @@ public class objListPanel extends Panel{
         DisplayS="display";
         this.setPreferredSize(new Dimension(360,50));
         this.setBackground(Color.LIGHT_GRAY);
+        this.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                for (obj o : ObjList.AtoolBar.parent.WorkSpace.activePage.Objs) {     
+                    if (o.ID == ObjID) {
+                        ObjList.AtoolBar.parent.WorkSpace.activePage.setActiveObj(o);
+                    }
+                }
+            }
+        });
         ObjIDLabel=new Label(""+ObjID);
         ObjIDLabel.setPreferredSize(new Dimension(50,20));
         ObjIDLabel.setFont(new programFont());

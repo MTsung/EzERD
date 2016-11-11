@@ -33,11 +33,10 @@ public abstract class obj extends Component {
             public void mouseDragged(MouseEvent e){
                 if(obj.this.parent.ObjEnum==objEnum.arrow){
                     
-                }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                }else if(obj.this.parent.PageActionEnum==pageActionEnum.moving){
                     Ep = e.getPoint();
                     obj.this.setLocation(obj.this.getLocation().x + (Ep.x - Sp.x),
                                          obj.this.getLocation().y + (Ep.y - Sp.y));
-                    
                 }
                 obj.this.parent.ArrowPaint=true;
             } 
@@ -64,7 +63,10 @@ public abstract class obj extends Component {
         this.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                parent.activeObj=obj.this;
+                parent.setActiveObj(obj.this);
+                obj.this.parent.repaint();
+                if(obj.this.parent.PageActionEnum==pageActionEnum.idle)
+                    obj.this.parent.PageActionEnum=pageActionEnum.moving;
                 if(obj.this.parent.ObjEnum==objEnum.arrow&&!obj.this.parent.ObjArrowJ){
                     obj.this.parent.ObjArrowJ=true;
                     obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
@@ -83,9 +85,8 @@ public abstract class obj extends Component {
                     obj.this.parent.EObj=null;
                     obj.this.parent.repaint();
                     obj.this.parent.Ep=null;
-                }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                }else if(obj.this.parent.PageActionEnum==pageActionEnum.moving){
                     Sp=e.getPoint();
-                    parent.activeObj=obj.this;
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(), obj.this.getY());
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
                     parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
@@ -103,19 +104,26 @@ public abstract class obj extends Component {
                             obj.this.parent.parent.TopToolBar.RedoBtn.setEnabled(obj.this.parent.redos.size() == 0 ? false : true);
                         }
                     }
+                    Graphics2D g=(Graphics2D)obj.this.parent.getGraphics();
+                    g.setXORMode(new Color(255,255,0));
+                    g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
+                    g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
+                                obj.this.getWidth() + 6, obj.this.getHeight() + 6);
                 }
             }
             @Override
             public void mouseReleased(MouseEvent e){
                 if(obj.this.parent.ObjEnum==objEnum.arrow){
-                }else if(obj.this.parent.PageActionEnum==pageActionEnum.idle){
+                }else if(obj.this.parent.PageActionEnum==pageActionEnum.moving){
                     for(object o:obj.this.parent.Points){
                         if(o.ObjID==ID){
                             o.Sp=obj.this.getLocation();
                             o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
                         }
                     }
+                    obj.this.parent.PageActionEnum=pageActionEnum.idle;
                 }
+                obj.this.parent.repaint();
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -151,6 +159,7 @@ public abstract class obj extends Component {
                 }
             }
         }
+        
     }
 
 }
