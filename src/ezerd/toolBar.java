@@ -35,8 +35,6 @@ public class toolBar extends Panel{
             System.err.println(ex.getMessage());
         }
         
-        ChoBtn.setOpaque(true);
-        ChoBtn.setBorderPainted(false);
         ChoBtn.setBackground(this.getBackground());
         ChoBtn.setBorder(null);
         ChoBtn.addActionListener(new ActionListener(){
@@ -49,8 +47,6 @@ public class toolBar extends Panel{
         });
         
         
-        GraffitiBtn.setOpaque(true);
-        GraffitiBtn.setBorderPainted(false);
         GraffitiBtn.setBackground(this.getBackground());
         GraffitiBtn.setBorder(null);
         GraffitiBtn.addActionListener(new ActionListener(){
@@ -62,8 +58,6 @@ public class toolBar extends Panel{
                 //parent.Ws.activePage.setCursor(cusTand);
             }
         });
-        ArrBtn.setOpaque(true);
-        ArrBtn.setBorderPainted(false);
         ArrBtn.setBackground(this.getBackground());
         ArrBtn.setBorder(null);
         ArrBtn.addActionListener(new ActionListener(){
@@ -73,8 +67,6 @@ public class toolBar extends Panel{
                 creatingObj(objEnum.arrow,ArrBtn);
             }
         });
-        RecBtn.setOpaque(true);
-        RecBtn.setBorderPainted(false);
         RecBtn.setBackground(this.getBackground());
         RecBtn.setBorder(null);
         RecBtn.addActionListener(new ActionListener(){
@@ -84,8 +76,6 @@ public class toolBar extends Panel{
                 creatingObj(objEnum.rectangle,RecBtn);
             }
         });
-        DiaBtn.setOpaque(true);
-        DiaBtn.setBorderPainted(false);
         DiaBtn.setBackground(this.getBackground());
         DiaBtn.setBorder(null);
         DiaBtn.addActionListener(new ActionListener(){
@@ -95,8 +85,6 @@ public class toolBar extends Panel{
                 creatingObj(objEnum.diamond,DiaBtn);
             }
         });
-        CirBtn.setOpaque(true);
-        CirBtn.setBorderPainted(false);
         CirBtn.setBackground(this.getBackground());
         CirBtn.setBorder(null);
         CirBtn.addActionListener(new ActionListener(){

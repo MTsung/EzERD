@@ -18,8 +18,9 @@ import javax.swing.event.*;
 
 public class attributesToolBar extends Panel {
     ezERD parent;
-    Panel SizePanel,TempPanel;
-    ScrollPane AttributesScrollPane;
+    Panel SizePanel,AttributesPanel,ObjPanel,TempPanel;
+    ScrollPane AttributesScrollPane,ObjScrollPane;
+    objList ObjList=new objList(this);
     attributesBox AttributesBox=new attributesBox(this);
     
     public attributesToolBar(ezERD p) {
@@ -53,11 +54,19 @@ public class attributesToolBar extends Panel {
                 parent.PageToolBar.resetButtonSize();
             }
         });
-        TempPanel=new Panel();
-        TempPanel.add(AttributesBox);
+        ObjPanel=new Panel();
+        ObjPanel.add(ObjList);
+        AttributesPanel=new Panel();
+        AttributesPanel.add(AttributesBox);
         AttributesScrollPane=new ScrollPane();
-        AttributesScrollPane.add(TempPanel);
-        this.add(AttributesScrollPane,BorderLayout.CENTER);
+        AttributesScrollPane.add(AttributesPanel);
+        ObjScrollPane=new ScrollPane();
+        ObjScrollPane.add(ObjPanel);
+        TempPanel=new Panel();
+        TempPanel.setLayout(new BoxLayout(TempPanel, BoxLayout.Y_AXIS));
+        TempPanel.add(AttributesScrollPane);
+        TempPanel.add(ObjScrollPane);
+        this.add(TempPanel,BorderLayout.CENTER);
         this.add(SizePanel,BorderLayout.WEST);
         
         for(Component a:this.getComponents())/**/

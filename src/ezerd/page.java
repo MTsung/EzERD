@@ -183,6 +183,7 @@ public class page extends Panel{
                             page.this.add(o,0);
                         }
                         page.this.add(o, 0);
+                        parent.AttributesToolBar.ObjList.addObj(ObjID);
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         Objs.add(o);
@@ -234,6 +235,8 @@ public class page extends Panel{
     Image paintPage(){
         bufferImage = createImage(PageWidth, PageHeight);
         bufferGraphics = bufferImage.getGraphics();
+        if(PaintObj)
+            Objs.removeAllElements();
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
         for(object p:Points){
@@ -253,6 +256,7 @@ public class page extends Panel{
                     o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
                 }
                 activeObj=o;
+                Objs.add(o);
                 this.add(o, 0);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));

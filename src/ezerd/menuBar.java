@@ -179,6 +179,7 @@ public class menuBar extends MenuBar{
             BufferedImage img = new BufferedImage(parent.WorkSpace.activePage.getWidth(),
                                                     parent.WorkSpace.activePage.getHeight(), BufferedImage.TYPE_INT_RGB);
             parent.WorkSpace.activePage.paint(img.getGraphics());
+            
             try {
                 ImageIO.write(img,S, new File(fileChooser.getDirectory() + fileChooser.getFile()));
 
