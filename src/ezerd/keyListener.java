@@ -5,8 +5,10 @@
  */
 package ezerd;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Iterator;
 
 /**
  *
@@ -44,6 +46,39 @@ public class keyListener implements KeyListener{
             parent.WorkSpace.prevPage();
         }else if(e.isControlDown() && e.getKeyCode() == 34){//ctrl + PgDn
             parent.WorkSpace.nextPage();
+        }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C){
+            parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
+        }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V){
+            obj o=null;
+            for (object p : parent.WorkSpace.activePage.Points) {
+                if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
+                    if (null != p.ObjEnum) switch (p.ObjEnum) {
+                        case rectangle:
+                            o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                            parent.WorkSpace.activePage.add(o, 0);
+                            break;
+                        case circular:
+                            o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                            parent.WorkSpace.activePage.add(o, 0);
+                            break;
+                        case diamond:
+                            o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                            parent.WorkSpace.activePage.add(o, 0);
+                            break;
+                        default:
+                            break;
+                    }
+                    parent.WorkSpace.activePage.add(o, 0);
+                    parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
+                    parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
+                    o.setLocation(0,0);
+                    o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                    parent.WorkSpace.activePage.Objs.add(o);
+                    parent.WorkSpace.activePage.Points.add(new object(new Point(0,0)
+                            , new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor
+                            , p.ObjEnum, parent.WorkSpace.activePage.ObjID++));
+                }
+            }
         }
         //System.out.println(e.getKeyCode());
         parent.MainWin.requestFocusInWindow();

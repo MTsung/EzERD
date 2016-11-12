@@ -191,6 +191,7 @@ public class topToolBar extends Panel{
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.ArrowPaint=true;
                     parent.WorkSpace.activePage.removeAll();
+                    parent.AttributesToolBar.ObjList.reset();
                     parent.WorkSpace.activePage.repaint();
                 }
                 parent.MainWin.requestFocusInWindow();
@@ -234,6 +235,7 @@ public class topToolBar extends Panel{
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.ArrowPaint=true;
                     parent.WorkSpace.activePage.removeAll();
+                    parent.AttributesToolBar.ObjList.reset();
                     parent.WorkSpace.activePage.repaint();
                 }
                 parent.MainWin.requestFocusInWindow();

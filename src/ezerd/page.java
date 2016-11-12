@@ -29,14 +29,14 @@ public class page extends Panel{
     Vector<obj> Objs,ReObjs;
     Stack<Integer> undos,redos;
     int undo=0,PageWidth=1400,PageHeight=800,ObjID=1;
-    float PenSize=8;
+    float PenSize=5;
     Color PenColor=new Color(0,0,0);
     rightClickMenu popupMenu1;
     Image bufferImage;
     Graphics bufferGraphics;
     pageActionEnum PageActionEnum;
     objEnum ObjEnum;
-    obj activeObj,SObj,EObj;
+    obj activeObj,SObj,EObj,CopyObj;
     page(ezERD p){
         super();      
         parent=p;      
@@ -138,7 +138,7 @@ public class page extends Panel{
                     Sp = e.getPoint();
                     PageActionEnum = PageActionEnum.creatingObject;
                 }
-                
+                setActiveObj(null);
             }
             
             @Override
@@ -188,7 +188,7 @@ public class page extends Panel{
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         Objs.add(o);
-                        activeObj=o;
+                        CopyObj=activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum,ObjID++));
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
@@ -208,7 +208,6 @@ public class page extends Panel{
 
     }
     
-    
     public void update(Graphics g) {
         paint(g);
     }
@@ -227,7 +226,7 @@ public class page extends Panel{
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
-            if(PageActionEnum!=PageActionEnum.moving){
+            if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()){
                 Graphics2D g2 = (Graphics2D) this.getGraphics();
                 g2.setColor(Color.BLUE);
                 g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
@@ -266,11 +265,12 @@ public class page extends Panel{
                 activeObj=o;
                 Objs.add(o);
                 this.add(o, 0);
+                parent.AttributesToolBar.ObjList.addObj(p.ObjID);
+                parent.AttributesToolBar.ObjList.setActiveObj(p.ObjID);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
             }
         }
-        
         for(objArrowXY obja:ObjArrowXYs){
             if(obja.SObj!=null&&obja.EObj!=null){
                 int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
@@ -321,7 +321,11 @@ public class page extends Panel{
     }
     void setActiveObj(obj o){
         activeObj=o;
-        parent.AttributesToolBar.ObjList.setActiveObj(o.ID);
+        if(o!=null)
+            parent.AttributesToolBar.ObjList.setActiveObj(o.ID);
+        else{
+            parent.AttributesToolBar.ObjList.setActiveObj(0);
+        }
         this.repaint();
     }
      

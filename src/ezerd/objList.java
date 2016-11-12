@@ -43,9 +43,17 @@ public class objList extends Panel{
         for(objListPanel o:objListPanels){
             Color C=new Color(150,150,150);
             o.setBackground(Color.LIGHT_GRAY);
+            o.ObjIDLabel.setBackground(Color.LIGHT_GRAY);
+            o.ObjHorDLabel.setBackground(Color.LIGHT_GRAY);
             if (o.ObjID == ID) {
                 o.setBackground(C);
+                o.ObjIDLabel.setBackground(C);
+                o.ObjHorDLabel.setBackground(C);
             }
         }
+    }
+    void reset(){
+        this.removeAll();
+        this.revalidate();
     }
 }

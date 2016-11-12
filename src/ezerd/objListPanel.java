@@ -11,6 +11,7 @@ import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -22,6 +23,7 @@ public class objListPanel extends Panel{
     objList ObjList;
     int ObjID;
     Label ObjIDLabel,ObjHorDLabel;
+    TextField IndexTextField;
     String HideS,DisplayS;
     objListPanel(objList p,int ID){
         super();
@@ -29,6 +31,7 @@ public class objListPanel extends Panel{
         ObjID=ID;
         HideS="hide";
         DisplayS="display";
+        this.setLayout(new FlowLayout(FlowLayout.RIGHT));
         this.setPreferredSize(new Dimension(360,50));
         this.setBackground(Color.LIGHT_GRAY);
         this.addMouseListener(new MouseAdapter(){
@@ -41,9 +44,19 @@ public class objListPanel extends Panel{
                 }
             }
         });
-        ObjIDLabel=new Label(""+ObjID);
-        ObjIDLabel.setPreferredSize(new Dimension(50,20));
+        ObjIDLabel=new Label("ObjID :"+ObjID);
+        ObjIDLabel.setPreferredSize(new Dimension(120,20));
         ObjIDLabel.setFont(new programFont());
+        ObjIDLabel.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e){
+                for (obj o : ObjList.AtoolBar.parent.WorkSpace.activePage.Objs) {     
+                    if (o.ID == ObjID) {
+                        ObjList.AtoolBar.parent.WorkSpace.activePage.setActiveObj(o);
+                    }
+                }
+            }
+        });
         ObjHorDLabel=new Label(DisplayS);
         ObjHorDLabel.setFont(new programFont());
         ObjHorDLabel.addMouseListener(new MouseAdapter(){
@@ -55,6 +68,7 @@ public class objListPanel extends Panel{
                     for(obj o:ObjList.AtoolBar.parent.WorkSpace.activePage.Objs){
                         if(o.ID==ObjID){
                             o.setVisible(true);
+                            ObjList.AtoolBar.parent.WorkSpace.activePage.repaint();
                         }
 
                     }
@@ -63,6 +77,7 @@ public class objListPanel extends Panel{
                     for(obj o:ObjList.AtoolBar.parent.WorkSpace.activePage.Objs){
                         if(o.ID==ObjID){
                             o.setVisible(false);
+                            ObjList.AtoolBar.parent.WorkSpace.activePage.repaint();
                         }
                     }
                 }
@@ -85,6 +100,9 @@ public class objListPanel extends Panel{
                 g2.drawImage(img,AffineTransform.getScaleInstance(1/x, 1/x), this);
             }
         }
+    }
+    void resetObjIDTextField(){
+        IndexTextField.setText(""+ObjID);
     }
     
 }

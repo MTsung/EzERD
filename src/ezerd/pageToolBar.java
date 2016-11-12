@@ -54,6 +54,7 @@ public class pageToolBar extends Panel{
         WorkSpace.parent.CurPage = n;
         activeButtonColor(n);
         this.add(Btns.elementAt(n));
+        WorkSpace.parent.AttributesToolBar.ObjList.reset();
         Btns.elementAt(n).addKeyListener(new keyListener(WorkSpace.parent));/**/
         allPage();
         resetPageMenu();
@@ -94,6 +95,9 @@ public class pageToolBar extends Panel{
         WorkSpace.parent.CurPage=n;
         WorkSpace.parent.MainWin.setTitle("EzERD-" + WorkSpace.parent.PageToolBar.Btns.elementAt(
                                                      WorkSpace.parent.PageToolBar.activeButton()).getText());
+                    WorkSpace.activePage.PaintObj = true;
+                    WorkSpace.parent.AttributesToolBar.ObjList.reset();
+                    WorkSpace.activePage.repaint();
     }
     void resetButtonSize(){
         //System.out.println(this.getWidth());

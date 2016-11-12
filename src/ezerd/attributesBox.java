@@ -47,7 +47,7 @@ public class attributesBox extends Panel{
         PenSizeSlider.setPaintTicks(true);
         PenSizeSlider.setPaintLabels(true);
         PenSizeSlider.setSnapToTicks(true);
-        PenSizeSlider.setValue(8);
+        PenSizeSlider.setValue(5);
         PenSizeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent event) {
@@ -68,7 +68,7 @@ public class attributesBox extends Panel{
         });
         
         
-        PenSizeText=new TextField("8",3);
+        PenSizeText=new TextField("5",3);
         PenSizeText.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
