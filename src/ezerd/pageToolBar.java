@@ -47,6 +47,7 @@ public class pageToolBar extends Panel{
                     updatePage(n);
                     activeButtonColor(n);
                     resetButtonSize();
+                    WorkSpace.activePage.removeAll();
                     WorkSpace.parent.ToolBar.ChoBtn.doClick();
                 }
             }

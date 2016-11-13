@@ -124,6 +124,10 @@ public abstract class obj extends Component {
                     obj.this.parent.PageActionEnum=pageActionEnum.idle;
                 }
                 obj.this.parent.repaint();
+                if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                    parent.popupMenu1.XY=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
+                    parent.popupMenu1.show(obj.this, e.getX(), e.getY());
+                }
             }
             @Override
             public void mouseEntered(MouseEvent e) {

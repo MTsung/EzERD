@@ -23,7 +23,7 @@ import javax.swing.event.*;
 public class menuBar extends MenuBar{
     ezERD parent;
     Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
-    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,JpgM,PngM,GifM,BmpM;
+    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,JpgM,PngM,GifM,BmpM,copyM,pasteM;
     menuBar(ezERD p){
         super();
         parent=p;
@@ -95,6 +95,46 @@ public class menuBar extends MenuBar{
                 parent.TopToolBar.RedoBtn.doClick();
             }
         });
+        copyM = new MenuItem("Copy(Ctrl+C)");
+        copyM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
+                pasteM.setEnabled(true);
+            }
+        });
+        pasteM = new MenuItem("Paste(Ctrl+V)");
+        pasteM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                obj o=null;
+                try {
+                    for (object p : parent.WorkSpace.activePage.Points) {
+                        if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
+                            if (p.ObjEnum == objEnum.rectangle) {
+                                o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                parent.WorkSpace.activePage.add(o, 0);
+                            } else if (p.ObjEnum == objEnum.circular) {
+                                o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                parent.WorkSpace.activePage.add(o, 0);
+                            } else if (p.ObjEnum == objEnum.diamond) {
+                                o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                parent.WorkSpace.activePage.add(o, 0);
+                            }
+                            parent.WorkSpace.activePage.add(o, 0);
+                            parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
+                            parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
+                            o.setLocation(0,0);
+                            o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                            parent.WorkSpace.activePage.Objs.add(o);
+                            parent.WorkSpace.activePage.CopyObj = o;
+                            parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
+                                    new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
+                                    p.ObjEnum, parent.WorkSpace.activePage.ObjID++));
+                        }
+                    }
+                } catch (Throwable ee) {
+                }
+            }
+        });
         
         PageMenu = new  Menu("Page");
         
@@ -159,6 +199,8 @@ public class menuBar extends MenuBar{
         ExportFileMenu.add(BmpM);
         EditMenu.add(undoM);
         EditMenu.add(redoM);
+        EditMenu.add(copyM);
+        EditMenu.add(pasteM);
         PageMenu.add(AllPageMenu);
         PageMenu.add(CachingPageMenu);
         LanguageMenu.add(TW);

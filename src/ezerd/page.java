@@ -145,14 +145,13 @@ public class page extends Panel{
             public void mouseReleased(MouseEvent e){
                 //System.out.println("mouseReleased");
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                    popupMenu1.XY=e.getPoint();
                     popupMenu1.show(page.this, e.getX(), e.getY());
                 } else if(ObjEnum == ObjEnum.graffiti){
                     if(undo!=0)
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
-                    parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
-                    parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);
                 } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null) {
                     undos.add(1);
                     RePoints.removeAllElements();
@@ -164,13 +163,12 @@ public class page extends Panel{
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
-                    if (Ep != null) {
+                    if (Ep != null && Sp.x != Ep.x && Sp.y != Ep.y) {
                         undos.add(1);
                         RePoints.removeAllElements();
                         redos.removeAllElements();
                         g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y
                                 , Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
-                    
                         obj o = null;
                         if (ObjEnum == ObjEnum.rectangle) {
                             o = new objRectangle(page.this,PenColor, PenSize,ObjID);
@@ -188,7 +186,7 @@ public class page extends Panel{
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         Objs.add(o);
-                        CopyObj=activeObj=o;
+                        activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum,ObjID++));
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
@@ -215,11 +213,20 @@ public class page extends Panel{
     public void paint(Graphics g) {
         g.drawImage(paintPage(), 0, 0, this);
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        parent.TopToolBar.UndoBtn.setEnabled(undos.size()==0 ? false:true);
+        parent.TopToolBar.UndoBtn.setEnabled(undos.size() != 0 );
+        parent.MainWin.MenuBar.undoM.setEnabled(undos.size() != 0);
+        popupMenu1.UndoMenuItem.setEnabled(undos.size() != 0);
+        parent.TopToolBar.RedoBtn.setEnabled(redos.size() != 0);
+        parent.MainWin.MenuBar.redoM.setEnabled(redos.size() != 0);
+        popupMenu1.RedoMenuItem.setEnabled(redos.size() != 0);
+        parent.MainWin.MenuBar.copyM.setEnabled(activeObj != null);
+        popupMenu1.CopyMenuItem.setEnabled(activeObj != null);
+        parent.MainWin.MenuBar.pasteM.setEnabled(CopyObj != null);
+        popupMenu1.PasteMenuItem.setEnabled(CopyObj != null);
         if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")&&undos.size()!=0)
                     parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
                                                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText()+"*");
-        parent.TopToolBar.RedoBtn.setEnabled(redos.size()==0 ? false:true);  
+        
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
         PenColor=parent.AttributesToolBar.AttributesBox.ColorBox.getColor();
