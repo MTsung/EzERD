@@ -43,7 +43,15 @@ public class colorBox extends Panel{
                 colorBox.this.repaint();
             }
             public void mouseReleased(MouseEvent e){
-                
+                if (AttributesToolBar.parent.WorkSpace.activePage.activeObj != null
+                        && AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum == pageActionEnum.idle) {
+                    for (object o : AttributesToolBar.parent.WorkSpace.activePage.Points) {
+                        if (o.ObjID == AttributesToolBar.parent.WorkSpace.activePage.activeObj.ID) {
+                            //AttributesToolBar.parent.WorkSpace.activePage.undos.add(-2);
+                            o.PenColor = new Color(ColorInt);
+                        }
+                    }
+                }
             }
         });
         for(Component a:this.getComponents())/**/
@@ -144,11 +152,6 @@ public class colorBox extends Panel{
         if(AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null
                 &&AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
             AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
-            for (object o : AttributesToolBar.parent.WorkSpace.activePage.Points) {
-                if(o.ObjID==AttributesToolBar.parent.WorkSpace.activePage.activeObj.ID){
-                    o.PenColor=new Color(ColorInt);
-                }
-            }
             AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
         }
         AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);

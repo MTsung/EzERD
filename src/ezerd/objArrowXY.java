@@ -5,6 +5,8 @@
  */
 package ezerd;
 
+import java.awt.Color;
+
 /**
  *
  * @author CMC
@@ -12,10 +14,12 @@ package ezerd;
 public class objArrowXY {
     obj SObj,EObj;
     int SObjID,EObjID;
-    objArrowXY(obj s,obj e,int sid,int eid){
+    Color ArrowColor;
+    objArrowXY(obj s,obj e,int sid,int eid,Color C){
         SObj=s;
         EObj=e;
         SObjID=sid;
         EObjID=eid;
+        ArrowColor=C;
     }
 }

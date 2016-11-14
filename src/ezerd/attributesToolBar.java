@@ -41,7 +41,7 @@ public class attributesToolBar extends Panel {
                 }
                 AttributesScrollPane.setPreferredSize(new Dimension(0,attributesToolBar.this.getHeight()/2));
                 ObjScrollPane.setPreferredSize(new Dimension(0,attributesToolBar.this.getHeight()/2));
-                TempPanel.validate();
+                TempPanel.revalidate();
             }
         };
         SizePanel.setBackground(Color.LIGHT_GRAY);

@@ -97,7 +97,8 @@ public class topToolBar extends Panel{
                         while((newLine=br.readLine()) != null){
                             if(newLine.startsWith("Arr,")){
                                 String[] L = newLine.split(",");
-                                parent.WorkSpace.activePage.ObjArrowXYs.add(new objArrowXY(null,null,Integer.parseInt(L[1]),Integer.parseInt(L[2])));
+                                parent.WorkSpace.activePage.ObjArrowXYs.add(new objArrowXY(null,null,Integer.parseInt(L[1])
+                                                        ,Integer.parseInt(L[2]),new Color(Integer.parseInt(L[3]))));
                             }else if(newLine.startsWith("pageSize,")){
                                 String[] L = newLine.split(",");
                                 parent.WorkSpace.activePage.setPageSize(Integer.parseInt(L[1]), Integer.parseInt(L[2]));
@@ -140,7 +141,7 @@ public class topToolBar extends Panel{
                                     + p.PenSize + "," + p.PenColor.getRGB() + "," + p.ObjEnum +","+p.ObjID+"\r\n");
                         }
                         for(objArrowXY obja:parent.WorkSpace.activePage.ObjArrowXYs){
-                            pw.write("Arr," + obja.SObjID + "," + obja.EObjID+"\r\n");
+                            pw.write("Arr," + obja.SObjID + "," + obja.EObjID + "," + obja.ArrowColor.getRGB() +"\r\n");
                         }
                         pw.close();
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());

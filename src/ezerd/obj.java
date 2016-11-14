@@ -31,31 +31,31 @@ public abstract class obj extends Component {
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
-                if(obj.this.parent.ObjEnum==objEnum.arrow){
+                if(parent.ObjEnum==objEnum.arrow){
                     
-                }else if(obj.this.parent.PageActionEnum==pageActionEnum.moving){
+                }else if(parent.PageActionEnum==pageActionEnum.moving){
                     Ep = e.getPoint();
                     obj.this.setLocation(obj.this.getLocation().x + (Ep.x - Sp.x),
                                          obj.this.getLocation().y + (Ep.y - Sp.y));
                 }
-                obj.this.parent.ArrowPaint=true;
+                parent.ArrowPaint=true;
             } 
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (obj.this.parent.ObjArrowJ) {
-                    Graphics2D g = (Graphics2D) obj.this.parent.getGraphics();
+                if (parent.ObjArrowJ) {
+                    Graphics2D g = (Graphics2D) parent.getGraphics();
                     g.setColor(Color.BLUE);
                     g.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
                     g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
                                 obj.this.getWidth() + 6, obj.this.getHeight() + 6);
                     
-                    Graphics2D g2 = (Graphics2D)obj.this.parent.getGraphics();
+                    Graphics2D g2 = (Graphics2D)parent.getGraphics();
                     g2.setXORMode(Color.yellow);
-                    if (obj.this.parent.Ep != null) {
-                        drawAL(obj.this.parent.Sp.x,obj.this.parent.Sp.y,obj.this.parent.Ep.x,obj.this.parent.Ep.y,g2);
+                    if (parent.Ep != null) {
+                        drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2);
                     }
-                    obj.this.parent.Ep=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
-                    drawAL(obj.this.parent.Sp.x,obj.this.parent.Sp.y,obj.this.parent.Ep.x,obj.this.parent.Ep.y,g2);
+                    parent.Ep=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
+                    drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2);
                     
                 }
             }
@@ -64,47 +64,47 @@ public abstract class obj extends Component {
             @Override
             public void mousePressed(MouseEvent e){
                 parent.setActiveObj(obj.this);
-                obj.this.parent.repaint();
-                if(obj.this.parent.PageActionEnum==pageActionEnum.idle)
-                    obj.this.parent.PageActionEnum=pageActionEnum.moving;
-                if(obj.this.parent.ObjEnum==objEnum.arrow&&!obj.this.parent.ObjArrowJ){
-                    obj.this.parent.ObjArrowJ=true;
-                    obj.this.parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
+                parent.repaint();
+                if(parent.PageActionEnum==pageActionEnum.idle)
+                    parent.PageActionEnum=pageActionEnum.moving;
+                if(parent.ObjEnum==objEnum.arrow&&!parent.ObjArrowJ){
+                    parent.ObjArrowJ=true;
+                    parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
                                                 ,obj.this.getY()+obj.this.getHeight()/2);
-                    obj.this.parent.SObj=obj.this;
-                }else if(obj.this.parent.ObjEnum==objEnum.arrow&&obj.this.parent.ObjArrowJ){
-                    obj.this.parent.ObjArrowJ=false;
-                    obj.this.parent.Ep=new Point(obj.this.getX()+obj.this.getWidth()/2,obj.this.getY()+obj.this.getHeight()/2);
-                    obj.this.parent.EObj=obj.this;
-                    obj.this.parent.ObjArrowXYs.add(new objArrowXY(obj.this.parent.SObj,obj.this.parent.EObj
-                                                    ,obj.this.parent.SObj.ID,obj.this.parent.EObj.ID));
-                    obj.this.parent.undos.add(-1);
-                    obj.this.parent.ReObjPoints.removeAllElements();
-                    obj.this.parent.redos.removeAllElements();
-                    obj.this.parent.SObj=null;
-                    obj.this.parent.EObj=null;
-                    obj.this.parent.repaint();
-                    obj.this.parent.Ep=null;
-                }else if(obj.this.parent.PageActionEnum==pageActionEnum.moving){
+                    parent.SObj=obj.this;
+                }else if(parent.ObjEnum==objEnum.arrow&&parent.ObjArrowJ){
+                    parent.ObjArrowJ=false;
+                    parent.Ep=new Point(obj.this.getX()+obj.this.getWidth()/2,obj.this.getY()+obj.this.getHeight()/2);
+                    parent.EObj=obj.this;
+                    parent.ObjArrowXYs.add(new objArrowXY(parent.SObj,parent.EObj
+                                                    ,parent.SObj.ID,parent.EObj.ID,parent.PenColor));
+                    parent.undos.add(-1);
+                    parent.ReObjPoints.removeAllElements();
+                    parent.redos.removeAllElements();
+                    parent.SObj=null;
+                    parent.EObj=null;
+                    parent.repaint();
+                    parent.Ep=null;
+                }else if(parent.PageActionEnum==pageActionEnum.moving){
                     Sp=e.getPoint();
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(), obj.this.getY());
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
                     parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
                     parent.parent.AttributesToolBar.AttributesBox.ColorBox.setColor(PenColor);
-                    for(object o:obj.this.parent.Points){
+                    for(object o:parent.Points){
                         if(o.ObjID==ID){
                             o.Sp=obj.this.getLocation();
                             o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
-                            obj.this.parent.ObjPoints.add(new objPoint(o.Sp,o.Ep,ID));
+                            parent.ObjPoints.add(new objPoint(o.Sp,o.Ep,ID));
                             
-                            obj.this.parent.undos.add(0);
-                            obj.this.parent.ReObjPoints.removeAllElements();
-                            obj.this.parent.redos.removeAllElements();
-                            obj.this.parent.parent.TopToolBar.UndoBtn.setEnabled(obj.this.parent.undos.size() == 0 ? false : true);
-                            obj.this.parent.parent.TopToolBar.RedoBtn.setEnabled(obj.this.parent.redos.size() == 0 ? false : true);
+                            parent.undos.add(0);
+                            parent.ReObjPoints.removeAllElements();
+                            parent.redos.removeAllElements();
+                            parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
+                            parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
                         }
                     }
-                    Graphics2D g=(Graphics2D)obj.this.parent.getGraphics();
+                    Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
                     g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
@@ -113,17 +113,17 @@ public abstract class obj extends Component {
             }
             @Override
             public void mouseReleased(MouseEvent e){
-                if(obj.this.parent.ObjEnum==objEnum.arrow){
-                }else if(obj.this.parent.PageActionEnum==pageActionEnum.moving){
-                    for(object o:obj.this.parent.Points){
+                if(parent.ObjEnum==objEnum.arrow){
+                }else if(parent.PageActionEnum==pageActionEnum.moving){
+                    for(object o:parent.Points){
                         if(o.ObjID==ID){
                             o.Sp=obj.this.getLocation();
                             o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
                         }
                     }
-                    obj.this.parent.PageActionEnum=pageActionEnum.idle;
+                    parent.PageActionEnum=pageActionEnum.idle;
                 }
-                obj.this.parent.repaint();
+                parent.repaint();
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                     parent.popupMenu1.XY=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
                     parent.popupMenu1.show(obj.this, e.getX(), e.getY());
@@ -131,13 +131,13 @@ public abstract class obj extends Component {
             }
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (obj.this.parent.ObjArrowJ) {
+                if (parent.ObjArrowJ) {
                 }
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                if (obj.this.parent.ObjArrowJ) {
-                    Graphics2D g=(Graphics2D)obj.this.parent.getGraphics();
+                if (parent.ObjArrowJ) {
+                    Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
                     g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
@@ -151,7 +151,7 @@ public abstract class obj extends Component {
     public void paint(Graphics g)
     {
         paintObj(g);
-        for (object o : obj.this.parent.Points) {
+        for (object o : parent.Points) {
             if (o.ObjID == ID) {
                 for (objArrowXY obja : parent.ObjArrowXYs) {
                     if (obja.SObjID == o.ObjID) {

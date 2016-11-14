@@ -152,7 +152,7 @@ public class page extends Panel{
                         undos.add(undo);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
-                } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null) {
+                } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null && Ep != null) {
                     undos.add(1);
                     RePoints.removeAllElements();
                     redos.removeAllElements();
@@ -280,6 +280,7 @@ public class page extends Panel{
         }
         for(objArrowXY obja:ObjArrowXYs){
             if(obja.SObj!=null&&obja.EObj!=null){
+                g2.setColor(obja.ArrowColor);
                 int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
                 if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {
                     SX += obja.SObj.getWidth();
