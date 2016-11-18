@@ -219,8 +219,10 @@ public class page extends Panel{
         parent.TopToolBar.RedoBtn.setEnabled(redos.size() != 0);
         parent.MainWin.MenuBar.redoM.setEnabled(redos.size() != 0);
         popupMenu1.RedoMenuItem.setEnabled(redos.size() != 0);
+        parent.TopToolBar.CopyBtn.setEnabled(activeObj != null);
         parent.MainWin.MenuBar.copyM.setEnabled(activeObj != null);
         popupMenu1.CopyMenuItem.setEnabled(activeObj != null);
+        parent.TopToolBar.PasteBtn.setEnabled(CopyObj != null);
         parent.MainWin.MenuBar.pasteM.setEnabled(CopyObj != null);
         popupMenu1.PasteMenuItem.setEnabled(CopyObj != null);
         if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")&&undos.size()!=0)
@@ -233,6 +235,7 @@ public class page extends Panel{
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(activeObj.getTra());
             if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()){
                 Graphics2D g2 = (Graphics2D) this.getGraphics();
                 g2.setColor(Color.BLUE);
@@ -243,6 +246,7 @@ public class page extends Panel{
         }else{
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(0,0);
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(0,0);
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(100);
         }
         
     }

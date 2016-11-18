@@ -22,7 +22,7 @@ import javax.swing.event.*;
  */
 public class topToolBar extends Panel{
     ezERD parent;
-    JButton NewPageBtn,ClosePageBtn,OpenBtn,SaveBtn,UndoBtn,RedoBtn;
+    JButton NewPageBtn,ClosePageBtn,OpenBtn,SaveBtn,UndoBtn,RedoBtn,DelBtn,CopyBtn,PasteBtn;
     String ClosingMessage,ClosingMessage1,Mess;
     
     topToolBar(ezERD p) {
@@ -40,6 +40,9 @@ public class topToolBar extends Panel{
             SaveBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Save.png"))));
             UndoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Undo.png"))));
             RedoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Redo.png"))));
+            DelBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Delete.png"))));
+            CopyBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Copy.png"))));
+            PasteBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Paste.png"))));
         }catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -242,6 +245,71 @@ public class topToolBar extends Panel{
                 parent.MainWin.requestFocusInWindow();
             }
         });
+        
+        CopyBtn.setBackground(this.getBackground());
+        CopyBtn.setToolTipText("Copy(Ctrl+C)");
+        CopyBtn.setActionCommand("Copy");
+        CopyBtn.setBorder(null);
+        this.add(CopyBtn);
+        CopyBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
+                parent.TopToolBar.PasteBtn.setEnabled(true);
+            }
+        });
+        
+        PasteBtn.setBackground(this.getBackground());
+        PasteBtn.setToolTipText("Paste(Ctrl+V)");
+        PasteBtn.setActionCommand("Paste");
+        PasteBtn.setBorder(null);
+        this.add(PasteBtn);
+        PasteBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                obj o = null;
+                try {
+                    for (object p : parent.WorkSpace.activePage.Points) {
+                        if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
+                            if (p.ObjEnum == objEnum.rectangle) {
+                                o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                parent.WorkSpace.activePage.add(o, 0);
+                            } else if (p.ObjEnum == objEnum.circular) {
+                                o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                parent.WorkSpace.activePage.add(o, 0);
+                            } else if (p.ObjEnum == objEnum.diamond) {
+                                o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                parent.WorkSpace.activePage.add(o, 0);
+                            }
+                            parent.WorkSpace.activePage.add(o, 0);
+                            parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
+                            parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
+                            o.setLocation(0, 0);
+                            o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                            parent.WorkSpace.activePage.Objs.add(o);
+                            parent.WorkSpace.activePage.CopyObj = o;
+                            parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
+                                    new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
+                                    p.ObjEnum, parent.WorkSpace.activePage.ObjID++));
+                        }
+                    }
+                } catch (Throwable ee) {
+                }
+            }
+        });
+        
+        DelBtn.setBackground(this.getBackground());
+        DelBtn.setToolTipText("Delete(Delete)");
+        DelBtn.setActionCommand("Delete");
+        DelBtn.setBorder(null);
+        this.add(DelBtn);
+        RedoBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+            
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/

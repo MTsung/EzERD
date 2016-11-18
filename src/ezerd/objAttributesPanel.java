@@ -17,19 +17,23 @@ public class objAttributesPanel extends Panel{
     attributesToolBar AtoolBar;
     TextField[] TextSize=new TextField[2];
     TextField[] TextLocation=new TextField[2];
-    Panel TextPanel,TempPanel1,TempPanel2;
-    Label LabelW,LabelH;
+    TextField TextTra;
+    Panel TextPanel,TempPanel1,TempPanel2,TempPanel3;
+    Label LabelW,LabelH,LabelTra;
     objAttributesPanel(attributesToolBar p){
         super();
         AtoolBar=p;
         TextPanel=new Panel();
-        TextPanel.setPreferredSize(new Dimension(270,80));
+        TextPanel.setPreferredSize(new Dimension(270,140));
         TempPanel1=new Panel();
         TempPanel2=new Panel();
+        TempPanel3=new Panel();
         LabelW=new Label("Width:");
         LabelH=new Label("Height:");
+        LabelTra=new Label("Transparency:");
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
+        LabelTra.setFont(new programFont());
         TextSize[0]=new TextField("0",3);
         TempPanel1.add(LabelW);
         TempPanel1.add(TextSize[0]);
@@ -126,18 +130,43 @@ public class objAttributesPanel extends Panel{
                 }
             }
         });
-                
+        TextTra=new TextField("100",3); 
+        TextTra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                    try {
+                        if(Integer.valueOf(TextTra.getText())>100)
+                            TextTra.setText(""+100);
+                        if(Integer.valueOf(TextTra.getText())<0)
+                            TextTra.setText(""+0);
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setTra(Integer.valueOf(TextTra.getText()));
+                    } catch (Exception ex) {
+                        TextTra.setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getTra());
+                    }
+                }else{
+                    TextTra.setText("100");
+                }
+            }
+        });
+        TempPanel3.add(LabelTra);
+        TempPanel3.add(TextTra);
         TextPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         TextPanel.add(TempPanel1);
         TextPanel.add(TempPanel2);
+        TextPanel.add(TempPanel3);
         this.add(TextPanel);
     }
     void setTextLocation(int x,int y){
-        TextLocation[0].setText(String.valueOf(x));
-        TextLocation[1].setText(String.valueOf(y));
+        TextLocation[0].setText(""+x);
+        TextLocation[1].setText(""+y);
     }
     void setTextSize(int w,int h){
-        TextSize[0].setText(String.valueOf(w));
-        TextSize[1].setText(String.valueOf(h));
+        TextSize[0].setText(""+w);
+        TextSize[1].setText(""+h);
+    }
+    void setTextTra(int t){
+        TextTra.setText(""+t);
     }
 }

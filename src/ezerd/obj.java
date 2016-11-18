@@ -20,7 +20,8 @@ public abstract class obj extends Component {
     Point Sp,Ep;
     Point ArrSp,ArrEp;
     obj EndObj;
-    int ID;
+    int ID,Tra=100;
+    pageActionEnum tempPAE;
     obj(){  
     }
     obj(page p,Color c,float s,int id){
@@ -131,8 +132,8 @@ public abstract class obj extends Component {
             }
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (parent.ObjArrowJ) {
-                }
+                //tempPAE=parent.PageActionEnum;
+                //parent.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
             @Override
             public void mouseExited(MouseEvent e) {
@@ -143,8 +144,20 @@ public abstract class obj extends Component {
                     g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
                                 obj.this.getWidth() + 6, obj.this.getHeight() + 6);
                 }
+                //if(parent.PageActionEnum!=pageActionEnum.idle)
+                    //parent.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
             }
         });
+    }
+    
+    void setTra(int n){
+        Tra=n;
+        PenColor=new Color(PenColor.getRed(),PenColor.getGreen(),PenColor.getBlue(),(int)(Tra*2.55));
+        this.repaint();
+    }
+    
+    int getTra(){
+       return Tra; 
     }
     
     public abstract void paintObj(Graphics g);

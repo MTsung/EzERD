@@ -47,37 +47,11 @@ public class keyListener implements KeyListener{
         }else if(e.isControlDown() && e.getKeyCode() == 34){//ctrl + PgDn
             parent.WorkSpace.nextPage();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C){
-            parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
+            parent.TopToolBar.CopyBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V){
-            obj o=null;
-            try {
-                for (object p : parent.WorkSpace.activePage.Points) {
-                    if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
-                        if (p.ObjEnum == objEnum.rectangle) {
-                            o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
-                            parent.WorkSpace.activePage.add(o, 0);
-                        } else if (p.ObjEnum == objEnum.circular) {
-                            o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
-                            parent.WorkSpace.activePage.add(o, 0);
-                        } else if (p.ObjEnum == objEnum.diamond) {
-                            o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
-                            parent.WorkSpace.activePage.add(o, 0);
-                        }
-                        parent.WorkSpace.activePage.add(o, 0);
-                        parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
-                        parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
-                        o.setLocation(0, 0);
-                        o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-                        parent.WorkSpace.activePage.Objs.add(o);
-                        parent.WorkSpace.activePage.CopyObj = o;
-                        parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
-                                new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
-                                p.ObjEnum, parent.WorkSpace.activePage.ObjID++));
-                    }
-                }
-            }catch (Throwable ee) {
-            }
-            
+            parent.TopToolBar.PasteBtn.doClick();
+        }else if(e.getKeyCode() == KeyEvent.VK_DELETE){
+            parent.TopToolBar.DelBtn.doClick();
         }
         //System.out.println(e.getKeyCode());
         parent.MainWin.requestFocusInWindow();
