@@ -239,6 +239,7 @@ public class page extends Panel{
             if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()){
                 Graphics2D g2 = (Graphics2D) this.getGraphics();
                 g2.setColor(Color.BLUE);
+                //g2.rotate(Math.toRadians(50), activeObj.getX()+activeObj.getWidth()/2, activeObj.getY()+activeObj.getHeight()/2);
                 g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
                 g2.drawRect(activeObj.getX() - 3, activeObj.getY() - 3,
                         activeObj.getWidth() + 6, activeObj.getHeight() + 6);

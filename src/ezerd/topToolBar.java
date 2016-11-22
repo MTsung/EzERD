@@ -191,7 +191,7 @@ public class topToolBar extends Panel{
                         parent.WorkSpace.activePage.ObjArrowXYs.remove(parent.WorkSpace.activePage.ObjArrowXYs.size()-1);
                     }
                     
-                    
+                    parent.WorkSpace.activePage.setActiveObj(null);
                     parent.WorkSpace.activePage.PaintObj=true;
                     parent.WorkSpace.activePage.ArrowPaint=true;
                     parent.WorkSpace.activePage.removeAll();

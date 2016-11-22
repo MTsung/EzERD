@@ -163,6 +163,7 @@ public abstract class obj extends Component {
     public abstract void paintObj(Graphics g);
     public void paint(Graphics g)
     {
+        
         paintObj(g);
         for (object o : parent.Points) {
             if (o.ObjID == ID) {
