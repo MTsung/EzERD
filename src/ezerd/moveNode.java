@@ -1,0 +1,234 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ezerd;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+/**
+ *
+ * @author CMC
+ */
+public class moveNode extends Panel{
+    page parent;
+    Point Sp,Ep;
+    Panel Node[]=new Panel[8];
+    int NodeW=14;
+    Cursor CursorTemp;
+    moveNode(page p) {
+        super();
+        parent=p;
+        for(int i=0;i<8;i++){
+            Node[i]=new Panel();
+            Node[i].setSize(NodeW, NodeW);
+            Node[i].setBackground(Color.BLUE);
+            Node[i].setVisible(false);
+            parent.add(Node[i]);
+        }
+        Node[0].setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
+        Node[0].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Sp.x - e.getX(), Sp.y - e.getY());
+                parent.activeObj.setLocation(parent.activeObj.getX() - Ep.x + Sp.x, parent.activeObj.getY() - Ep.y + Sp.y);
+                parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+            }
+        });
+        Node[0].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[0].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[0].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[1].setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
+        Node[1].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Node[1].getX(), Sp.y - e.getY());
+                parent.activeObj.setLocation(parent.activeObj.getX(), parent.activeObj.getY() - Ep.y + Sp.y);
+                parent.activeObj.setSize(parent.activeObj.getWidth(), parent.activeObj.getHeight() + Ep.y - Sp.y);
+            }
+        });
+        Node[1].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[1].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[1].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[2].setCursor(Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR));
+        Node[2].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Sp.x + e.getX(), Sp.y - e.getY());
+                parent.activeObj.setLocation(parent.activeObj.getX(), parent.activeObj.getY() - Ep.y + Sp.y);
+                parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+            }
+        });
+        Node[2].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[2].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[2].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[3].setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+        Node[3].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Sp.x - e.getX(), Node[3].getY());
+                parent.activeObj.setLocation(parent.activeObj.getX() - Ep.x + Sp.x, parent.activeObj.getY());
+                parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight());
+            }
+        });
+        Node[3].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[3].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[3].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[4].setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+        Node[4].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Sp.x + e.getX(), Node[4].getY());
+                parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight());
+            }
+        });
+        Node[4].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[4].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[4].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[5].setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
+        Node[5].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Sp.x - e.getX(), Sp.y + e.getY());
+                parent.activeObj.setLocation(parent.activeObj.getX() - Ep.x + Sp.x, parent.activeObj.getY());
+                parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+            }
+        });
+        Node[5].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[5].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[5].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[6].setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
+        Node[6].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Node[6].getX(), Sp.y + e.getY());
+                parent.activeObj.setSize(parent.activeObj.getWidth(), parent.activeObj.getHeight() + Ep.y - Sp.y);
+            }
+        });
+        Node[6].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[6].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[6].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+
+        Node[7].setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
+        Node[7].addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Ep = new Point(Sp.x + e.getX(), Sp.y + e.getY());
+                parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+            }
+        });
+        Node[7].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = Node[7].getLocation();
+                CursorTemp=parent.getCursor();
+                parent.setCursor(Node[7].getCursor());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                parent.setCursor(CursorTemp);
+            }
+        });
+    }
+    
+    void ShowNode(){
+        for(Panel p:Node){
+            p.setVisible(true);
+        }
+        int X = parent.activeObj.getX(), Y = parent.activeObj.getY();
+        int W = parent.activeObj.getWidth(), H = parent.activeObj.getHeight();
+        Node[0].setLocation(X - 3 - NodeW, Y - 3 - NodeW);
+        Node[1].setLocation(X + W / 2 - NodeW / 2, Y - 3 - NodeW);
+        Node[2].setLocation(X + W + 3, Y - 3 - NodeW);
+        Node[3].setLocation(X - 3 - NodeW, Y + H / 2 - NodeW / 2);
+        Node[4].setLocation(X + W + 3, Y + H / 2 - NodeW / 2);
+        Node[5].setLocation(X - 3 - NodeW, Y + H + 3);
+        Node[6].setLocation(X + W / 2 - NodeW / 2, Y + H + 3);
+        Node[7].setLocation(X + W + 3, Y + H + 3);
+    }
+    void HideNode(){
+        for(Panel p:Node){
+            p.setVisible(false);
+        }
+    }
+}

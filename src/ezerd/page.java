@@ -37,6 +37,7 @@ public class page extends Panel{
     pageActionEnum PageActionEnum;
     objEnum ObjEnum;
     obj activeObj,SObj,EObj,CopyObj;
+    moveNode MoveNode;
     page(ezERD p){
         super();      
         parent=p;      
@@ -87,7 +88,7 @@ public class page extends Panel{
                     if (e.getModifiers() == 17) {
                         if(e.getX() < Sp.x && e.getY() < Sp.y){
                             Ep = Sp.x - e.getX() > Sp.y - e.getY()
-                                    ?new Point(e.getX(),Sp.y-Sp.x + e.getX())
+                                    ? new Point(e.getX(),Sp.y-Sp.x + e.getX())
                                     : new Point(Sp.x-Sp.y + e.getY(),e.getY());
                         }else{
                             Ep = e.getX() - Sp.x > e.getY() - Sp.y
@@ -199,6 +200,8 @@ public class page extends Panel{
         popupMenu1 =new rightClickMenu(parent);
         popupMenu1.setFont(new programFont());
         this.add(popupMenu1);
+        MoveNode = new moveNode(this);
+        this.add(MoveNode);
        
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
@@ -243,19 +246,25 @@ public class page extends Panel{
                 g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
                 g2.drawRect(activeObj.getX() - 3, activeObj.getY() - 3,
                         activeObj.getWidth() + 6, activeObj.getHeight() + 6);
-            }
+                MoveNode.ShowNode();
+            }else
+                MoveNode.HideNode();
         }else{
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(0,0);
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(0,0);
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(100);
+            MoveNode.HideNode();
         }
         
     }
     Image paintPage(){
         bufferImage = createImage(PageWidth, PageHeight);
         bufferGraphics = bufferImage.getGraphics();
-        if(PaintObj)
+        if(PaintObj){
             Objs.removeAllElements();
+            MoveNode = new moveNode(this);
+            this.add(MoveNode);
+        }
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
         for(object p:Points){
