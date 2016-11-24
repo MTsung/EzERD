@@ -17,7 +17,7 @@ public class moveNode extends Panel{
     page parent;
     Point Sp,Ep;
     Panel Node[]=new Panel[8];
-    int NodeW=14;
+    int NodeW=10;
     Cursor CursorTemp;
     moveNode(page p) {
         super();
@@ -36,6 +36,7 @@ public class moveNode extends Panel{
                 Ep = new Point(Sp.x - e.getX(), Sp.y - e.getY());
                 parent.activeObj.setLocation(parent.activeObj.getX() - Ep.x + Sp.x, parent.activeObj.getY() - Ep.y + Sp.y);
                 parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+                parent.repaint();
             }
         });
         Node[0].addMouseListener(new MouseAdapter() {
@@ -59,6 +60,7 @@ public class moveNode extends Panel{
                 Ep = new Point(Node[1].getX(), Sp.y - e.getY());
                 parent.activeObj.setLocation(parent.activeObj.getX(), parent.activeObj.getY() - Ep.y + Sp.y);
                 parent.activeObj.setSize(parent.activeObj.getWidth(), parent.activeObj.getHeight() + Ep.y - Sp.y);
+                parent.repaint();
             }
         });
         Node[1].addMouseListener(new MouseAdapter() {
@@ -82,6 +84,7 @@ public class moveNode extends Panel{
                 Ep = new Point(Sp.x + e.getX(), Sp.y - e.getY());
                 parent.activeObj.setLocation(parent.activeObj.getX(), parent.activeObj.getY() - Ep.y + Sp.y);
                 parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+                parent.repaint();
             }
         });
         Node[2].addMouseListener(new MouseAdapter() {
@@ -105,6 +108,7 @@ public class moveNode extends Panel{
                 Ep = new Point(Sp.x - e.getX(), Node[3].getY());
                 parent.activeObj.setLocation(parent.activeObj.getX() - Ep.x + Sp.x, parent.activeObj.getY());
                 parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight());
+                parent.repaint();
             }
         });
         Node[3].addMouseListener(new MouseAdapter() {
@@ -127,6 +131,7 @@ public class moveNode extends Panel{
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Sp.x + e.getX(), Node[4].getY());
                 parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight());
+                parent.repaint();
             }
         });
         Node[4].addMouseListener(new MouseAdapter() {
@@ -150,6 +155,7 @@ public class moveNode extends Panel{
                 Ep = new Point(Sp.x - e.getX(), Sp.y + e.getY());
                 parent.activeObj.setLocation(parent.activeObj.getX() - Ep.x + Sp.x, parent.activeObj.getY());
                 parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+                parent.repaint();
             }
         });
         Node[5].addMouseListener(new MouseAdapter() {
@@ -172,6 +178,7 @@ public class moveNode extends Panel{
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Node[6].getX(), Sp.y + e.getY());
                 parent.activeObj.setSize(parent.activeObj.getWidth(), parent.activeObj.getHeight() + Ep.y - Sp.y);
+                parent.repaint();
             }
         });
         Node[6].addMouseListener(new MouseAdapter() {
@@ -194,6 +201,7 @@ public class moveNode extends Panel{
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Sp.x + e.getX(), Sp.y + e.getY());
                 parent.activeObj.setSize(parent.activeObj.getWidth() + Ep.x - Sp.x, parent.activeObj.getHeight() + Ep.y - Sp.y);
+                parent.repaint();
             }
         });
         Node[7].addMouseListener(new MouseAdapter() {
