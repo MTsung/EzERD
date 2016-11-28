@@ -58,7 +58,7 @@ public class rightClickMenu extends PopupMenu{
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
                             parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
-                            o.setLocation(XY.x,XY.y);
+                            o.setLocation(XY.x-parent.WorkSpace.activePage.CopyObj.getWidth()/2,XY.y-parent.WorkSpace.activePage.CopyObj.getHeight()/2);
                             o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
                             parent.WorkSpace.activePage.Objs.add(o);
                             parent.WorkSpace.activePage.CopyObj = o;

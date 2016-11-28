@@ -22,6 +22,7 @@ public abstract class obj extends Component {
     obj EndObj;
     int ID,Tra=100;
     pageActionEnum tempPAE;
+int w,h;
     obj(){  
     }
     obj(page p,Color c,float s,int id){
@@ -66,8 +67,8 @@ public abstract class obj extends Component {
             public void mousePressed(MouseEvent e){
                 parent.setActiveObj(obj.this);
                 parent.repaint();
-                if(parent.PageActionEnum==pageActionEnum.idle)
-                    parent.PageActionEnum=pageActionEnum.moving;
+                tempPAE=parent.PageActionEnum;
+                parent.PageActionEnum=pageActionEnum.moving;
                 if(parent.ObjEnum==objEnum.arrow&&!parent.ObjArrowJ){
                     parent.ObjArrowJ=true;
                     parent.Sp=new Point(obj.this.getX()+obj.this.getWidth()/2
@@ -92,19 +93,7 @@ public abstract class obj extends Component {
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
                     parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
                     parent.parent.AttributesToolBar.AttributesBox.ColorBox.setColor(PenColor);
-                    for(object o:parent.Points){
-                        if(o.ObjID==ID){
-                            o.Sp=obj.this.getLocation();
-                            o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
-                            parent.ObjPoints.add(new objPoint(o.Sp,o.Ep,ID));
-                            
-                            parent.undos.add(0);
-                            parent.ReObjPoints.removeAllElements();
-                            parent.redos.removeAllElements();
-                            parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
-                            parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
-                        }
-                    }
+                    obj.this.addUndo();
                     Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
@@ -116,13 +105,8 @@ public abstract class obj extends Component {
             public void mouseReleased(MouseEvent e){
                 if(parent.ObjEnum==objEnum.arrow){
                 }else if(parent.PageActionEnum==pageActionEnum.moving){
-                    for(object o:parent.Points){
-                        if(o.ObjID==ID){
-                            o.Sp=obj.this.getLocation();
-                            o.Ep=new Point(obj.this.getX()+obj.this.getWidth(),obj.this.getY()+obj.this.getHeight());
-                        }
-                    }
-                    parent.PageActionEnum=pageActionEnum.idle;
+                    obj.this.setPoints();
+                    parent.PageActionEnum=tempPAE;
                 }
                 parent.repaint();
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
@@ -159,11 +143,44 @@ public abstract class obj extends Component {
     int getTra(){
        return Tra; 
     }
-    
+    void addUndo(){
+        for (object o : parent.Points) {
+            if (o.ObjID == ID) {
+                o.Sp = this.getLocation();
+                o.Ep = new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight());
+                parent.ObjPoints.add(new objPoint(o.Sp, o.Ep, ID));
+
+                parent.undos.add(0);
+                parent.ReObjPoints.removeAllElements();
+                parent.redos.removeAllElements();
+                parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
+                parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
+            }
+        }
+    }
+    void setPoints(){
+        for (object o : parent.Points) {
+            if (o.ObjID == ID) {
+                o.Sp = obj.this.getLocation();
+                o.Ep = new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight());
+            }
+        }
+        parent.repaint();
+        
+    }
+    void setObjSize(int W,int H){
+        this.addUndo();
+        this.setSize(W,H);
+        this.setPoints();
+    }
+    void setObjLocation(int X,int Y){
+        this.addUndo();
+        this.setLocation(X,Y);
+        this.setPoints();
+    }
     public abstract void paintObj(Graphics g);
     public void paint(Graphics g)
     {
-        
         paintObj(g);
         for (object o : parent.Points) {
             if (o.ObjID == ID) {
