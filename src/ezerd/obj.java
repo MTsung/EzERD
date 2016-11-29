@@ -22,7 +22,6 @@ public abstract class obj extends Component {
     obj EndObj;
     int ID,Tra=100;
     pageActionEnum tempPAE;
-int w,h;
     obj(){  
     }
     obj(page p,Color c,float s,int id){
