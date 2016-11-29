@@ -17,12 +17,13 @@ import javax.swing.event.*;
 public class moveNode extends Panel {
 
     page parent;
-    Point Sp, Ep;
+    Point Sp, Ep,pp,tempget;
     Panel Node[] = new Panel[8];
     int NodeW = 10, w, h, MinW = 7;
     Cursor CursorTemp;
     obj objTemp;
-
+    Boolean P=true;
+    
     moveNode(page p) {
         super();
         parent = p;
@@ -39,8 +40,8 @@ public class moveNode extends Panel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Sp.x - e.getX(), Sp.y - e.getY());
-                w = parent.activeObj.getWidth() + Ep.x - Sp.x;
-                h = parent.activeObj.getHeight() + Ep.y - Sp.y;
+                w += Ep.x - Sp.x;
+                h += Ep.y - Sp.y;
                 parent.activeObj.setLocation(w > MinW ? parent.activeObj.getX() - Ep.x + Sp.x : Node[7].getX() - 3 - MinW,
                          h > MinW ? parent.activeObj.getY() - Ep.y + Sp.y : Node[7].getY() - 3 - MinW);
                 parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
