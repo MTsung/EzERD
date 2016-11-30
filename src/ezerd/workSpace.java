@@ -20,7 +20,6 @@ public class workSpace extends Panel{
     Vector<page> Pages;
     page activePage=null;
     static int count=0;
-    Panel P;
     
     workSpace(ezERD p){
         parent=p;

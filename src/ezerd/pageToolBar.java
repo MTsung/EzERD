@@ -21,7 +21,6 @@ public class pageToolBar extends Panel{
     Vector<Boolean> BtnJ=new Vector<Boolean>();
     Color BtnC=new Color(200,255,255);
     int BtnSum=1,i;
-    rightClickMenu popupMenu1;
     
     pageToolBar(workSpace Ws){
         super();

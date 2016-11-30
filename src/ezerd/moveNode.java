@@ -17,12 +17,10 @@ import javax.swing.event.*;
 public class moveNode extends Panel {
 
     page parent;
-    Point Sp, Ep,pp,tempget;
-    Panel Node[] = new Panel[8];
+    Point Sp, Ep;
+    Panel[] Node = new Panel[8];
     int NodeW = 10, w, h, MinW = 7;
     Cursor CursorTemp;
-    obj objTemp;
-    Boolean P=true;
     
     moveNode(page p) {
         super();

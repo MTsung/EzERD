@@ -23,7 +23,7 @@ import javax.swing.event.*;
 public class menuBar extends MenuBar{
     ezERD parent;
     Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
-    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,JP,EN,JpgM,PngM,GifM,BmpM,copyM,pasteM;
+    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,EN,JpgM,PngM,GifM,BmpM,copyM,pasteM;
     menuBar(ezERD p){
         super();
         parent=p;
@@ -152,7 +152,7 @@ public class menuBar extends MenuBar{
                     Logger.getLogger(menuBar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });
+        });/*
         JP= new MenuItem("日本語(Japan)");
         JP.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -166,7 +166,7 @@ public class menuBar extends MenuBar{
                     Logger.getLogger(menuBar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });
+        });*/
         EN= new MenuItem("English");
         EN.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -204,7 +204,7 @@ public class menuBar extends MenuBar{
         PageMenu.add(AllPageMenu);
         PageMenu.add(CachingPageMenu);
         LanguageMenu.add(TW);
-        LanguageMenu.add(JP);
+        //LanguageMenu.add(JP);
         LanguageMenu.add(EN);
     }
     void savePageToImage(String S){
