@@ -19,7 +19,7 @@ public class moveNode extends Panel {
     page parent;
     Point Sp, Ep;
     Panel[] Node = new Panel[8];
-    int NodeW = 10, w, h, MinW = 7;
+    int NodeW = 10, w, h, MinW = 7,x,y;
     Cursor CursorTemp;
     
     moveNode(page p) {
@@ -37,19 +37,21 @@ public class moveNode extends Panel {
         Node[0].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Sp.x - e.getX(), Sp.y - e.getY());
-                w += Ep.x - Sp.x;
-                h += Ep.y - Sp.y;
-                parent.activeObj.setLocation(w > MinW ? parent.activeObj.getX() - Ep.x + Sp.x : Node[7].getX() - 3 - MinW,
-                         h > MinW ? parent.activeObj.getY() - Ep.y + Sp.y : Node[7].getY() - 3 - MinW);
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(e.getXOnScreen() - Sp.x, e.getYOnScreen() - Sp.y);
+                parent.activeObj.setLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
+                                            Ep.y < h ? y + Ep.y : y + h + NodeW);
+                parent.activeObj.setSize(Math.abs(Ep.x - w), Math.abs(Ep.y - h));
                 parent.repaint();
             }
         });
         Node[0].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[0].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[0].getCursor());
                 parent.activeObj.addUndo();
@@ -66,19 +68,21 @@ public class moveNode extends Panel {
         Node[1].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Node[1].getX(), Sp.y - e.getY());
-                w = parent.activeObj.getWidth();
-                h = parent.activeObj.getHeight() + Ep.y - Sp.y;
+                Ep = new Point(e.getXOnScreen() - Sp.x, e.getYOnScreen() - Sp.y);
                 parent.activeObj.setLocation(parent.activeObj.getX(),
-                         h > MinW ? parent.activeObj.getY() - Ep.y + Sp.y : Node[7].getY() - 3 - MinW);
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                                            Ep.y < h ? y + Ep.y : y + h + NodeW);
+                parent.activeObj.setSize(w,Math.abs(Ep.y - h));
                 parent.repaint();
             }
         });
         Node[1].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[1].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[1].getCursor());
                 parent.activeObj.addUndo();
@@ -95,19 +99,21 @@ public class moveNode extends Panel {
         Node[2].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Sp.x + e.getX(), Sp.y - e.getY());
-                w = parent.activeObj.getWidth() + Ep.x - Sp.x;
-                h = parent.activeObj.getHeight() + Ep.y - Sp.y;
-                parent.activeObj.setLocation(parent.activeObj.getX(),
-                         h > MinW ? parent.activeObj.getY() - Ep.y + Sp.y : Node[7].getY() - 3 - MinW);
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(Sp.x - e.getXOnScreen() , e.getYOnScreen() - Sp.y);
+                parent.activeObj.setLocation(Ep.x < w ? x : x - Ep.x +w,
+                                            Ep.y < h ? y + Ep.y : y + h + NodeW);
+                parent.activeObj.setSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h));
                 parent.repaint();
             }
         });
         Node[2].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[2].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[2].getCursor());
                 parent.activeObj.addUndo();
@@ -124,19 +130,21 @@ public class moveNode extends Panel {
         Node[3].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Sp.x - e.getX(), Node[3].getY());
-                w = parent.activeObj.getWidth() + Ep.x - Sp.x;
-                h = parent.activeObj.getHeight();
-                parent.activeObj.setLocation(w > MinW ? parent.activeObj.getX() - Ep.x + Sp.x : Node[7].getX() - 3 - MinW,
-                         parent.activeObj.getY());
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(e.getXOnScreen() - Sp.x, e.getYOnScreen() - Sp.y);
+                parent.activeObj.setLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
+                                            parent.activeObj.getY());
+                parent.activeObj.setSize(Math.abs(Ep.x - w),h);
                 parent.repaint();
             }
         });
         Node[3].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[3].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[3].getCursor());
                 parent.activeObj.addUndo();
@@ -153,17 +161,21 @@ public class moveNode extends Panel {
         Node[4].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Sp.x + e.getX(), Node[4].getY());
-                w = parent.activeObj.getWidth() + Ep.x - Sp.x;
-                h = parent.activeObj.getHeight();
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(Sp.x - e.getXOnScreen() , e.getYOnScreen() - Sp.y);
+                parent.activeObj.setLocation(Ep.x < w ? x : x - Ep.x +w,
+                                            parent.activeObj.getY());
+                parent.activeObj.setSize(Math.abs(Ep.x - w),h);
                 parent.repaint();
             }
         });
         Node[4].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[4].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[4].getCursor());
                 parent.activeObj.addUndo();
@@ -180,19 +192,21 @@ public class moveNode extends Panel {
         Node[5].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Sp.x - e.getX(), Sp.y + e.getY());
-                w = parent.activeObj.getWidth() + Ep.x - Sp.x;
-                h = parent.activeObj.getHeight() + Ep.y - Sp.y;
-                parent.activeObj.setLocation(w > MinW ? parent.activeObj.getX() - Ep.x + Sp.x : Node[7].getX() - 3 - MinW,
-                         parent.activeObj.getY());
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(e.getXOnScreen() - Sp.x, Sp.y - e.getYOnScreen());
+                parent.activeObj.setLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
+                                            Ep.y < h ? y : y - Ep.y + h - NodeW);
+                parent.activeObj.setSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h));
                 parent.repaint();
             }
         });
         Node[5].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[5].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[5].getCursor());
                 parent.activeObj.addUndo();
@@ -209,17 +223,21 @@ public class moveNode extends Panel {
         Node[6].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Node[6].getX(), Sp.y + e.getY());
-                w = parent.activeObj.getWidth();
-                h = parent.activeObj.getHeight() + Ep.y - Sp.y;
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(e.getXOnScreen() - Sp.x, Sp.y - e.getYOnScreen());
+                parent.activeObj.setLocation(parent.activeObj.getX(),
+                                            Ep.y < h ? y  : y - Ep.y + h - NodeW);
+                parent.activeObj.setSize(w,Math.abs(Ep.y - h));
                 parent.repaint();
             }
         });
         Node[6].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[6].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[6].getCursor());
                 parent.activeObj.addUndo();
@@ -235,10 +253,10 @@ public class moveNode extends Panel {
         Node[7].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Ep = new Point(Sp.x + e.getX(), Sp.y + e.getY());
-                w = parent.activeObj.getWidth() + Ep.x - Sp.x;
-                h = parent.activeObj.getHeight() + Ep.y - Sp.y;
-                parent.activeObj.setSize(w < MinW ? MinW : w, h < MinW ? MinW : h);
+                Ep = new Point(Sp.x-e.getXOnScreen() , Sp.y-e.getYOnScreen());
+                parent.activeObj.setLocation(Ep.x < w ? x : x-Ep.x + w - NodeW,
+                                            Ep.y < h ? y : y-Ep.y + h - NodeW);
+                parent.activeObj.setSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h));
                 parent.repaint();
 
             }
@@ -246,7 +264,11 @@ public class moveNode extends Panel {
         Node[7].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Sp = Node[7].getLocation();
+                Sp = e.getLocationOnScreen();
+                x =parent.activeObj.getX();
+                y =parent.activeObj.getY();
+                w =parent.activeObj.getWidth();
+                h =parent.activeObj.getHeight();
                 CursorTemp = parent.getCursor();
                 parent.setCursor(Node[7].getCursor());
                 parent.activeObj.addUndo();

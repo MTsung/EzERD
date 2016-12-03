@@ -220,14 +220,15 @@ public class menuBar extends MenuBar{
         if (fileChooser.getDirectory() != null && fileChooser.getFile() != null) {
             BufferedImage img = new BufferedImage(parent.WorkSpace.activePage.getWidth(),
                                                     parent.WorkSpace.activePage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            parent.WorkSpace.activePage.MoveNode.HideNode();
             parent.WorkSpace.activePage.paint(img.getGraphics());
-            
             try {
                 ImageIO.write(img,S, new File(fileChooser.getDirectory() + fileChooser.getFile()));
 
             } catch (Exception ex) {
                 System.out.println("panel not saved" + ex.getMessage());
             }
+            parent.WorkSpace.activePage.MoveNode.ShowNode();
         }
     }
 }
