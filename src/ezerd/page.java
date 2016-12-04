@@ -202,7 +202,7 @@ public class page extends Panel{
         popupMenu1.setFont(new programFont());
         this.add(popupMenu1);
         MoveNode = new moveNode(this);
-        this.add(MoveNode);
+        //this.add(MoveNode);
        
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
@@ -241,12 +241,6 @@ public class page extends Panel{
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(activeObj.getTra());
             if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()){
-                Graphics2D g2 = (Graphics2D) this.getGraphics();
-                g2.setColor(Color.BLUE);
-                //g2.rotate(Math.toRadians(50), activeObj.getX()+activeObj.w/2, activeObj.getY()+activeObj.h/2);
-                g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
-                g2.drawRect(activeObj.getX() - 3, activeObj.getY() - 3,
-                        activeObj.getWidth() + 6, activeObj.getHeight() + 6);
                 MoveNode.ShowNode();
             }else
                 MoveNode.HideNode();
@@ -264,7 +258,6 @@ public class page extends Panel{
         if(PaintObj){
             Objs.removeAllElements();
             MoveNode = new moveNode(this);
-            this.add(MoveNode);
         }
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  

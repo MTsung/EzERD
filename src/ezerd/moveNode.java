@@ -6,6 +6,8 @@
 package ezerd;
 
 import java.awt.*;
+import static java.awt.BasicStroke.CAP_ROUND;
+import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -14,7 +16,7 @@ import javax.swing.event.*;
  *
  * @author CMC
  */
-public class moveNode extends Panel {
+public class moveNode{
 
     page parent;
     Point Sp, Ep;
@@ -281,10 +283,6 @@ public class moveNode extends Panel {
             }
         });
 
-        for (Component a : this.getComponents())/**/ {
-            a.addKeyListener(new keyListener(parent.parent));/**/
-        }
-        this.addKeyListener(new keyListener(parent.parent));/**/
     }
 
     void ShowNode() {
@@ -301,6 +299,12 @@ public class moveNode extends Panel {
         Node[5].setLocation(X - 3 - NodeW, Y + H + 3);
         Node[6].setLocation(X + W / 2 - NodeW / 2, Y + H + 3);
         Node[7].setLocation(X + W + 3, Y + H + 3);
+        Graphics2D g2 = (Graphics2D) parent.getGraphics();
+        g2.setColor(Color.BLUE);
+        //g2.rotate(Math.toRadians(50), activeObj.getX()+activeObj.w/2, activeObj.getY()+activeObj.h/2);
+        g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
+        g2.drawRect(parent.activeObj.getX() - 3, parent.activeObj.getY() - 3,
+                parent.activeObj.getWidth() + 6, parent.activeObj.getHeight() + 6);
     }
 
     void HideNode() {
