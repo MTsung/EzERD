@@ -187,6 +187,7 @@ public class page extends Panel{
                        
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        o.setXYwh();
                         Objs.add(o);
                         activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum,ObjID++));
@@ -240,7 +241,7 @@ public class page extends Panel{
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(activeObj.getTra());
-            if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()){
+            if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()&&MoveNode.isRotateing()){
                 MoveNode.ShowNode();
             }else
                 MoveNode.HideNode();
@@ -284,6 +285,7 @@ public class page extends Panel{
                 parent.AttributesToolBar.ObjList.setActiveObj(p.ObjID);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                o.setXYwh();
             }
         }
         for(objArrowXY obja:ObjArrowXYs){

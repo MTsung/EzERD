@@ -12,15 +12,22 @@ import java.awt.event.*;
 /**
  *
  * @author CMC
- */
+ */ 
+
 public abstract class obj extends Component {
+    enum LineEnum {
+        Solid,Dotted
+    } //實線 虛線
+    LineEnum Line=LineEnum.Solid;
     Color PenColor;
     float PenSize;
     page parent;
     Point Sp,Ep;
     Point ArrSp,ArrEp;
     obj EndObj;
-    int ID,Tra=100;
+    int ID,Tra=100,Angle=0;
+    int w,h,X,Y;
+    String str;
     pageActionEnum tempPAE;
     obj(){  
     }
@@ -35,9 +42,11 @@ public abstract class obj extends Component {
                 if(parent.ObjEnum==objEnum.arrow){
                     
                 }else if(parent.PageActionEnum==pageActionEnum.moving){
+                    if(Ep==null)
+                        obj.this.addUndo();
                     Ep = e.getPoint();
-                    obj.this.setLocation(obj.this.getLocation().x + (Ep.x - Sp.x),
-                                         obj.this.getLocation().y + (Ep.y - Sp.y));
+                    obj.this.setObjLocation(X + (Ep.x - Sp.x),
+                                         Y + (Ep.y - Sp.y),false);
                 }
                 parent.ArrowPaint=true;
             } 
@@ -57,7 +66,11 @@ public abstract class obj extends Component {
                     }
                     parent.Ep=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
                     drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2);
-                    
+                }
+                if (parent.ObjEnum == objEnum.arrow) {
+                    obj.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                } else {
+                    obj.this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
                 }
             }
         });
@@ -92,7 +105,6 @@ public abstract class obj extends Component {
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
                     parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
                     parent.parent.AttributesToolBar.AttributesBox.ColorBox.setColor(PenColor);
-                    obj.this.addUndo();
                     Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
@@ -102,16 +114,32 @@ public abstract class obj extends Component {
             }
             @Override
             public void mouseReleased(MouseEvent e){
-                if(parent.ObjEnum==objEnum.arrow){
-                }else if(parent.PageActionEnum==pageActionEnum.moving){
+                if (parent.ObjEnum == objEnum.arrow) {
+                } else if (parent.PageActionEnum == pageActionEnum.moving) {
                     obj.this.setPoints();
-                    parent.PageActionEnum=tempPAE;
+                    parent.PageActionEnum = tempPAE;
+                    if (e.getClickCount() != 1) {
+                        TextField TempTextField=new TextField();
+                        TempTextField.setLocation(X+10, Y+h/2-10);
+                        TempTextField.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                obj.this.setText(TempTextField.getText());
+                                parent.remove(TempTextField);
+                                obj.this.repaint();
+                            }
+                        });
+                        TempTextField.setSize(w-20, 20);
+                        parent.add(TempTextField,0);
+                    }
                 }
                 parent.repaint();
+                Ep = null;
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                    parent.popupMenu1.XY=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
+                    parent.popupMenu1.XY = new Point(obj.this.getX() + e.getX(), obj.this.getY() + e.getY());
                     parent.popupMenu1.show(obj.this, e.getX(), e.getY());
                 }
+                
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -167,15 +195,53 @@ public abstract class obj extends Component {
         parent.repaint();
         
     }
-    void setObjSize(int W,int H){
-        this.addUndo();
+    void setObjSize(int W,int H,Boolean b){
+        if(b)
+            this.addUndo();
+        double Tx,Ty,T;//克拉瑪
+        T = Math.abs(Math.cos(Math.toRadians(Angle))) * Math.abs(Math.cos(Math.toRadians(Angle))) 
+                - Math.abs(Math.sin(Math.toRadians(Angle))) * Math.abs(Math.sin(Math.toRadians(Angle)));
+        Tx = W * Math.abs(Math.cos(Math.toRadians(Angle))) - H * Math.abs(Math.sin(Math.toRadians(Angle)));
+        Ty = Math.abs(Math.cos(Math.toRadians(Angle))) * H - Math.abs(Math.sin(Math.toRadians(Angle))) * W;
         this.setSize(W,H);
-        this.setPoints();
+        w=(int)(Tx/T);
+        h=(int)(Ty/T);
+        this.repaint();
+        if(b)
+            this.setPoints();
     }
-    void setObjLocation(int X,int Y){
-        this.addUndo();
+    void setObjLocation(int X,int Y,Boolean b){
+        if(b)
+            this.addUndo();
+        this.X=X;
+        this.Y=Y;
         this.setLocation(X,Y);
-        this.setPoints();
+        this.repaint();
+        if(b)
+            this.setPoints();
+    }
+    void setAngle(int A){
+        Angle=A%360;
+        this.setSize((int)(w * Math.abs(Math.cos(Math.toRadians(Angle))) + h * Math.abs(Math.sin(Math.toRadians(Angle)))) ,
+                 (int)(w * Math.abs(Math.sin(Math.toRadians(Angle))) + h * Math.abs(Math.cos(Math.toRadians(Angle)))));
+        this.setLocation(X-this.getWidth()/2+w/2, Y-this.getHeight()/2+h/2);
+        this.repaint();
+    }
+    void setXYwh(){
+        w=this.getWidth();
+        h=this.getHeight();
+        X=this.getX();
+        Y=this.getY();
+    }
+    void setLine(int n){
+        if(n==1)
+            Line=LineEnum.Solid;
+        else
+            Line=LineEnum.Dotted;
+        this.repaint();
+    }
+    void setText(String s){
+        str=s;
     }
     public abstract void paintObj(Graphics g);
     public void paint(Graphics g)

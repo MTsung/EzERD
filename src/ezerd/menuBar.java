@@ -124,6 +124,7 @@ public class menuBar extends MenuBar{
                             parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
                             o.setLocation(0,0);
                             o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                            o.setXYwh();
                             parent.WorkSpace.activePage.Objs.add(o);
                             parent.WorkSpace.activePage.CopyObj = o;
                             parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),

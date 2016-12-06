@@ -44,7 +44,7 @@ public class objAttributesPanel extends Panel{
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setObjSize(Integer.valueOf(TextSize[0].getText()),
-                                 Integer.valueOf(TextSize[1].getText()));
+                                 Integer.valueOf(TextSize[1].getText()),true);
                     } catch (Exception ex) {
                         TextSize[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getWidth());
                         TextSize[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getHeight());
@@ -67,7 +67,7 @@ public class objAttributesPanel extends Panel{
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setObjSize(Integer.valueOf(TextSize[0].getText()),
-                                 Integer.valueOf(TextSize[1].getText()));
+                                 Integer.valueOf(TextSize[1].getText()),true);
                     } catch (Exception ex) {
                         TextSize[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getWidth());
                         TextSize[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getHeight());
@@ -94,7 +94,7 @@ public class objAttributesPanel extends Panel{
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setObjLocation(Integer.valueOf(TextLocation[0].getText()),
-                                 Integer.valueOf(TextLocation[1].getText()));
+                                 Integer.valueOf(TextLocation[1].getText()),true);
                     } catch (Exception ex) {
                         TextLocation[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getX());
                         TextLocation[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getY());
@@ -117,7 +117,7 @@ public class objAttributesPanel extends Panel{
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         AtoolBar.parent.WorkSpace.activePage.activeObj.setObjLocation(Integer.valueOf(TextLocation[0].getText()),
-                                 Integer.valueOf(TextLocation[1].getText()));
+                                 Integer.valueOf(TextLocation[1].getText()),true);
                     } catch (Exception ex) {
                         TextLocation[0].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getX());
                         TextLocation[1].setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getY());

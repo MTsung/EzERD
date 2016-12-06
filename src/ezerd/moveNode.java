@@ -21,12 +21,19 @@ public class moveNode{
     page parent;
     Point Sp, Ep;
     Panel[] Node = new Panel[8];
-    int NodeW = 10, w, h, MinW = 7,x,y;
+    Panel N;
+    int NodeW = 10, w, h,x,y,TempAngle;
     Cursor CursorTemp;
+    Boolean P=true;
     
     moveNode(page p) {
         super();
         parent = p;
+        N=new Panel();
+        N.setSize(15, 15);
+        N.setBackground(Color.GREEN);
+        N.setVisible(false);
+        parent.add(N);
         for (int i = 0; i < 8; i++) {
             Node[i] = new Panel();
             Node[i].setSize(NodeW, NodeW);
@@ -34,15 +41,16 @@ public class moveNode{
             Node[i].setVisible(false);
             Node[i].addKeyListener(new keyListener(parent.parent));/**/
             parent.add(Node[i]);
+            
         }
         Node[0].setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
         Node[0].addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(e.getXOnScreen() - Sp.x, e.getYOnScreen() - Sp.y);
-                parent.activeObj.setLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
-                                            Ep.y < h ? y + Ep.y : y + h + NodeW);
-                parent.activeObj.setSize(Math.abs(Ep.x - w), Math.abs(Ep.y - h));
+                parent.activeObj.setObjLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
+                                            Ep.y < h ? y + Ep.y : y + h + NodeW,false);
+                parent.activeObj.setObjSize(Math.abs(Ep.x - w), Math.abs(Ep.y - h),false);
                 parent.repaint();
             }
         });
@@ -71,9 +79,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(e.getXOnScreen() - Sp.x, e.getYOnScreen() - Sp.y);
-                parent.activeObj.setLocation(parent.activeObj.getX(),
-                                            Ep.y < h ? y + Ep.y : y + h + NodeW);
-                parent.activeObj.setSize(w,Math.abs(Ep.y - h));
+                parent.activeObj.setObjLocation(parent.activeObj.getX(),
+                                            Ep.y < h ? y + Ep.y : y + h + NodeW,false);
+                parent.activeObj.setObjSize(w,Math.abs(Ep.y - h),false);
                 parent.repaint();
             }
         });
@@ -102,9 +110,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Sp.x - e.getXOnScreen() , e.getYOnScreen() - Sp.y);
-                parent.activeObj.setLocation(Ep.x < w ? x : x - Ep.x +w,
-                                            Ep.y < h ? y + Ep.y : y + h + NodeW);
-                parent.activeObj.setSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h));
+                parent.activeObj.setObjLocation(Ep.x < w ? x : x - Ep.x +w,
+                                            Ep.y < h ? y + Ep.y : y + h + NodeW,false);
+                parent.activeObj.setObjSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h),false);
                 parent.repaint();
             }
         });
@@ -133,9 +141,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(e.getXOnScreen() - Sp.x, e.getYOnScreen() - Sp.y);
-                parent.activeObj.setLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
-                                            parent.activeObj.getY());
-                parent.activeObj.setSize(Math.abs(Ep.x - w),h);
+                parent.activeObj.setObjLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
+                                            parent.activeObj.getY(),false);
+                parent.activeObj.setObjSize(Math.abs(Ep.x - w),h,false);
                 parent.repaint();
             }
         });
@@ -164,9 +172,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Sp.x - e.getXOnScreen() , e.getYOnScreen() - Sp.y);
-                parent.activeObj.setLocation(Ep.x < w ? x : x - Ep.x +w,
-                                            parent.activeObj.getY());
-                parent.activeObj.setSize(Math.abs(Ep.x - w),h);
+                parent.activeObj.setObjLocation(Ep.x < w ? x : x - Ep.x +w,
+                                            parent.activeObj.getY(),false);
+                parent.activeObj.setObjSize(Math.abs(Ep.x - w),h,false);
                 parent.repaint();
             }
         });
@@ -195,9 +203,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(e.getXOnScreen() - Sp.x, Sp.y - e.getYOnScreen());
-                parent.activeObj.setLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
-                                            Ep.y < h ? y : y - Ep.y + h - NodeW);
-                parent.activeObj.setSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h));
+                parent.activeObj.setObjLocation(Ep.x < w ? x + Ep.x : x + w + NodeW,
+                                            Ep.y < h ? y : y - Ep.y + h - NodeW,false);
+                parent.activeObj.setObjSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h),false);
                 parent.repaint();
             }
         });
@@ -226,9 +234,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(e.getXOnScreen() - Sp.x, Sp.y - e.getYOnScreen());
-                parent.activeObj.setLocation(parent.activeObj.getX(),
-                                            Ep.y < h ? y  : y - Ep.y + h - NodeW);
-                parent.activeObj.setSize(w,Math.abs(Ep.y - h));
+                parent.activeObj.setObjLocation(parent.activeObj.getX(),
+                                            Ep.y < h ? y  : y - Ep.y + h - NodeW,false);
+                parent.activeObj.setObjSize(w,Math.abs(Ep.y - h),false);
                 parent.repaint();
             }
         });
@@ -256,9 +264,9 @@ public class moveNode{
             @Override
             public void mouseDragged(MouseEvent e) {
                 Ep = new Point(Sp.x-e.getXOnScreen() , Sp.y-e.getYOnScreen());
-                parent.activeObj.setLocation(Ep.x < w ? x : x-Ep.x + w - NodeW,
-                                            Ep.y < h ? y : y-Ep.y + h - NodeW);
-                parent.activeObj.setSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h));
+                parent.activeObj.setObjLocation(Ep.x < w ? x : x-Ep.x + w - NodeW,
+                                            Ep.y < h ? y : y-Ep.y + h - NodeW,false);
+                parent.activeObj.setObjSize(Math.abs(Ep.x - w),Math.abs(Ep.y - h),false);
                 parent.repaint();
 
             }
@@ -283,17 +291,53 @@ public class moveNode{
             }
         });
 
+        N.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int tt =(int) Math.toDegrees(Math.atan(
+                        ((float) (Sp.x) - e.getXOnScreen())
+                        / (e.getYOnScreen() - (float) (Sp.y))
+                        ));
+                if((float)(Sp.y)>e.getYOnScreen()){
+                    if((float) (Sp.x) > e.getXOnScreen()){
+                        tt+=360;
+                    }
+                }else{
+                    tt+=180;
+                }
+                parent.activeObj.setAngle(tt+TempAngle);
+                parent.repaint();
+            }
+        });
+        N.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Sp = new Point(parent.activeObj.getLocationOnScreen().x + parent.activeObj.getWidth() / 2,
+                        parent.activeObj.getLocationOnScreen().y + parent.activeObj.getHeight() / 2);
+                TempAngle=parent.activeObj.Angle;
+                P=false;
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                ShowNode();
+                P=true;
+            }
+        });
     }
-
+    Boolean isRotateing(){
+        return P;
+    }
     void ShowNode() {
         for (Panel p : Node) {
             p.setVisible(true);
         }
+        N.setVisible(true);
         int X = parent.activeObj.getX(), Y = parent.activeObj.getY();
         int W = parent.activeObj.getWidth(), H = parent.activeObj.getHeight();
         Node[0].setLocation(X - 3 - NodeW, Y - 3 - NodeW);
         Node[1].setLocation(X + W / 2 - NodeW / 2, Y - 3 - NodeW);
         Node[2].setLocation(X + W + 3, Y - 3 - NodeW);
+        N.setLocation(X + W / 2 - 15 / 2, Y - 30);
         Node[3].setLocation(X - 3 - NodeW, Y + H / 2 - NodeW / 2);
         Node[4].setLocation(X + W + 3, Y + H / 2 - NodeW / 2);
         Node[5].setLocation(X - 3 - NodeW, Y + H + 3);
@@ -301,8 +345,8 @@ public class moveNode{
         Node[7].setLocation(X + W + 3, Y + H + 3);
         Graphics2D g2 = (Graphics2D) parent.getGraphics();
         g2.setColor(Color.BLUE);
-        //g2.rotate(Math.toRadians(50), activeObj.getX()+activeObj.w/2, activeObj.getY()+activeObj.h/2);
-        g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
+        g2.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND,
+                     0, new float[]{16, 8}, 0));
         g2.drawRect(parent.activeObj.getX() - 3, parent.activeObj.getY() - 3,
                 parent.activeObj.getWidth() + 6, parent.activeObj.getHeight() + 6);
     }
@@ -311,5 +355,6 @@ public class moveNode{
         for (Panel p : Node) {
             p.setVisible(false);
         }
+        N.setVisible(false);
     }
 }
