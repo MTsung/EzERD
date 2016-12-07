@@ -28,17 +28,27 @@ public class objDiamond extends obj{
     public void paintObj(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         
+        g2.rotate(Math.toRadians(Angle), this.getWidth()/2, this.getHeight()/2);
+                                                                     
         g2.setColor(Color.WHITE);
-        int x[] = {this.getWidth()-(int)PenSize/2-2,this.getWidth()/2,(int)PenSize/2,this.getWidth()/2};
-        int y[] = {this.getHeight()/2,(int)PenSize/2,this.getHeight()/2,this.getHeight()-(int)PenSize/2};
+        int a = this.getWidth() / 2 - w / 2;
+        int b = this.getHeight() / 2 - h / 2;
+        int x[] = {a + w - (int) PenSize / 2 - 2, a + w / 2, a + (int) PenSize / 2, a + w / 2};
+        int y[] = {b + h / 2, b + (int) PenSize / 2, b + h / 2, b + h - (int) PenSize / 2};
         g2.fillPolygon(x, y, 4);
         
-        g2.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
+        if(Line==LineEnum.Solid){
+            g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND));
+        }else if(Line==LineEnum.Dotted){
+            g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND,
+                     0, new float[]{16, 8}, 0));
+        }
         g2.setColor(this.PenColor);
-        g2.drawLine(this.getWidth()-(int)PenSize/2-3,this.getHeight()/2,this.getWidth()/2,(int)PenSize/2);
-        g2.drawLine((int)PenSize/2,this.getHeight()/2,this.getWidth()/2,(int)PenSize/2);
-        g2.drawLine((int)PenSize/2,this.getHeight()/2,this.getWidth()/2,this.getHeight()-(int)PenSize/2);
-        g2.drawLine(this.getWidth()/2,this.getHeight()-(int)PenSize/2-1,this.getWidth()-(int)PenSize/2-3,this.getHeight()/2);
+        g2.drawPolygon(x, y, 4);
+        if(str!=null){
+            g2.setFont(new programFont());
+            g2.drawString(str,this.getWidth()/2-str.length()*6,this.getHeight()/2+7);
+        }
         
    }
 }

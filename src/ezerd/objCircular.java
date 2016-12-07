@@ -24,14 +24,24 @@ public class objCircular extends obj{
     @Override
     public void paintObj(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
-        //g2.rotate(Math.toRadians(50),this.getWidth() /2, this.getHeight()/2);
-        
+        g2.rotate(Math.toRadians(Angle), this.getWidth()/2, this.getHeight()/2);
         g2.setColor(Color.WHITE);
-        g2.fillOval((int)PenSize/2, (int)PenSize/2, this.getWidth()-(int)PenSize,this.getHeight()-(int)PenSize);
+        g2.fillOval(this.getWidth()/2-w/2+(int)PenSize/2, this.getHeight()/2-h/2+(int)PenSize/2,
+                w-(int)PenSize,h-(int)PenSize);
         
-        g2.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
+        if(Line==LineEnum.Solid){
+            g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND));
+        }else if(Line==LineEnum.Dotted){
+            g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND,
+                     0, new float[]{16, 8}, 0));
+        }
         g2.setColor(this.PenColor);
-        g2.drawOval((int)PenSize/2, (int)PenSize/2, this.getWidth()-(int)PenSize,this.getHeight()-(int)PenSize);
+        g2.drawOval(this.getWidth()/2-w/2+(int)PenSize/2, this.getHeight()/2-h/2+(int)PenSize/2,
+                w-(int)PenSize,h-(int)PenSize);
         
+        if(str!=null){
+            g2.setFont(new programFont());
+            g2.drawString(str,this.getWidth()/2-str.length()*6,this.getHeight()/2+7);
+        }
    }
 }
