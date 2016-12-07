@@ -14,9 +14,19 @@ import static java.awt.BasicStroke.CAP_ROUND;
 import static java.awt.BasicStroke.JOIN_ROUND;
 import java.awt.event.*;
 
-public class objText extends Label{
-    objText(){
-        super();
-        this.setText("122");
+public class objText extends obj{
+    
+    objText(page p,Color c,float s,int id){
+        super(p,c,s,id);
+    }
+
+    @Override
+    public void paintObj(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(this.PenColor);
+        if(str!=null){
+            g2.setFont(new programFont());
+            g2.drawString(str,this.getWidth()/2-str.length()*5,this.getHeight()/2+7);
+        }
     }
 }

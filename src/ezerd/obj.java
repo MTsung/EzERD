@@ -29,6 +29,7 @@ public abstract class obj extends Component {
     int w,h,X,Y;
     String str;
     pageActionEnum tempPAE;
+    TextField TempTextField;
     obj(){  
     }
     obj(page p,Color c,float s,int id){
@@ -119,8 +120,11 @@ public abstract class obj extends Component {
                     obj.this.setPoints();
                     parent.PageActionEnum = tempPAE;
                     if (e.getClickCount() != 1) {
-                        TextField TempTextField=new TextField();
+                        if(TempTextField!=null)
+                            parent.remove(TempTextField);
+                        TempTextField=new TextField(obj.this.str);
                         TempTextField.setLocation(X+10, Y+h/2-10);
+                        TempTextField.setSize(w-20, 20);
                         TempTextField.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -129,7 +133,6 @@ public abstract class obj extends Component {
                                 obj.this.repaint();
                             }
                         });
-                        TempTextField.setSize(w-20, 20);
                         parent.add(TempTextField,0);
                     }
                 }
@@ -193,9 +196,12 @@ public abstract class obj extends Component {
             }
         }
         parent.repaint();
-        
     }
     void setObjSize(int W,int H,Boolean b){
+        if (TempTextField != null) {
+            TempTextField.setLocation(X + 10, Y + h / 2 - 10);
+            TempTextField.setSize(w - 20, 20);
+        }
         if(b)
             this.addUndo();
         double Tx,Ty,T;//克拉瑪
@@ -211,6 +217,10 @@ public abstract class obj extends Component {
             this.setPoints();
     }
     void setObjLocation(int X,int Y,Boolean b){
+        if (TempTextField != null) {
+            TempTextField.setLocation(X + 10, Y + h / 2 - 10);
+            TempTextField.setSize(w - 20, 20);
+        }
         if(b)
             this.addUndo();
         this.X=X;
