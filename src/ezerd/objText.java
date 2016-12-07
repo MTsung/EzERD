@@ -18,6 +18,7 @@ public class objText extends obj{
     
     objText(page p,Color c,float s,int id){
         super(p,c,s,id);
+        str="Text";
     }
 
     @Override
@@ -26,7 +27,7 @@ public class objText extends obj{
         g2.setColor(this.PenColor);
         if(str!=null){
             g2.setFont(new programFont());
-            g2.drawString(str,this.getWidth()/2-str.length()*5,this.getHeight()/2+7);
+            g2.drawString(str,this.getWidth()/2-str.length()*6,this.getHeight()/2+7);
         }
     }
 }

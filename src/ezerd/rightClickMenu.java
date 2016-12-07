@@ -54,6 +54,8 @@ public class rightClickMenu extends PopupMenu{
                             } else if (p.ObjEnum == objEnum.diamond) {
                                 o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
                                 parent.WorkSpace.activePage.add(o, 0);
+                            } else if (p.ObjEnum == p.ObjEnum.text) {
+                                o = new objText(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
                             }
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);

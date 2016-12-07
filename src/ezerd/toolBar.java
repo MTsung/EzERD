@@ -17,7 +17,7 @@ import javax.swing.event.*;
  */
 public class toolBar extends Panel{
     ezERD parent;
-    JButton ChoBtn,GraffitiBtn,RecBtn,CirBtn,DiaBtn,ArrBtn;
+    JButton ChoBtn,GraffitiBtn,RecBtn,CirBtn,DiaBtn,ArrBtn,TextBtn;
     
     toolBar(ezERD p){
         super();
@@ -31,6 +31,7 @@ public class toolBar extends Panel{
             RecBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Rectangle.png"))));
             DiaBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Diamond.png"))));
             CirBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Circular.png"))));
+            TextBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Text.png"))));
         }catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -94,6 +95,15 @@ public class toolBar extends Panel{
                 creatingObj(objEnum.circular,CirBtn);
             }
         });
+        TextBtn.setBackground(this.getBackground());
+        TextBtn.setBorder(null);
+        TextBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                creatingObj(objEnum.text,TextBtn);
+            }
+        });
         
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(ChoBtn);
@@ -102,6 +112,7 @@ public class toolBar extends Panel{
         this.add(RecBtn);
         this.add(DiaBtn);
         this.add(CirBtn);
+        this.add(TextBtn);
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/

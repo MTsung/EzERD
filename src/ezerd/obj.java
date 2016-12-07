@@ -123,8 +123,9 @@ public abstract class obj extends Component {
                         if(TempTextField!=null)
                             parent.remove(TempTextField);
                         TempTextField=new TextField(obj.this.str);
-                        TempTextField.setLocation(X+10, Y+h/2-10);
-                        TempTextField.setSize(w-20, 20);
+                        TempTextField.setLocation(X+20, Y+h/2-15);
+                        TempTextField.setSize(w-40, 30);
+                        TempTextField.setFont(new programFont());
                         TempTextField.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -199,8 +200,8 @@ public abstract class obj extends Component {
     }
     void setObjSize(int W,int H,Boolean b){
         if (TempTextField != null) {
-            TempTextField.setLocation(X + 10, Y + h / 2 - 10);
-            TempTextField.setSize(w - 20, 20);
+            TempTextField.setLocation(X + 20, Y + h / 2 - 15);
+            TempTextField.setSize(w - 40, 30);
         }
         if(b)
             this.addUndo();
@@ -218,8 +219,8 @@ public abstract class obj extends Component {
     }
     void setObjLocation(int X,int Y,Boolean b){
         if (TempTextField != null) {
-            TempTextField.setLocation(X + 10, Y + h / 2 - 10);
-            TempTextField.setSize(w - 20, 20);
+            TempTextField.setLocation(X + 20, Y + h / 2 - 15);
+            TempTextField.setSize(w - 40, 30);
         }
         if(b)
             this.addUndo();

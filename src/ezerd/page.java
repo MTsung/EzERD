@@ -180,6 +180,9 @@ public class page extends Panel{
                         } else if (ObjEnum == ObjEnum.diamond) {
                             o = new objDiamond(page.this,PenColor, PenSize,ObjID);
                             page.this.add(o,0);
+                        }else if (ObjEnum == ObjEnum.text) {
+                            o = new objText(page.this,PenColor, PenSize,ObjID);
+                            page.this.add(o,0);
                         }
                         page.this.add(o, 0);
                         parent.AttributesToolBar.ObjList.addObj(ObjID);
@@ -277,6 +280,8 @@ public class page extends Panel{
                     o = new objCircular(this, p.PenColor, p.PenSize,p.ObjID);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
                     o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
+                } else if (ObjEnum == ObjEnum.text) {
+                    o = new objText(this, p.PenColor, p.PenSize, p.ObjID);
                 }
                 activeObj=o;
                 Objs.add(o);
