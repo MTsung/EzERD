@@ -19,7 +19,7 @@ public abstract class obj extends Component {
         Solid,Dotted
     } //實線 虛線
     LineEnum Line=LineEnum.Solid;
-    Color PenColor;
+    Color PenColor,TextColor,BackgroundColor;
     float PenSize;
     page parent;
     Point Sp,Ep;
@@ -35,7 +35,7 @@ public abstract class obj extends Component {
     obj(page p,Color c,float s,int id){
         parent=p;
         PenColor=c;
-        PenSize = s > 8 ? 8 : s;
+        PenSize = s;
         ID=id;
         this.addMouseMotionListener(new MouseAdapter(){
             @Override

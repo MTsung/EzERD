@@ -39,8 +39,8 @@ public class attributesToolBar extends Panel {
                     for(int i=4;i<12;i++)
                         g.drawLine(i,attributesToolBar.this.getHeight()/2-10+(16-i)*10/12,i,attributesToolBar.this.getHeight()/2+10-(16-i)*10/12);
                 }
-                AttributesScrollPane.setPreferredSize(new Dimension(0,attributesToolBar.this.getHeight()/2));
-                ObjScrollPane.setPreferredSize(new Dimension(0,attributesToolBar.this.getHeight()/2));
+                AttributesScrollPane.setPreferredSize(new Dimension(0,attributesToolBar.this.getHeight()*3/4));
+                ObjScrollPane.setPreferredSize(new Dimension(0,attributesToolBar.this.getHeight()/4));
                 TempPanel.revalidate();
             }
         };

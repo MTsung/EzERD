@@ -18,25 +18,45 @@ public class objAttributesPanel extends Panel{
     TextField[] TextSize=new TextField[2];
     TextField[] TextLocation=new TextField[2];
     TextField TextTra;
-    Panel TextPanel,TempPanel1,TempPanel2,TempPanel3;
-    Label LabelW,LabelH,LabelTra;
+    Panel TextPanel,SizePanel,LocationPanel,TarPanel,AnglePanel,LineColorPanel,TextColorPanel,BGColorPanel;
+    Label LabelW,LabelH,LabelX,LabelY,LabelTra,LabelAngle,LabelLineColor,LabelTextColor,LabelBGColor;
     objAttributesPanel(attributesToolBar p){
         super();
         AtoolBar=p;
         TextPanel=new Panel();
-        TextPanel.setPreferredSize(new Dimension(270,140));
-        TempPanel1=new Panel();
-        TempPanel2=new Panel();
-        TempPanel3=new Panel();
+        TextPanel.setPreferredSize(new Dimension(270,280));
+        SizePanel=new Panel();
+        LocationPanel=new Panel();
+        TarPanel=new Panel();
+        AnglePanel=new Panel();
+        LineColorPanel=new Panel();
+        TextColorPanel=new Panel();
+        BGColorPanel=new Panel();
+        
         LabelW=new Label("Width:");
         LabelH=new Label("Height:");
+        LabelX=new Label("X       :");
+        LabelY=new Label("Y        :");
         LabelTra=new Label("Transparency:");
+        LabelAngle=new Label("Angle:");
+        LabelLineColor=new Label("Line Color:");
+        LabelTextColor=new Label("Text Color:");
+        LabelBGColor=new Label("Background Color:");
+        
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
+        LabelX.setFont(new programFont());
+        LabelY.setFont(new programFont());
         LabelTra.setFont(new programFont());
+        LabelAngle.setFont(new programFont());
+        LabelLineColor.setFont(new programFont());
+        LabelTextColor.setFont(new programFont());
+        LabelBGColor.setFont(new programFont());
+        
+        
         TextSize[0]=new TextField("0",3);
-        TempPanel1.add(LabelW);
-        TempPanel1.add(TextSize[0]);
+        SizePanel.add(LabelW);
+        SizePanel.add(TextSize[0]);
         TextSize[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,8 +78,8 @@ public class objAttributesPanel extends Panel{
             }
         });
         TextSize[1]=new TextField("0",3);
-        TempPanel1.add(LabelH);
-        TempPanel1.add(TextSize[1]);
+        SizePanel.add(LabelH);
+        SizePanel.add(TextSize[1]);
         TextSize[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,13 +100,11 @@ public class objAttributesPanel extends Panel{
                 }
             }
         });
-        Label LabelX=new Label("X       :");
-        Label LabelY=new Label("Y        :");
-        LabelX.setFont(new programFont());
-        LabelY.setFont(new programFont());
+        
+        
         TextLocation[0]=new TextField("0",3);
-        TempPanel2.add(LabelX);
-        TempPanel2.add(TextLocation[0]);
+        LocationPanel.add(LabelX);
+        LocationPanel.add(TextLocation[0]);
         TextLocation[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,8 +126,8 @@ public class objAttributesPanel extends Panel{
             }
         });
         TextLocation[1]=new TextField("0",3);
-        TempPanel2.add(LabelY);
-        TempPanel2.add(TextLocation[1]);
+        LocationPanel.add(LabelY);
+        LocationPanel.add(TextLocation[1]);
         TextLocation[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -130,6 +148,8 @@ public class objAttributesPanel extends Panel{
                 }
             }
         });
+        
+        
         TextTra=new TextField("100",3); 
         TextTra.addActionListener(new ActionListener() {
             @Override
@@ -150,12 +170,22 @@ public class objAttributesPanel extends Panel{
                 }
             }
         });
-        TempPanel3.add(LabelTra);
-        TempPanel3.add(TextTra);
+        
+        AnglePanel.add(LabelAngle);
+        LineColorPanel.add(LabelLineColor);
+        TextColorPanel.add(LabelTextColor);
+        BGColorPanel.add(LabelBGColor);
+        
+        TarPanel.add(LabelTra);
+        TarPanel.add(TextTra);
         TextPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        TextPanel.add(TempPanel1);
-        TextPanel.add(TempPanel2);
-        TextPanel.add(TempPanel3);
+        TextPanel.add(SizePanel);
+        TextPanel.add(LocationPanel);
+        TextPanel.add(TarPanel);
+        TextPanel.add(AnglePanel);
+        TextPanel.add(LineColorPanel);
+        TextPanel.add(TextColorPanel);
+        TextPanel.add(BGColorPanel);
         this.add(TextPanel);
     }
     void setTextLocation(int x,int y){

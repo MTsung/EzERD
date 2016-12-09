@@ -70,7 +70,7 @@ public class page extends Panel{
                     Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum.graffiti,0));
                     Sp=Ep;
                     undo++; 
-                }else if(ObjEnum==ObjEnum.arrow){
+                }else if(ObjEnum==ObjEnum.arrow && Sp!=null){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
@@ -108,7 +108,7 @@ public class page extends Panel{
             
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (ObjEnum == ObjEnum.arrow && ObjArrowJ) {
+                if (ObjEnum == ObjEnum.arrow && ObjArrowJ && Sp!=null) {
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
@@ -239,7 +239,7 @@ public class page extends Panel{
         
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
-        PenColor=parent.AttributesToolBar.AttributesBox.ColorBox.getColor();
+        //PenColor=parent.AttributesToolBar.AttributesBox.ColorBox.getColor();
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());

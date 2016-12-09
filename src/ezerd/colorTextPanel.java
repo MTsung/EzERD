@@ -83,7 +83,7 @@ public class colorTextPanel extends Panel{
         ColorPanel.setPreferredSize(new Dimension(70,50));
         this.add(ColorPanel);
         this.add(TextPanel);
-        
+        setColor(Color.BLACK);
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(AttributesToolBox.parent));/**/

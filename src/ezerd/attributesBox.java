@@ -33,7 +33,7 @@ public class attributesBox extends Panel{
         super();
         AtoolBar=p;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        ColorBox=new colorBox(AtoolBar,360);
+        //ColorBox=new colorBox(AtoolBar,360);
         ColorTextPanel= new colorTextPanel(AtoolBar);
         PageSizePanel=new pageSizePanel(AtoolBar);
         ObjAttributesPanel=new objAttributesPanel(AtoolBar);
@@ -55,10 +55,10 @@ public class attributesBox extends Panel{
                 PenSizeText.setText(""+PenSizeSlider.getValue());
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null
                         &&AtoolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
-                    AtoolBar.parent.WorkSpace.activePage.activeObj.PenSize=PenSizeSlider.getValue()>8?8:PenSizeSlider.getValue();
+                    AtoolBar.parent.WorkSpace.activePage.activeObj.PenSize=PenSizeSlider.getValue();
                     for (object o : AtoolBar.parent.WorkSpace.activePage.Points) {
                         if (o.ObjID == AtoolBar.parent.WorkSpace.activePage.activeObj.ID) {
-                            o.PenSize = PenSizeSlider.getValue()>8?8:PenSizeSlider.getValue();
+                            o.PenSize = PenSizeSlider.getValue();
                         }
                     }
                     AtoolBar.parent.WorkSpace.activePage.repaint();
@@ -113,9 +113,10 @@ public class attributesBox extends Panel{
         ColorChooserLabel.addMouseListener(new MouseAdapter(){
             @Override                   
             public void mousePressed(MouseEvent e){
-                ColorBox.setVisible(ColorBox.isVisible()?false:true);
+                //ColorBox.setVisible(ColorBox.isVisible()?false:true);
                 ColorTextPanel.setVisible(ColorTextPanel.isVisible()?false:true);
                 AtoolBar.parent.MainWin.validate();
+        new colorWin(AtoolBar,Color.BLACK);
             }
         });
         PenSizeLabel=new Label("PenSize :");
@@ -146,7 +147,7 @@ public class attributesBox extends Panel{
         this.add(ObjectLabel);
         this.add(ObjAttributesPanel);
         this.add(ColorChooserLabel);
-        this.add(ColorBox);
+        //this.add(ColorBox);
         this.add(ColorTextPanel);
         this.add(PenSizeLabel);
         this.add(PenSizePanel);

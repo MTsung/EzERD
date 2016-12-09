@@ -16,14 +16,14 @@ import java.awt.image.BufferedImage;
  * @author CMC
  */
 public class colorBox extends Panel{
-    attributesToolBar AttributesToolBar;                                                                                            
+    colorWin parent;                                                                                            
     int ColorInt;
     Image bufferImage;
     Graphics bufferGraphics;
     int X=0, Y=35,XX=-4,ColorBoxWidth=360,pressY;
-    colorBox(attributesToolBar p,int w) {
+    colorBox(colorWin p,int w) {
         super();
-        AttributesToolBar=p;
+        parent=p;
         ColorBoxWidth=w;
         this.setPreferredSize(new Dimension(ColorBoxWidth,ColorBoxWidth+35));
         this.addMouseMotionListener(new MouseAdapter(){
@@ -43,10 +43,10 @@ public class colorBox extends Panel{
                 colorBox.this.repaint();
             }
             public void mouseReleased(MouseEvent e){
-                if (AttributesToolBar.parent.WorkSpace.activePage.activeObj != null
-                        && AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum == pageActionEnum.idle) {
-                    for (object o : AttributesToolBar.parent.WorkSpace.activePage.Points) {
-                        if (o.ObjID == AttributesToolBar.parent.WorkSpace.activePage.activeObj.ID) {
+                if (parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj != null
+                        && parent.AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum == pageActionEnum.idle) {
+                    for (object o : parent.AttributesToolBar.parent.WorkSpace.activePage.Points) {
+                        if (o.ObjID == parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.ID) {
                             //AttributesToolBar.parent.WorkSpace.activePage.undos.add(-2);
                             o.PenColor = new Color(ColorInt);
                         }
@@ -55,8 +55,8 @@ public class colorBox extends Panel{
             }
         });
         for(Component a:this.getComponents())/**/
-            a.addKeyListener(new keyListener(AttributesToolBar.parent));/**/
-        this.addKeyListener(new keyListener(AttributesToolBar.parent));/**/
+            a.addKeyListener(new keyListener(parent.AttributesToolBar.parent));/**/
+        this.addKeyListener(new keyListener(parent.AttributesToolBar.parent));/**/
         
     }
     int getColorInt(){
@@ -149,20 +149,20 @@ public class colorBox extends Panel{
         g.drawImage(bufferImage, 0, 0, this);
         BufferedImage bufImg = (BufferedImage) bufferImage;
         ColorInt=bufImg.getRGB(X,Y);
-        if(AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null
-                &&AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
-            AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
-            AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
+        if(parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null
+                &&parent.AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
+            parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
+            parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
         }
-        AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
-        AttributesToolBar.AttributesBox.ColorTextPanel.setColor(new Color(ColorInt));
-        AttributesToolBar.AttributesBox.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
-        AttributesToolBar.AttributesBox.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
-        AttributesToolBar.AttributesBox.ColorTextPanel.TextRGB[2].setText(""+new Color(ColorInt).getBlue());
-        AttributesToolBar.AttributesBox.ColorTextPanel.TextHSB[0].setText(""+(float)(XX+4)/ColorBoxWidth*360);
-        AttributesToolBar.AttributesBox.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
-        AttributesToolBar.AttributesBox.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
-        AttributesToolBar.parent.MainWin.requestFocusInWindow();
+        parent.AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
+        parent.ColorTextPanel.setColor(new Color(ColorInt));
+        parent.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
+        parent.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
+        parent.ColorTextPanel.TextRGB[2].setText(""+new Color(ColorInt).getBlue());
+        parent.ColorTextPanel.TextHSB[0].setText(""+(float)(XX+4)/ColorBoxWidth*360);
+        parent.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
+        parent.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
+        parent.AttributesToolBar.parent.MainWin.requestFocusInWindow();
         
         
     } 
