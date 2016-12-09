@@ -18,13 +18,15 @@ public class objAttributesPanel extends Panel{
     TextField[] TextSize=new TextField[2];
     TextField[] TextLocation=new TextField[2];
     TextField TextTra;
+    TextField TextAngle;
     Panel TextPanel,SizePanel,LocationPanel,TarPanel,AnglePanel,LineColorPanel,TextColorPanel,BGColorPanel;
+    Panel LineColorBtn,TextColorBtn,BGColorBtn;
     Label LabelW,LabelH,LabelX,LabelY,LabelTra,LabelAngle,LabelLineColor,LabelTextColor,LabelBGColor;
     objAttributesPanel(attributesToolBar p){
         super();
         AtoolBar=p;
         TextPanel=new Panel();
-        TextPanel.setPreferredSize(new Dimension(270,280));
+        TextPanel.setPreferredSize(new Dimension(270,330));
         SizePanel=new Panel();
         LocationPanel=new Panel();
         TarPanel=new Panel();
@@ -32,6 +34,16 @@ public class objAttributesPanel extends Panel{
         LineColorPanel=new Panel();
         TextColorPanel=new Panel();
         BGColorPanel=new Panel();
+        LineColorBtn=new Panel();
+        TextColorBtn=new Panel();
+        BGColorBtn=new Panel();
+        LineColorBtn.setPreferredSize(new Dimension(60,30));
+        LineColorBtn.setBackground(Color.BLACK);
+        TextColorBtn.setPreferredSize(new Dimension(60,30));
+        TextColorBtn.setBackground(Color.WHITE);
+        BGColorBtn.setPreferredSize(new Dimension(60,30));
+        BGColorBtn.setBackground(Color.BLACK);
+        
         
         LabelW=new Label("Width:");
         LabelH=new Label("Height:");
@@ -39,9 +51,9 @@ public class objAttributesPanel extends Panel{
         LabelY=new Label("Y        :");
         LabelTra=new Label("Transparency:");
         LabelAngle=new Label("Angle:");
-        LabelLineColor=new Label("Line Color:");
-        LabelTextColor=new Label("Text Color:");
-        LabelBGColor=new Label("Background Color:");
+        LabelLineColor=new Label("Line Color             :");
+        LabelTextColor=new Label("Text Color             :");
+        LabelBGColor=new Label("Background Color  :");
         
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
@@ -170,11 +182,40 @@ public class objAttributesPanel extends Panel{
                 }
             }
         });
-        
+        TextAngle=new TextField("0",3); 
+        TextAngle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        LineColorBtn.addMouseListener(new MouseAdapter(){
+            @Override                   
+            public void mouseReleased(MouseEvent e){
+                AtoolBar.AttributesBox.ColorWin.Show();
+                AtoolBar.AttributesBox.ColorWin.setColor("Line");
+            }
+        });
+        TextColorBtn.addMouseListener(new MouseAdapter(){
+            @Override                   
+            public void mouseReleased(MouseEvent e){
+                AtoolBar.AttributesBox.ColorWin.Show();
+                AtoolBar.AttributesBox.ColorWin.setColor("Text");
+            }
+        });
+        BGColorBtn.addMouseListener(new MouseAdapter(){
+            @Override                   
+            public void mouseReleased(MouseEvent e){
+                AtoolBar.AttributesBox.ColorWin.Show();
+                AtoolBar.AttributesBox.ColorWin.setColor("BG");
+            }
+        });
         AnglePanel.add(LabelAngle);
         LineColorPanel.add(LabelLineColor);
+        LineColorPanel.add(LineColorBtn);
         TextColorPanel.add(LabelTextColor);
+        TextColorPanel.add(TextColorBtn);
         BGColorPanel.add(LabelBGColor);
+        BGColorPanel.add(BGColorBtn);
         
         TarPanel.add(LabelTra);
         TarPanel.add(TextTra);
@@ -183,6 +224,7 @@ public class objAttributesPanel extends Panel{
         TextPanel.add(LocationPanel);
         TextPanel.add(TarPanel);
         TextPanel.add(AnglePanel);
+        TextPanel.add(TextAngle);
         TextPanel.add(LineColorPanel);
         TextPanel.add(TextColorPanel);
         TextPanel.add(BGColorPanel);
@@ -198,5 +240,14 @@ public class objAttributesPanel extends Panel{
     }
     void setTextTra(int t){
         TextTra.setText(""+t);
+    }
+    void setTextColor(Color c){
+        TextColorBtn.setBackground(c);
+    }
+    void setLineColor(Color c){
+        LineColorBtn.setBackground(c);
+    }
+    void setBGColor(Color c){
+        BGColorBtn.setBackground(c);
     }
 }

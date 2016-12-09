@@ -21,23 +21,21 @@ import javax.swing.event.*;
 
 public class attributesBox extends Panel{
     attributesToolBar AtoolBar;   
-    colorBox ColorBox;
-    colorTextPanel ColorTextPanel;
+    colorWin ColorWin;
     pageSizePanel PageSizePanel;
     objAttributesPanel ObjAttributesPanel;
     JSlider PenSizeSlider;
     Panel PenSizePanel;
     TextField PenSizeText;
-    Label PenSizeLabel,PageSizeLabel,ColorChooserLabel,ObjectLabel;
+    Label PenSizeLabel,PageSizeLabel,ObjectLabel;
     attributesBox(attributesToolBar p) {
         super();
         AtoolBar=p;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        //ColorBox=new colorBox(AtoolBar,360);
-        ColorTextPanel= new colorTextPanel(AtoolBar);
         PageSizePanel=new pageSizePanel(AtoolBar);
         ObjAttributesPanel=new objAttributesPanel(AtoolBar);
         PenSizePanel=new Panel();
+        ColorWin=new colorWin(AtoolBar,Color.BLACK);
         
         PenSizeSlider=new JSlider(1,40);
         PenSizeSlider.setPreferredSize(new Dimension(300,50));
@@ -106,19 +104,6 @@ public class attributesBox extends Panel{
             }
         });
         
-        ColorChooserLabel=new Label("Color Chooser :");
-        ColorChooserLabel.setPreferredSize(new Dimension(360,50));
-        ColorChooserLabel.setBackground(Color.LIGHT_GRAY);
-        ColorChooserLabel.setFont(new programFont());
-        ColorChooserLabel.addMouseListener(new MouseAdapter(){
-            @Override                   
-            public void mousePressed(MouseEvent e){
-                //ColorBox.setVisible(ColorBox.isVisible()?false:true);
-                ColorTextPanel.setVisible(ColorTextPanel.isVisible()?false:true);
-                AtoolBar.parent.MainWin.validate();
-        new colorWin(AtoolBar,Color.BLACK);
-            }
-        });
         PenSizeLabel=new Label("PenSize :");
         PenSizeLabel.setPreferredSize(new Dimension(360,50));
         PenSizeLabel.setBackground(Color.LIGHT_GRAY);
@@ -146,9 +131,6 @@ public class attributesBox extends Panel{
         this.add(PageSizePanel);
         this.add(ObjectLabel);
         this.add(ObjAttributesPanel);
-        this.add(ColorChooserLabel);
-        //this.add(ColorBox);
-        this.add(ColorTextPanel);
         this.add(PenSizeLabel);
         this.add(PenSizePanel);
     }

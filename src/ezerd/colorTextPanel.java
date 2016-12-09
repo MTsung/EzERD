@@ -45,7 +45,8 @@ public class colorTextPanel extends Panel{
                             TextRGB[j].setText("0");
                         } 
                     }
-                    AttributesToolBox.AttributesBox.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText()), Integer.valueOf(TextRGB[1].getText())
+                    AttributesToolBox.AttributesBox.ColorWin.ColorBox.setColor(Integer.valueOf(TextRGB[0].getText())
+                                                    ,Integer.valueOf(TextRGB[1].getText())
                                                     ,Integer.valueOf(TextRGB[2].getText()));
                 }
             });
@@ -72,7 +73,8 @@ public class colorTextPanel extends Panel{
                             TextHSB[j].setText("0.0");
                         } 
                     }
-                    AttributesToolBox.AttributesBox.ColorBox.setColor(Float.valueOf(TextHSB[0].getText()),Float.valueOf(TextHSB[1].getText())
+                    AttributesToolBox.AttributesBox.ColorWin.ColorBox.setColor(Float.valueOf(TextHSB[0].getText())
+                                                    ,Float.valueOf(TextHSB[1].getText())
                                                     ,Float.valueOf(TextHSB[2].getText()));
                 }
             });
@@ -91,5 +93,8 @@ public class colorTextPanel extends Panel{
     }
     void setColor(Color c){
         ColorPanel.setBackground(c);
+    }
+    Color getColor(){
+        return ColorPanel.getBackground();
     }
 }
