@@ -22,7 +22,7 @@ import javax.swing.event.*;
  */
 public class menuBar extends MenuBar{
     ezERD parent;
-    Menu  FileMenu, EditMenu, LanguageMenu,HelpMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
+    Menu  FileMenu, EditMenu, LanguageMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
     MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,EN,JpgM,PngM,GifM,BmpM,copyM,pasteM;
     menuBar(ezERD p){
         super();
@@ -186,12 +186,10 @@ public class menuBar extends MenuBar{
             }
         });
         
-        HelpMenu = new Menu("Help");
         this.add(FileMenu);
         this.add(EditMenu);
         this.add(PageMenu);
         this.add(LanguageMenu);
-        this.add(HelpMenu);
         FileMenu.add(newM);
         FileMenu.add(cloM);
         FileMenu.add(openM);
@@ -208,7 +206,6 @@ public class menuBar extends MenuBar{
         PageMenu.add(AllPageMenu);
         PageMenu.add(CachingPageMenu);
         LanguageMenu.add(TW);
-        //LanguageMenu.add(JP);
         LanguageMenu.add(EN);
     }
     void savePageToImage(String S){

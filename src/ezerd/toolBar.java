@@ -64,6 +64,7 @@ public class toolBar extends Panel{
         ArrBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                parent.WorkSpace.activePage.setActiveObj(null);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 creatingObj(objEnum.arrow,ArrBtn);
             }

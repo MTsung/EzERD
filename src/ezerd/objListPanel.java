@@ -89,8 +89,7 @@ public class objListPanel extends Panel{
     public void paint(Graphics g) {
         for (obj o : ObjList.AtoolBar.parent.WorkSpace.activePage.Objs) {     
             if(o.ID==ObjID){
-                int w=o.getWidth(),h=o.getHeight(),temp=o.Tra;
-                o.setTra(100,false);
+                int w=o.getWidth(),h=o.getHeight();
                 float x=(float)w/100>(float)h/50?(float)w/100:(float)h/50;
                 Graphics2D g2 = (Graphics2D)g;
                 BufferedImage img = new BufferedImage((int)(100*x), (int)(50*x), BufferedImage.TYPE_INT_RGB);
@@ -99,7 +98,6 @@ public class objListPanel extends Panel{
                 imgG.fillRect(0, 0, img.getWidth(), img.getHeight());    
                 o.paintObj(img.getGraphics());
                 g2.drawImage(img,AffineTransform.getScaleInstance(1/x, 1/x), this);
-                o.setTra(temp,false);
             }
         }
     }

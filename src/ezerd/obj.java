@@ -82,8 +82,6 @@ public abstract class obj extends Component {
         this.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                parent.setActiveObj(obj.this);
-                parent.repaint();
                 tempPAE=parent.PageActionEnum;
                 parent.PageActionEnum=pageActionEnum.moving;
                 if(parent.ObjEnum==objEnum.arrow&&!parent.ObjArrowJ){
@@ -115,6 +113,8 @@ public abstract class obj extends Component {
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
                     g.drawRect(obj.this.getX()-3, obj.this.getY()-3,
                                 obj.this.getWidth() + 6, obj.this.getHeight() + 6);
+                    parent.setActiveObj(obj.this);
+                    parent.repaint();
                 }
             }
             @Override
@@ -363,7 +363,10 @@ public abstract class obj extends Component {
                 }
             }
         }
-        
+        for(objListPanel p:parent.parent.AttributesToolBar.AttributesBox.AtoolBar.ObjList.objListPanels){
+            if(p.ObjID==this.ID)
+                p.repaint();
+        }
     }
 
 }

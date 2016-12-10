@@ -65,10 +65,12 @@ public class rightClickMenu extends PopupMenu{
                             o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
                             o.setXYwh();
                             parent.WorkSpace.activePage.Objs.add(o);
+                            parent.WorkSpace.activePage.setActiveObj(o);
                             parent.WorkSpace.activePage.CopyObj = o;
                             parent.WorkSpace.activePage.Points.add(new object(new Point(XY.x,XY.y),
                                     new Point(XY.x+Math.abs(p.Sp.x - p.Ep.x), XY.y+Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
-                                    p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str));
+                                    p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str
+                                    ,p.Angle,p.Tra,p.x,p.y,p.w,p.h));
                         }
                     }
                 } catch (Throwable ee) {

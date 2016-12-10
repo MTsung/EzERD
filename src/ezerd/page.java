@@ -216,7 +216,6 @@ public class page extends Panel{
         this.add(popupMenu1);
         MoveNode = new moveNode(this);
         //this.add(MoveNode);
-       
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/
         this.addKeyListener(new keyListener(parent));/**/
@@ -294,7 +293,7 @@ public class page extends Panel{
                 Objs.add(o);
                 this.add(o, 0);
                 parent.AttributesToolBar.ObjList.addObj(p.ObjID);
-                
+                ObjID=p.ObjID+1;
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
             }

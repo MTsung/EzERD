@@ -33,5 +33,6 @@ public class pageScrollPane extends ScrollPane{
         parent.WorkSpace.validate();
         parent.WorkSpace.activePage=p;
         parent.WorkSpace.Pages.add(p);
+        parent.ToolBar.ChoBtn.doClick();
     }
 }

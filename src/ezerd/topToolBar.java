@@ -284,7 +284,7 @@ public class topToolBar extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
-                parent.TopToolBar.PasteBtn.setEnabled(true);
+                parent.WorkSpace.activePage.repaint();
             }
         });
         
@@ -318,13 +318,14 @@ public class topToolBar extends Panel{
                             parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
                             o.setLocation(0, 0);
                             o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                            o.setXYwh();
                             parent.WorkSpace.activePage.Objs.add(o);
+                            parent.WorkSpace.activePage.setActiveObj(o);
                             parent.WorkSpace.activePage.CopyObj = o;
                             parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
                                     new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
-                                    p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str));
-                            o.setArr(p);
-                            //o.setXYwh();
+                                    p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str
+                                    ,p.Angle,p.Tra,p.x,p.y,p.w,p.h));
                         }
                     }
                 } catch (Throwable ee) {
