@@ -305,7 +305,7 @@ public class moveNode{
                 }else{
                     tt+=180;
                 }
-                parent.activeObj.setAngle(tt+TempAngle);
+                parent.activeObj.setAngle(tt+TempAngle,false);
                 parent.repaint();
             }
         });
@@ -316,11 +316,13 @@ public class moveNode{
                         parent.activeObj.getLocationOnScreen().y + parent.activeObj.getHeight() / 2);
                 TempAngle=parent.activeObj.Angle;
                 P=false;
+                parent.activeObj.addUndo();
             }
             @Override
             public void mouseReleased(MouseEvent e) {
                 ShowNode();
                 P=true;
+                parent.activeObj.setPoints();
             }
         });
     }

@@ -17,15 +17,21 @@ public class object {
     objEnum ObjEnum;
     Point Sp,Ep;
     float PenSize;
-    Color PenColor;
-    int ObjID;
-    object(Point s,Point e,float Size,Color color,objEnum O,int id){
+    Color PenColor,TextColor,BGColor;
+    int ObjID,LineSD,Tra=100,Angle=0;
+    int w,h,x,y;
+    String str;
+    object(Point s,Point e,float Size,Color c,Color c1,Color c2,objEnum O,int id,int SD,String S){
         Sp=s;
         Ep=e;
         PenSize=Size;
-        PenColor=color;
+        PenColor=c;
+        BGColor=c1;
+        TextColor=c2;
         ObjEnum=O;
         ObjID=id;
+        LineSD=SD;
+        str=S;
     }
     
 }

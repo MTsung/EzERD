@@ -19,14 +19,15 @@ public class objAttributesPanel extends Panel{
     TextField[] TextLocation=new TextField[2];
     TextField TextTra;
     TextField TextAngle;
+    Choice choice;
     Panel TextPanel,SizePanel,LocationPanel,TarPanel,AnglePanel,LineColorPanel,TextColorPanel,BGColorPanel;
     Panel LineColorBtn,TextColorBtn,BGColorBtn;
-    Label LabelW,LabelH,LabelX,LabelY,LabelTra,LabelAngle,LabelLineColor,LabelTextColor,LabelBGColor;
+    Label LabelW,LabelH,LabelX,LabelY,LabelTra,LabelAngle,LabelLineColor,LabelTextColor,LabelBGColor,LabelLine;
     objAttributesPanel(attributesToolBar p){
         super();
         AtoolBar=p;
         TextPanel=new Panel();
-        TextPanel.setPreferredSize(new Dimension(270,330));
+        TextPanel.setPreferredSize(new Dimension(270,380));
         SizePanel=new Panel();
         LocationPanel=new Panel();
         TarPanel=new Panel();
@@ -37,23 +38,28 @@ public class objAttributesPanel extends Panel{
         LineColorBtn=new Panel();
         TextColorBtn=new Panel();
         BGColorBtn=new Panel();
+        
         LineColorBtn.setPreferredSize(new Dimension(60,30));
         LineColorBtn.setBackground(Color.BLACK);
-        TextColorBtn.setPreferredSize(new Dimension(60,30));
-        TextColorBtn.setBackground(Color.WHITE);
+        LineColorBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         BGColorBtn.setPreferredSize(new Dimension(60,30));
-        BGColorBtn.setBackground(Color.BLACK);
+        BGColorBtn.setBackground(Color.WHITE);
+        BGColorBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        TextColorBtn.setPreferredSize(new Dimension(60,30));
+        TextColorBtn.setBackground(Color.BLACK);
+        TextColorBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         
         LabelW=new Label("Width:");
         LabelH=new Label("Height:");
         LabelX=new Label("X       :");
         LabelY=new Label("Y        :");
-        LabelTra=new Label("Transparency:");
-        LabelAngle=new Label("Angle:");
-        LabelLineColor=new Label("Line Color             :");
-        LabelTextColor=new Label("Text Color             :");
-        LabelBGColor=new Label("Background Color  :");
+        LabelTra=new Label("Opacity         :");
+        LabelAngle=new Label("Angle            :");
+        LabelLineColor=new Label("Line              :");
+        LabelBGColor=new Label("Background   :");
+        LabelTextColor=new Label("Text              :");
+        LabelLine=new Label("                                            ");
         
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
@@ -62,8 +68,8 @@ public class objAttributesPanel extends Panel{
         LabelTra.setFont(new programFont());
         LabelAngle.setFont(new programFont());
         LabelLineColor.setFont(new programFont());
-        LabelTextColor.setFont(new programFont());
         LabelBGColor.setFont(new programFont());
+        LabelTextColor.setFont(new programFont());
         
         
         TextSize[0]=new TextField("0",3);
@@ -173,7 +179,7 @@ public class objAttributesPanel extends Panel{
                             TextTra.setText(""+100);
                         if(Integer.valueOf(TextTra.getText())<0)
                             TextTra.setText(""+0);
-                        AtoolBar.parent.WorkSpace.activePage.activeObj.setTra(Integer.valueOf(TextTra.getText()));
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setTra(Integer.valueOf(TextTra.getText()),true);
                     } catch (Exception ex) {
                         TextTra.setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getTra());
                     }
@@ -186,8 +192,23 @@ public class objAttributesPanel extends Panel{
         TextAngle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                    try {
+                        if(Integer.valueOf(TextAngle.getText())>359)
+                            TextAngle.setText(""+0);
+                        if(Integer.valueOf(TextAngle.getText())<0)
+                            TextAngle.setText(""+(360+Integer.valueOf(TextAngle.getText())));
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setAngle(Integer.valueOf(TextAngle.getText()),true);
+                    } catch (Exception ex) {
+                        TextAngle.setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getAngle());
+                    }
+                }else{
+                    TextAngle.setText("0");
+                }
             }
         });
+        
         LineColorBtn.addMouseListener(new MouseAdapter(){
             @Override                   
             public void mouseReleased(MouseEvent e){
@@ -209,6 +230,18 @@ public class objAttributesPanel extends Panel{
                 AtoolBar.AttributesBox.ColorWin.setColor("BG");
             }
         });
+        
+        choice = new Choice();
+        choice.setFont(new programFont());
+        choice.add("Solid     ");
+        choice.add("Dotted");
+        choice.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null)
+                    AtoolBar.parent.WorkSpace.activePage.activeObj.setLine(choice.getSelectedIndex(),true);
+            }
+        });
+        
         AnglePanel.add(LabelAngle);
         LineColorPanel.add(LabelLineColor);
         LineColorPanel.add(LineColorBtn);
@@ -226,8 +259,10 @@ public class objAttributesPanel extends Panel{
         TextPanel.add(AnglePanel);
         TextPanel.add(TextAngle);
         TextPanel.add(LineColorPanel);
-        TextPanel.add(TextColorPanel);
+        TextPanel.add(LabelLine);
+        TextPanel.add(choice);
         TextPanel.add(BGColorPanel);
+        TextPanel.add(TextColorPanel);
         this.add(TextPanel);
     }
     void setTextLocation(int x,int y){
@@ -241,13 +276,25 @@ public class objAttributesPanel extends Panel{
     void setTextTra(int t){
         TextTra.setText(""+t);
     }
-    void setTextColor(Color c){
-        TextColorBtn.setBackground(c);
+    void setTextAngle(int a){
+        TextAngle.setText(""+a);
     }
     void setLineColor(Color c){
         LineColorBtn.setBackground(c);
+        if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+            AtoolBar.parent.WorkSpace.activePage.activeObj.setPenColor(c,true);
+        }
     }
     void setBGColor(Color c){
         BGColorBtn.setBackground(c);
+        if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+            AtoolBar.parent.WorkSpace.activePage.activeObj.setBGColor(c,true);
+        }
+    }
+    void setTextColor(Color c){
+        TextColorBtn.setBackground(c);
+        if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+            AtoolBar.parent.WorkSpace.activePage.activeObj.setTextColor(c,true);
+        }
     }
 }

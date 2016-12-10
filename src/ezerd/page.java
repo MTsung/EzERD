@@ -23,14 +23,13 @@ public class page extends Panel{
     Boolean PaintObj=true,ObjArrowJ=false,ArrowPaint=true;
     ezERD parent;
     Point Sp,Ep;
-    Vector<object> Points,RePoints;
-    Vector<objPoint> ObjPoints,ReObjPoints;
+    Vector<object> Points,UndoPoints,RePoints;
+    Vector<objPoint> UnObjPoints,ReObjPoints;
     Vector<objArrowXY> ObjArrowXYs,ReObjArrowXYs;
-    Vector<obj> Objs,ReObjs;
+    Vector<obj> Objs;
     Stack<Integer> undos,redos;
     int undo=0,PageWidth=1400,PageHeight=800,ObjID=1;
     float PenSize=5;
-    Color PenColor=new Color(0,0,0);
     rightClickMenu popupMenu1;
     Image bufferImage;
     Graphics bufferGraphics;
@@ -42,11 +41,12 @@ public class page extends Panel{
         super();      
         parent=p;      
         Objs=new Vector<obj>();
-        ObjPoints=new Vector<objPoint>();
+        UnObjPoints=new Vector<objPoint>();
         ReObjPoints=new Vector<objPoint>();
         ObjArrowXYs=new Vector<objArrowXY>();
         ReObjArrowXYs=new Vector<objArrowXY>();
         Points=new Vector<object>();
+        UndoPoints=new Vector<object>();
         RePoints=new Vector<object>();
         undos=new Stack<Integer>();
         redos=new Stack<Integer>();
@@ -58,16 +58,17 @@ public class page extends Panel{
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
+                objAttributesPanel temp=parent.AttributesToolBar.AttributesBox.ObjAttributesPanel;
                 //System.out.println("mouseReleased");
-                //PenColor=new Color(parent.AttributesToolBar.PenAttributesBox.ColorBox.getColorInt());
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                 }else if(ObjEnum == ObjEnum.graffiti){
                     Graphics2D g = (Graphics2D)page.this.getGraphics();    
                     g.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
-                    g.setColor(PenColor);
+                    g.setColor(temp.LineColorBtn.getBackground());
                     Ep=e.getPoint();
                     g.drawLine(Sp.x, Sp.y, Ep.x, Ep.y);
-                    Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum.graffiti,0));
+                    Points.add(new object(Sp,Ep,PenSize,temp.LineColorBtn.getBackground(),temp.BGColorBtn.getBackground(),
+                                temp.TextColorBtn.getBackground(),ObjEnum.graffiti,0,0,""));
                     Sp=Ep;
                     undo++; 
                 }else if(ObjEnum==ObjEnum.arrow && Sp!=null){
@@ -144,6 +145,7 @@ public class page extends Panel{
             
             @Override
             public void mouseReleased(MouseEvent e){
+                objAttributesPanel temp=parent.AttributesToolBar.AttributesBox.ObjAttributesPanel;
                 //System.out.println("mouseReleased");
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                     popupMenu1.XY=e.getPoint();
@@ -158,9 +160,10 @@ public class page extends Panel{
                     RePoints.removeAllElements();
                     redos.removeAllElements();
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
-                    g.setColor(PenColor);
+                    g.setColor(temp.LineColorBtn.getBackground());
                     drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
-                    Points.add(new object(Sp,Ep,1,PenColor,ObjEnum,0));
+                    Points.add(new object(Sp,Ep,1,temp.LineColorBtn.getBackground(),temp.BGColorBtn.getBackground(),
+                                temp.TextColorBtn.getBackground(),ObjEnum,0,0,""));
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
@@ -172,17 +175,21 @@ public class page extends Panel{
                                 , Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         obj o = null;
                         if (ObjEnum == ObjEnum.rectangle) {
-                            o = new objRectangle(page.this,PenColor, PenSize,ObjID);
-                            page.this.add(o,0);
+                            o = new objRectangle(page.this,temp.LineColorBtn.getBackground()
+                                    ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
+                                    ,temp.choice.getSelectedIndex(),"");
                         } else if (ObjEnum == ObjEnum.circular) {
-                            o = new objCircular(page.this,PenColor, PenSize,ObjID);
-                            page.this.add(o,0);
+                            o = new objCircular(page.this,temp.LineColorBtn.getBackground()
+                                    ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
+                                    ,temp.choice.getSelectedIndex(),"");
                         } else if (ObjEnum == ObjEnum.diamond) {
-                            o = new objDiamond(page.this,PenColor, PenSize,ObjID);
-                            page.this.add(o,0);
+                            o = new objDiamond(page.this,temp.LineColorBtn.getBackground()
+                                    ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
+                                    ,temp.choice.getSelectedIndex(),"");
                         }else if (ObjEnum == ObjEnum.text) {
-                            o = new objText(page.this,PenColor, PenSize,ObjID);
-                            page.this.add(o,0);
+                            o = new objText(page.this,temp.LineColorBtn.getBackground()
+                                    ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
+                                    ,temp.choice.getSelectedIndex(),"text");
                         }
                         page.this.add(o, 0);
                         parent.AttributesToolBar.ObjList.addObj(ObjID);
@@ -193,7 +200,8 @@ public class page extends Panel{
                         o.setXYwh();
                         Objs.add(o);
                         activeObj=o;
-                        Points.add(new object(Sp,Ep,PenSize,PenColor,ObjEnum,ObjID++));
+                        Points.add(new object(Sp,Ep,PenSize,o.PenColor,o.BGColor,o.TextColor,ObjEnum,ObjID++,
+                                    temp.choice.getSelectedIndex(),o.str));
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
                 }  
@@ -239,11 +247,11 @@ public class page extends Panel{
         
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
-        //PenColor=parent.AttributesToolBar.AttributesBox.ColorBox.getColor();
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(activeObj.getTra());
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextAngle(activeObj.getAngle());
             if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()&&MoveNode.isRotateing()){
                 MoveNode.ShowNode();
             }else
@@ -275,14 +283,15 @@ public class page extends Panel{
             } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
-                    o = new objRectangle(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new objRectangle(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
                 } else if (p.ObjEnum == ObjEnum.circular) {
-                    o = new objCircular(this, p.PenColor, p.PenSize,p.ObjID);
+                    o = new objCircular(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
-                    o = new objDiamond(this, p.PenColor, p.PenSize,p.ObjID);
-                } else if (ObjEnum == ObjEnum.text) {
-                    o = new objText(this, p.PenColor, p.PenSize, p.ObjID);
+                    o = new objDiamond(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
+                } else if (p.ObjEnum == ObjEnum.text) {
+                    o = new objText(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
                 }
+                o.setArr(p);
                 activeObj=o;
                 Objs.add(o);
                 this.add(o, 0);
@@ -290,7 +299,6 @@ public class page extends Panel{
                 parent.AttributesToolBar.ObjList.setActiveObj(p.ObjID);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-                o.setXYwh();
             }
         }
         for(objArrowXY obja:ObjArrowXYs){

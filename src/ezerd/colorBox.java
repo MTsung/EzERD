@@ -43,6 +43,7 @@ public class colorBox extends Panel{
                 colorBox.this.repaint();
             }
             public void mouseReleased(MouseEvent e){
+                /*
                 if (parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj != null
                         && parent.AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum == pageActionEnum.idle) {
                     for (object o : parent.AttributesToolBar.parent.WorkSpace.activePage.Points) {
@@ -51,7 +52,7 @@ public class colorBox extends Panel{
                             o.PenColor = new Color(ColorInt);
                         }
                     }
-                }
+                }*/
             }
         });
         for(Component a:this.getComponents())/**/
@@ -151,10 +152,10 @@ public class colorBox extends Panel{
         ColorInt=bufImg.getRGB(X,Y);
         if(parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null
                 &&parent.AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
-            parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
+            //parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
             parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
         }
-        parent.AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
+        //parent.AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
         parent.ColorTextPanel.setColor(new Color(ColorInt));
         parent.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
         parent.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());

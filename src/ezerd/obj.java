@@ -15,11 +15,12 @@ import java.awt.event.*;
  */ 
 
 public abstract class obj extends Component {
+
     enum LineEnum {
         Solid,Dotted
     } //實線 虛線
     LineEnum Line=LineEnum.Solid;
-    Color PenColor,TextColor,BackgroundColor;
+    Color PenColor,TextColor,BGColor;
     float PenSize;
     page parent;
     Point Sp,Ep;
@@ -32,11 +33,15 @@ public abstract class obj extends Component {
     TextField TempTextField;
     obj(){  
     }
-    obj(page p,Color c,float s,int id){
+    obj(page p,Color c,Color c1,Color c2,float s,int id,int LineSD,String S){
         parent=p;
         PenColor=c;
+        BGColor=c1;
+        TextColor=c2;
+        setLine(LineSD,false);
         PenSize = s;
         ID=id;
+        str=S;
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
@@ -92,7 +97,8 @@ public abstract class obj extends Component {
                     parent.Ep=new Point(obj.this.getX()+obj.this.getWidth()/2,obj.this.getY()+obj.this.getHeight()/2);
                     parent.EObj=obj.this;
                     parent.ObjArrowXYs.add(new objArrowXY(parent.SObj,parent.EObj
-                                                    ,parent.SObj.ID,parent.EObj.ID,parent.PenColor));
+                                                    ,parent.SObj.ID,parent.EObj.ID
+                            ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.LineColorBtn.getBackground()));
                     parent.undos.add(-1);
                     parent.ReObjPoints.removeAllElements();
                     parent.redos.removeAllElements();
@@ -105,7 +111,6 @@ public abstract class obj extends Component {
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(), obj.this.getY());
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
                     parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
-                    parent.parent.AttributesToolBar.AttributesBox.ColorWin.ColorBox.setColor(PenColor);
                     Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
@@ -129,7 +134,7 @@ public abstract class obj extends Component {
                         TempTextField.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                obj.this.setText(TempTextField.getText());
+                                obj.this.setText(TempTextField.getText(),true);
                                 parent.remove(TempTextField);
                                 obj.this.repaint();
                             }
@@ -165,21 +170,40 @@ public abstract class obj extends Component {
         });
     }
     
-    void setTra(int n){
+    void setTra(int n,Boolean b){
+        if(b)
+            this.addUndo();
         Tra=n;
         PenColor=new Color(PenColor.getRed(),PenColor.getGreen(),PenColor.getBlue(),(int)(Tra*2.55));
+        TextColor=new Color(TextColor.getRed(),TextColor.getGreen(),TextColor.getBlue(),(int)(Tra*2.55));
+        BGColor=new Color(BGColor.getRed(),BGColor.getGreen(),BGColor.getBlue(),(int)(Tra*2.55));
         this.repaint();
+        if(b)
+            this.setPoints();
     }
     
     int getTra(){
        return Tra; 
     }
     void addUndo(){
+        System.out.println(this.Angle);
+        parent.UnObjPoints.add(new objPoint(this.getLocation(),
+                 new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight()),
+                 this.PenSize, this.PenColor, this.BGColor, this.TextColor, this.ID,
+                 this.getLine(), this.str, this.Tra, this.Angle));
+
+        parent.undos.add(0);
+        parent.ReObjPoints.removeAllElements();
+        parent.redos.removeAllElements();
+        parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
+        parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
+        
+        /*
         for (object o : parent.Points) {
             if (o.ObjID == ID) {
                 o.Sp = this.getLocation();
                 o.Ep = new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight());
-                parent.ObjPoints.add(new objPoint(o.Sp, o.Ep, ID));
+                parent.UnObjPoints.add(new objPoint(o.Sp, o.Ep, ID));
 
                 parent.undos.add(0);
                 parent.ReObjPoints.removeAllElements();
@@ -187,13 +211,24 @@ public abstract class obj extends Component {
                 parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
                 parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
             }
-        }
+        }*/
     }
     void setPoints(){
         for (object o : parent.Points) {
             if (o.ObjID == ID) {
-                o.Sp = obj.this.getLocation();
+                o.Sp = this.getLocation();
                 o.Ep = new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight());
+                o.PenColor=PenColor;
+                o.BGColor=BGColor;
+                o.TextColor=TextColor;
+                o.LineSD=getLine();
+                o.str=str;
+                o.Angle=Angle;
+                o.Tra=Tra;
+                o.x=X;
+                o.y=Y;
+                o.w=w;
+                o.h=h;
             }
         }
         parent.repaint();
@@ -231,12 +266,29 @@ public abstract class obj extends Component {
         if(b)
             this.setPoints();
     }
-    void setAngle(int A){
+    void setAngle(int A,Boolean b){
+        if(b)
+            this.addUndo();
         Angle=A%360;
         this.setSize((int)(w * Math.abs(Math.cos(Math.toRadians(Angle))) + h * Math.abs(Math.sin(Math.toRadians(Angle)))) ,
                  (int)(w * Math.abs(Math.sin(Math.toRadians(Angle))) + h * Math.abs(Math.cos(Math.toRadians(Angle)))));
         this.setLocation(X-this.getWidth()/2+w/2, Y-this.getHeight()/2+h/2);
         this.repaint();
+        if(b)
+            this.setPoints();
+    }
+    int getAngle(){
+        return Angle;
+    }
+    void setXYwh(int a,int b,int c,int d,Boolean B){
+        if(B)
+            this.addUndo();
+        w=a;
+        h=b;
+        X=c;
+        Y=d;
+        if(B)
+            this.setPoints();
     }
     void setXYwh(){
         w=this.getWidth();
@@ -244,16 +296,62 @@ public abstract class obj extends Component {
         X=this.getX();
         Y=this.getY();
     }
-    void setLine(int n){
-        if(n==1)
+    void setLine(int n,Boolean b){
+        if(b)
+            this.addUndo();
+        if(n==0)
             Line=LineEnum.Solid;
         else
             Line=LineEnum.Dotted;
         this.repaint();
+        if(b)
+            this.setPoints();
     }
-    void setText(String s){
+    int getLine(){
+        if(Line==LineEnum.Solid)
+            return 0;
+        else
+            return 1;
+    }
+    void setText(String s,Boolean b){
+        if(b)
+            this.addUndo();
         str=s;
+        if(b)
+            this.setPoints();
     }
+    void setArr(object p) {
+        setText(p.str,false);
+        setLine(p.LineSD,false);
+        setAngle(p.Angle,false);
+        setXYwh(p.w,p.h,p.x,p.y,false);
+        setTra(p.Tra,false);
+    }
+    void setPenColor(Color c, Boolean b) {
+        if(b)
+            this.addUndo();
+        PenColor=c;
+        if(b)
+            this.setPoints();
+    }
+
+    void setBGColor(Color c, Boolean b) {
+        if(b)
+            this.addUndo();
+        BGColor=c;
+        if(b)
+            this.setPoints();
+    }
+
+    void setTextColor(Color c, Boolean b) {
+        if(b)
+            this.addUndo();
+        TextColor=c;
+        if(b)
+            this.setPoints();
+    }
+    
+    
     public abstract void paintObj(Graphics g);
     public void paint(Graphics g)
     {

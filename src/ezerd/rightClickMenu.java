@@ -46,16 +46,17 @@ public class rightClickMenu extends PopupMenu{
                     for (object p : parent.WorkSpace.activePage.Points) {
                         if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
                             if (p.ObjEnum == objEnum.rectangle) {
-                                o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
-                                parent.WorkSpace.activePage.add(o, 0);
+                                o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             } else if (p.ObjEnum == objEnum.circular) {
-                                o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
-                                parent.WorkSpace.activePage.add(o, 0);
+                                o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             } else if (p.ObjEnum == objEnum.diamond) {
-                                o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
-                                parent.WorkSpace.activePage.add(o, 0);
+                                o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             } else if (p.ObjEnum == p.ObjEnum.text) {
-                                o = new objText(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                o = new objText(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             }
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
@@ -67,7 +68,7 @@ public class rightClickMenu extends PopupMenu{
                             parent.WorkSpace.activePage.CopyObj = o;
                             parent.WorkSpace.activePage.Points.add(new object(new Point(XY.x,XY.y),
                                     new Point(XY.x+Math.abs(p.Sp.x - p.Ep.x), XY.y+Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
-                                    p.ObjEnum, parent.WorkSpace.activePage.ObjID++));
+                                    p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str));
                         }
                     }
                 } catch (Throwable ee) {

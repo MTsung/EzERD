@@ -40,7 +40,7 @@ public class topToolBar extends Panel{
             SaveBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Save.png"))));
             UndoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Undo.png"))));
             RedoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Redo.png"))));
-            DelBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Delete.png"))));
+            //DelBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Delete.png"))));
             CopyBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Copy.png"))));
             PasteBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Paste.png"))));
         }catch (IOException ex) {
@@ -107,11 +107,11 @@ public class topToolBar extends Panel{
                                 parent.WorkSpace.activePage.setPageSize(Integer.parseInt(L[1]), Integer.parseInt(L[2]));
                             }else{
                                 String[] L = newLine.split(",");
-                                parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
+                                /*parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                         ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
                                                                         ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
                                                                         ,objEnum.valueOf(L[6]),Integer.parseInt(L[7])
-                                                                        ));
+                                                                        ));*/
                             }
                         }
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -168,17 +168,30 @@ public class topToolBar extends Panel{
                     int temp=parent.WorkSpace.activePage.undos.pop();
                     parent.WorkSpace.activePage.redos.add(temp);
                     if(temp==0){
-                        int id=parent.WorkSpace.activePage.ObjPoints.elementAt(parent.WorkSpace.activePage.ObjPoints.size()-1).ID;
+                        int id=parent.WorkSpace.activePage.UnObjPoints.elementAt(parent.WorkSpace.activePage.UnObjPoints.size()-1).ID;
                         for (object o :parent.WorkSpace.activePage.Points) {
                             if (o.ObjID == id) {
-                                parent.WorkSpace.activePage.ReObjPoints.add(new objPoint(o.Sp,o.Ep,id));
-                                o.Sp = parent.WorkSpace.activePage.ObjPoints.elementAt(
-                                                            parent.WorkSpace.activePage.ObjPoints.size() - 1).Sp;
-                                o.Ep = parent.WorkSpace.activePage.ObjPoints.elementAt(
-                                                            parent.WorkSpace.activePage.ObjPoints.size() - 1).Ep;
+                                objPoint objPointTemp=parent.WorkSpace.activePage.UnObjPoints.elementAt(
+                                                            parent.WorkSpace.activePage.UnObjPoints.size() - 1);
+                                parent.WorkSpace.activePage.ReObjPoints.add(new objPoint(objPointTemp));
+                                o.Sp = objPointTemp.Sp;
+                                o.Ep = objPointTemp.Ep;
+                                o.Angle=objPointTemp.Angle;
+                                o.Tra=objPointTemp.Tra;
+                                o.BGColor=objPointTemp.BGColor;
+                                o.PenColor=objPointTemp.PenColor;
+                                o.TextColor=objPointTemp.TextColor;
+                                o.str=objPointTemp.str;
+                                o.PenSize=objPointTemp.PenSize;
+                                o.LineSD=objPointTemp.LineSD;
+                                o.x=objPointTemp.x;
+                                o.y=objPointTemp.y;
+                                o.w=objPointTemp.w;
+                                o.h=objPointTemp.h;
+                                
                             }
                         }
-                        parent.WorkSpace.activePage.ObjPoints.remove(parent.WorkSpace.activePage.ObjPoints.size()-1);
+                        parent.WorkSpace.activePage.UnObjPoints.remove(parent.WorkSpace.activePage.UnObjPoints.size()-1);
                     }else if(temp>0){
                         for(int i=temp;i>0;i--){
                             parent.WorkSpace.activePage.RePoints.add(parent.WorkSpace.activePage.Points.elementAt(
@@ -215,13 +228,25 @@ public class topToolBar extends Panel{
                     parent.WorkSpace.activePage.undos.add(temp);
                     if(temp==0){
                         int id=parent.WorkSpace.activePage.ReObjPoints.elementAt(parent.WorkSpace.activePage.ReObjPoints.size()-1).ID;
-                        for (object o : topToolBar.this.parent.WorkSpace.activePage.Points) {
+                        for (object o : parent.WorkSpace.activePage.Points) {
                             if (o.ObjID == id) {
-                                parent.WorkSpace.activePage.ObjPoints.add(new objPoint(o.Sp,o.Ep,id));
-                                o.Sp = parent.WorkSpace.activePage.ReObjPoints.elementAt(
-                                                            parent.WorkSpace.activePage.ReObjPoints.size() - 1).Sp;
-                                o.Ep = parent.WorkSpace.activePage.ReObjPoints.elementAt(
-                                                            parent.WorkSpace.activePage.ReObjPoints.size() - 1).Ep;
+                                objPoint objPointTemp=parent.WorkSpace.activePage.ReObjPoints.elementAt(
+                                                            parent.WorkSpace.activePage.ReObjPoints.size() - 1);
+                                parent.WorkSpace.activePage.UnObjPoints.add(new objPoint(objPointTemp));
+                                o.Sp = objPointTemp.Sp;
+                                o.Ep = objPointTemp.Ep;
+                                o.Angle=objPointTemp.Angle;
+                                o.Tra=objPointTemp.Tra;
+                                o.BGColor=objPointTemp.BGColor;
+                                o.PenColor=objPointTemp.PenColor;
+                                o.TextColor=objPointTemp.TextColor;
+                                o.str=objPointTemp.str;
+                                o.PenSize=objPointTemp.PenSize;
+                                o.LineSD=objPointTemp.LineSD;
+                                o.x=objPointTemp.x;
+                                o.y=objPointTemp.y;
+                                o.w=objPointTemp.w;
+                                o.h=objPointTemp.h;
                             }
                         }
                         parent.WorkSpace.activePage.ReObjPoints.remove(parent.WorkSpace.activePage.ReObjPoints.size()-1);
@@ -272,13 +297,17 @@ public class topToolBar extends Panel{
                     for (object p : parent.WorkSpace.activePage.Points) {
                         if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
                             if (p.ObjEnum == objEnum.rectangle) {
-                                o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             } else if (p.ObjEnum == objEnum.circular) {
-                                o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             } else if (p.ObjEnum == objEnum.diamond) {
-                                o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             } else if (p.ObjEnum == p.ObjEnum.text) {
-                                o = new objText(parent.WorkSpace.activePage, p.PenColor, p.PenSize, parent.WorkSpace.activePage.ObjID);
+                                o = new objText(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
                             }
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
@@ -290,14 +319,14 @@ public class topToolBar extends Panel{
                             parent.WorkSpace.activePage.CopyObj = o;
                             parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
                                     new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
-                                    p.ObjEnum, parent.WorkSpace.activePage.ObjID++));
+                                    p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str));
                         }
                     }
                 } catch (Throwable ee) {
                 }
             }
         });
-        
+        /*
         DelBtn.setBackground(this.getBackground());
         DelBtn.setToolTipText("Delete(Delete)");
         DelBtn.setActionCommand("Delete");
@@ -309,7 +338,7 @@ public class topToolBar extends Panel{
                 
             }
         });
-            
+          */  
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/

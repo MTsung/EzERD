@@ -16,15 +16,16 @@ import java.awt.event.*;
 
 public class objText extends obj{
     
-    objText(page p,Color c,float s,int id){
-        super(p,c,s,id);
+    objText(page p,Color c,Color c1,Color c2,float s,int id,int n,String S){
+        super(p,c,c1,c2,s,id,n,S);
         str="Text";
     }
 
     @Override
     public void paintObj(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(this.PenColor);
+        
+        g2.setColor(TextColor);
         if(str!=null){
             g2.setFont(new programFont());
             g2.drawString(str,this.getWidth()/2-str.length()*6,this.getHeight()/2+7);
