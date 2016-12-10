@@ -17,17 +17,17 @@ public class objAttributesPanel extends Panel{
     attributesToolBar AtoolBar;
     TextField[] TextSize=new TextField[2];
     TextField[] TextLocation=new TextField[2];
-    TextField TextTra;
-    TextField TextAngle;
+    TextField TextTra,TextAngle,PenSizeText;
     Choice choice;
     Panel TextPanel,SizePanel,LocationPanel,TarPanel,AnglePanel,LineColorPanel,TextColorPanel,BGColorPanel;
     Panel LineColorBtn,TextColorBtn,BGColorBtn;
-    Label LabelW,LabelH,LabelX,LabelY,LabelTra,LabelAngle,LabelLineColor,LabelTextColor,LabelBGColor,LabelLine;
+    Label LabelW,LabelH,LabelX,LabelY,LabelTra,LabelAngle,LabelLineColor,LabelTextColor,LabelBGColor,LabelLine,Labelsize;
     objAttributesPanel(attributesToolBar p){
         super();
         AtoolBar=p;
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         TextPanel=new Panel();
-        TextPanel.setPreferredSize(new Dimension(270,380));
+        TextPanel.setPreferredSize(new Dimension(270,420));
         SizePanel=new Panel();
         LocationPanel=new Panel();
         TarPanel=new Panel();
@@ -39,13 +39,13 @@ public class objAttributesPanel extends Panel{
         TextColorBtn=new Panel();
         BGColorBtn=new Panel();
         
-        LineColorBtn.setPreferredSize(new Dimension(60,30));
+        LineColorBtn.setPreferredSize(new Dimension(45,30));
         LineColorBtn.setBackground(Color.BLACK);
         LineColorBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        BGColorBtn.setPreferredSize(new Dimension(60,30));
+        BGColorBtn.setPreferredSize(new Dimension(45,30));
         BGColorBtn.setBackground(Color.WHITE);
         BGColorBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        TextColorBtn.setPreferredSize(new Dimension(60,30));
+        TextColorBtn.setPreferredSize(new Dimension(45,30));
         TextColorBtn.setBackground(Color.BLACK);
         TextColorBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
@@ -56,10 +56,11 @@ public class objAttributesPanel extends Panel{
         LabelY=new Label("Y        :");
         LabelTra=new Label("Opacity         :");
         LabelAngle=new Label("Angle            :");
-        LabelLineColor=new Label("Line              :");
-        LabelBGColor=new Label("Background   :");
-        LabelTextColor=new Label("Text              :");
-        LabelLine=new Label("                                            ");
+        LabelLineColor=new Label("Line Color      :");
+        LabelBGColor=new Label("BG Color       :");
+        LabelTextColor=new Label("Text Color      :");
+        Labelsize=new Label("Line Size        :");
+        LabelLine=new Label("Line Style       :");
         
         LabelW.setFont(new programFont());
         LabelH.setFont(new programFont());
@@ -69,6 +70,8 @@ public class objAttributesPanel extends Panel{
         LabelAngle.setFont(new programFont());
         LabelLineColor.setFont(new programFont());
         LabelBGColor.setFont(new programFont());
+        Labelsize.setFont(new programFont());
+        LabelLine.setFont(new programFont());
         LabelTextColor.setFont(new programFont());
         
         
@@ -216,6 +219,29 @@ public class objAttributesPanel extends Panel{
                 AtoolBar.AttributesBox.ColorWin.setColor("Line");
             }
         });
+        PenSizeText=new TextField("3.0",3);
+        PenSizeText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int n = 3;
+                try {
+                    if (Integer.valueOf(PenSizeText.getText()) < 1) {
+                        n = 1;
+                    } else {
+                        n = Integer.valueOf(PenSizeText.getText());
+                    }
+                    if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setPenSize(n,true);
+                    AtoolBar.parent.WorkSpace.activePage.repaint();
+                }
+                    PenSizeText.setText("" + n);
+                } catch (Exception ex) {
+                    PenSizeText.setText("" + n);
+                }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
+            }
+        });
+        
         TextColorBtn.addMouseListener(new MouseAdapter(){
             @Override                   
             public void mouseReleased(MouseEvent e){
@@ -259,6 +285,8 @@ public class objAttributesPanel extends Panel{
         TextPanel.add(AnglePanel);
         TextPanel.add(TextAngle);
         TextPanel.add(LineColorPanel);
+        TextPanel.add(Labelsize);
+        TextPanel.add(PenSizeText);
         TextPanel.add(LabelLine);
         TextPanel.add(choice);
         TextPanel.add(BGColorPanel);
@@ -296,5 +324,23 @@ public class objAttributesPanel extends Panel{
         if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
             AtoolBar.parent.WorkSpace.activePage.activeObj.setTextColor(c,true);
         }
+    }
+    void setLineSD(int n){
+        choice.select(n);
+    }
+    void setPenSize(float n){
+        PenSizeText.setText(""+n);
+    }
+    void setActiveObjAtt(obj p){
+        setTextLocation(p.X,p.Y);
+        setTextSize(p.w, p.h);
+        setTextTra(p.Tra);
+        setTextAngle(p.Angle);
+        setLineSD(p.getLine());
+        setPenSize(p.PenSize);
+        LineColorBtn.setBackground(p.PenColor);
+        BGColorBtn.setBackground(p.BGColor);
+        TextColorBtn.setBackground(p.TextColor);
+        
     }
 }

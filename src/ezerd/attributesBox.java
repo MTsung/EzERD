@@ -24,73 +24,14 @@ public class attributesBox extends Panel{
     colorWin ColorWin;
     pageSizePanel PageSizePanel;
     objAttributesPanel ObjAttributesPanel;
-    JSlider PenSizeSlider;
-    Panel PenSizePanel;
-    TextField PenSizeText;
-    Label PenSizeLabel,PageSizeLabel,ObjectLabel;
+    Label PageSizeLabel,ObjectLabel;
     attributesBox(attributesToolBar p) {
         super();
         AtoolBar=p;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         PageSizePanel=new pageSizePanel(AtoolBar);
         ObjAttributesPanel=new objAttributesPanel(AtoolBar);
-        PenSizePanel=new Panel();
         ColorWin=new colorWin(AtoolBar,Color.BLACK);
-        
-        PenSizeSlider=new JSlider(1,40);
-        PenSizeSlider.setPreferredSize(new Dimension(300,50));
-        PenSizeSlider.setBackground(new Color(205,205,200));
-        PenSizeSlider.setMinorTickSpacing(1);
-        PenSizeSlider.setMajorTickSpacing(3);
-        PenSizeSlider.setPaintTicks(true);
-        PenSizeSlider.setPaintLabels(true);
-        PenSizeSlider.setSnapToTicks(true);
-        PenSizeSlider.setValue(5);
-        PenSizeSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent event) {
-                AtoolBar.parent.WorkSpace.activePage.PenSize=PenSizeSlider.getValue();
-                PenSizeText.setText(""+PenSizeSlider.getValue());
-                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null
-                        &&AtoolBar.parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle){
-                    AtoolBar.parent.WorkSpace.activePage.activeObj.PenSize=PenSizeSlider.getValue();
-                    for (object o : AtoolBar.parent.WorkSpace.activePage.Points) {
-                        if (o.ObjID == AtoolBar.parent.WorkSpace.activePage.activeObj.ID) {
-                            o.PenSize = PenSizeSlider.getValue();
-                        }
-                    }
-                    AtoolBar.parent.WorkSpace.activePage.repaint();
-                }
-                AtoolBar.parent.MainWin.requestFocusInWindow();
-            }
-        });
-        
-        
-        PenSizeText=new TextField("5",3);
-        PenSizeText.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int n=8;
-                    try{
-                        if (Integer.valueOf(PenSizeText.getText()) < 1) {
-                            n=1;
-                        } else if (Integer.valueOf(PenSizeText.getText()) > 40) {
-                            n=40;
-                        }else{
-                            n=Integer.valueOf(PenSizeText.getText());
-                        }
-                        PenSizeText.setText(""+n);
-                    } catch (Exception ex) {
-                        PenSizeText.setText(""+n);
-                    }
-                    PenSizeSlider.setValue(n);
-                    AtoolBar.parent.MainWin.requestFocusInWindow();
-                }
-            });
-        
-        PenSizePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        PenSizePanel.add(PenSizeSlider);
-        PenSizePanel.add(PenSizeText);
         
         PageSizeLabel=new Label("PageSize :");
         PageSizeLabel.setPreferredSize(new Dimension(360,50));
@@ -100,18 +41,6 @@ public class attributesBox extends Panel{
             @Override                   
             public void mousePressed(MouseEvent e){
                 PageSizePanel.setVisible(PageSizePanel.isVisible()?false:true);
-                AtoolBar.parent.MainWin.validate();
-            }
-        });
-        
-        PenSizeLabel=new Label("PenSize :");
-        PenSizeLabel.setPreferredSize(new Dimension(360,50));
-        PenSizeLabel.setBackground(Color.LIGHT_GRAY);
-        PenSizeLabel.setFont(new programFont());
-        PenSizeLabel.addMouseListener(new MouseAdapter(){
-            @Override                   
-            public void mousePressed(MouseEvent e){
-                PenSizePanel.setVisible(PenSizePanel.isVisible()?false:true);
                 AtoolBar.parent.MainWin.validate();
             }
         });
@@ -131,7 +60,5 @@ public class attributesBox extends Panel{
         this.add(PageSizePanel);
         this.add(ObjectLabel);
         this.add(ObjAttributesPanel);
-        this.add(PenSizeLabel);
-        this.add(PenSizePanel);
     }
 }

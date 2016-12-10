@@ -29,7 +29,7 @@ public class page extends Panel{
     Vector<obj> Objs;
     Stack<Integer> undos,redos;
     int undo=0,PageWidth=1400,PageHeight=800,ObjID=1;
-    float PenSize=5;
+    float PenSize=3;
     rightClickMenu popupMenu1;
     Image bufferImage;
     Graphics bufferGraphics;
@@ -127,6 +127,7 @@ public class page extends Panel{
             @Override
             public void mousePressed(MouseEvent e){
                 //System.out.println("mousePressed");
+                PenSize=Float.valueOf(parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.PenSizeText.getText());
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                 }else if(ObjEnum == ObjEnum.graffiti){
                     Sp=e.getPoint();
@@ -197,11 +198,11 @@ public class page extends Panel{
                        
                         o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
                         o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
-                        o.setXYwh();
                         Objs.add(o);
                         activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,o.PenColor,o.BGColor,o.TextColor,ObjEnum,ObjID++,
                                     temp.choice.getSelectedIndex(),o.str));
+                        o.setXYwh();
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;
                 }  
@@ -248,10 +249,7 @@ public class page extends Panel{
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageW.setText(""+PageWidth);
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
         if(activeObj!=null){
-            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(activeObj.getX(), activeObj.getY());
-            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(activeObj.getWidth(),activeObj.getHeight());
-            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(activeObj.getTra());
-            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextAngle(activeObj.getAngle());
+            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setActiveObjAtt(activeObj);
             if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()&&MoveNode.isRotateing()){
                 MoveNode.ShowNode();
             }else
@@ -292,11 +290,11 @@ public class page extends Panel{
                     o = new objText(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
                 }
                 o.setArr(p);
-                activeObj=o;
+                //activeObj=o;
                 Objs.add(o);
                 this.add(o, 0);
                 parent.AttributesToolBar.ObjList.addObj(p.ObjID);
-                parent.AttributesToolBar.ObjList.setActiveObj(p.ObjID);
+                
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
             }

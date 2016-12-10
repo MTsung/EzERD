@@ -40,7 +40,6 @@ public class topToolBar extends Panel{
             SaveBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Save.png"))));
             UndoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Undo.png"))));
             RedoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Redo.png"))));
-            //DelBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Delete.png"))));
             CopyBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Copy.png"))));
             PasteBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Paste.png"))));
         }catch (IOException ex) {
@@ -107,11 +106,14 @@ public class topToolBar extends Panel{
                                 parent.WorkSpace.activePage.setPageSize(Integer.parseInt(L[1]), Integer.parseInt(L[2]));
                             }else{
                                 String[] L = newLine.split(",");
-                                /*parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
+                                parent.WorkSpace.activePage.Points.add(new object(new Point(Integer.parseInt(L[0]),Integer.parseInt(L[1]))
                                                                         ,new Point(Integer.parseInt(L[2]),Integer.parseInt(L[3]))
                                                                         ,Float.parseFloat(L[4]),new Color(Integer.parseInt(L[5]))
-                                                                        ,objEnum.valueOf(L[6]),Integer.parseInt(L[7])
-                                                                        ));*/
+                                                                        ,new Color(Integer.parseInt(L[6])),new Color(Integer.parseInt(L[7]))
+                                                                        ,objEnum.valueOf(L[8]),Integer.parseInt(L[9]),Integer.parseInt(L[10])
+                                                                        ,L[11],Integer.parseInt(L[12]),Integer.parseInt(L[13]),Integer.parseInt(L[14])
+                                                                        ,Integer.parseInt(L[15]),Integer.parseInt(L[16]),Integer.parseInt(L[17])
+                                                                        ));
                             }
                         }
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -140,8 +142,11 @@ public class topToolBar extends Panel{
                         PrintWriter pw   = new PrintWriter(selectedFile);
                         pw.write("pageSize," + P.x + "," + P.y + "\r\n");
                         for(object p:parent.WorkSpace.activePage.Points){
-                            pw.write(""+ p.Sp.x +","+ p.Sp.y +","+ p.Ep.x +","+ p.Ep.y + ","
-                                    + p.PenSize + "," + p.PenColor.getRGB() + "," + p.ObjEnum +","+p.ObjID+"\r\n");
+                            pw.write("" + p.Sp.x + "," + p.Sp.y + "," + p.Ep.x + "," + p.Ep.y + "," + p.PenSize
+                                    + "," + p.PenColor.getRGB()+ "," + p.BGColor.getRGB() + "," + p.TextColor.getRGB()
+                                    + "," + p.ObjEnum + "," + p.ObjID + "," + p.LineSD
+                                    + "," + p.str + "," + p.Angle + "," + p.Tra
+                                    + "," + p.x + "," + p.y + "," + p.w + "," + p.h +"\r\n");
                         }
                         for(objArrowXY obja:parent.WorkSpace.activePage.ObjArrowXYs){
                             pw.write("Arr," + obja.SObjID + "," + obja.EObjID + "," + obja.ArrowColor.getRGB() +"\r\n");
@@ -171,9 +176,9 @@ public class topToolBar extends Panel{
                         int id=parent.WorkSpace.activePage.UnObjPoints.elementAt(parent.WorkSpace.activePage.UnObjPoints.size()-1).ID;
                         for (object o :parent.WorkSpace.activePage.Points) {
                             if (o.ObjID == id) {
+                                parent.WorkSpace.activePage.ReObjPoints.add(new objPoint(o));
                                 objPoint objPointTemp=parent.WorkSpace.activePage.UnObjPoints.elementAt(
                                                             parent.WorkSpace.activePage.UnObjPoints.size() - 1);
-                                parent.WorkSpace.activePage.ReObjPoints.add(new objPoint(objPointTemp));
                                 o.Sp = objPointTemp.Sp;
                                 o.Ep = objPointTemp.Ep;
                                 o.Angle=objPointTemp.Angle;
@@ -183,12 +188,11 @@ public class topToolBar extends Panel{
                                 o.TextColor=objPointTemp.TextColor;
                                 o.str=objPointTemp.str;
                                 o.PenSize=objPointTemp.PenSize;
-                                o.LineSD=objPointTemp.LineSD;
+                                o.LineSD=objPointTemp.LineSD;     
                                 o.x=objPointTemp.x;
                                 o.y=objPointTemp.y;
                                 o.w=objPointTemp.w;
                                 o.h=objPointTemp.h;
-                                
                             }
                         }
                         parent.WorkSpace.activePage.UnObjPoints.remove(parent.WorkSpace.activePage.UnObjPoints.size()-1);
@@ -230,9 +234,9 @@ public class topToolBar extends Panel{
                         int id=parent.WorkSpace.activePage.ReObjPoints.elementAt(parent.WorkSpace.activePage.ReObjPoints.size()-1).ID;
                         for (object o : parent.WorkSpace.activePage.Points) {
                             if (o.ObjID == id) {
+                                parent.WorkSpace.activePage.UnObjPoints.add(new objPoint(o));
                                 objPoint objPointTemp=parent.WorkSpace.activePage.ReObjPoints.elementAt(
                                                             parent.WorkSpace.activePage.ReObjPoints.size() - 1);
-                                parent.WorkSpace.activePage.UnObjPoints.add(new objPoint(objPointTemp));
                                 o.Sp = objPointTemp.Sp;
                                 o.Ep = objPointTemp.Ep;
                                 o.Angle=objPointTemp.Angle;
@@ -314,31 +318,19 @@ public class topToolBar extends Panel{
                             parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
                             o.setLocation(0, 0);
                             o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-                            o.setXYwh();
                             parent.WorkSpace.activePage.Objs.add(o);
                             parent.WorkSpace.activePage.CopyObj = o;
                             parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
                                     new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
                                     p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str));
+                            o.setArr(p);
+                            //o.setXYwh();
                         }
                     }
                 } catch (Throwable ee) {
                 }
             }
         });
-        /*
-        DelBtn.setBackground(this.getBackground());
-        DelBtn.setToolTipText("Delete(Delete)");
-        DelBtn.setActionCommand("Delete");
-        DelBtn.setBorder(null);
-        this.add(DelBtn);
-        RedoBtn.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-            }
-        });
-          */  
         
         for(Component a:this.getComponents())/**/
             a.addKeyListener(new keyListener(parent));/**/

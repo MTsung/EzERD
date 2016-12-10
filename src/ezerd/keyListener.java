@@ -38,10 +38,6 @@ public class keyListener implements KeyListener{
             parent.TopToolBar.OpenBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_S){
             parent.TopToolBar.SaveBtn.doClick();
-        }else if(e.isControlDown() && e.getKeyCode() == 107){//ctrl + '+'
-            parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue(parent.AttributesToolBar.AttributesBox.PenSizeSlider.getValue()+1);
-        }else if(e.isControlDown() && e.getKeyCode() == 109){//ctrl + '-'
-            parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue(parent.AttributesToolBar.AttributesBox.PenSizeSlider.getValue()-1);
         }else if(e.isControlDown() && e.getKeyCode() == 33){//ctrl + PgUp
             parent.WorkSpace.prevPage();
         }else if(e.isControlDown() && e.getKeyCode() == 34){//ctrl + PgDn

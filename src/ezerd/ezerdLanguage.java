@@ -16,7 +16,7 @@ public class ezerdLanguage {
             p.MainWin.ClosingMessage="尚有文件未儲存，是否關閉？";
             p.AttributesToolBar.AttributesBox.ObjectLabel.setText("物件屬性:");
             p.AttributesToolBar.AttributesBox.PageSizeLabel.setText("頁面大小:");
-            p.AttributesToolBar.AttributesBox.PenSizeLabel.setText("筆寬:");
+            //p.AttributesToolBar.AttributesBox.PenSizeLabel.setText("筆寬:");
             p.AttributesToolBar.AttributesBox.PageSizePanel.LabelH.setText("高度:");
             p.AttributesToolBar.AttributesBox.PageSizePanel.LabelW.setText("寬度:");
             p.AttributesToolBar.AttributesBox.ObjAttributesPanel.LabelH.setText("高度:");
@@ -51,7 +51,7 @@ public class ezerdLanguage {
             p.MainWin.ClosingMessage="File is modified. Close？";
             p.AttributesToolBar.AttributesBox.ObjectLabel.setText("Object Attributes :");
             p.AttributesToolBar.AttributesBox.PageSizeLabel.setText("Page Size :");
-            p.AttributesToolBar.AttributesBox.PenSizeLabel.setText("Pen Size :");
+            //p.AttributesToolBar.AttributesBox.PenSizeLabel.setText("Pen Size :");
             p.AttributesToolBar.AttributesBox.PageSizePanel.LabelH.setText("Height :");
             p.AttributesToolBar.AttributesBox.PageSizePanel.LabelW.setText("Width :");
             p.AttributesToolBar.AttributesBox.ObjAttributesPanel.LabelH.setText("Height :");

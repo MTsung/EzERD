@@ -15,7 +15,6 @@ import java.awt.event.*;
  */ 
 
 public abstract class obj extends Component {
-
     enum LineEnum {
         Solid,Dotted
     } //實線 虛線
@@ -110,7 +109,7 @@ public abstract class obj extends Component {
                     Sp=e.getPoint();
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(), obj.this.getY());
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
-                    parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
+                    //parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
                     Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
@@ -128,8 +127,8 @@ public abstract class obj extends Component {
                         if(TempTextField!=null)
                             parent.remove(TempTextField);
                         TempTextField=new TextField(obj.this.str);
-                        TempTextField.setLocation(X+20, Y+h/2-15);
-                        TempTextField.setSize(w-40, 30);
+                        TempTextField.setLocation(obj.this.getX()+20,obj.this.getY()+obj.this.getHeight()/2-15);
+                        TempTextField.setSize(obj.this.getWidth()-40, 30);
                         TempTextField.setFont(new programFont());
                         TempTextField.addActionListener(new ActionListener() {
                             @Override
@@ -186,11 +185,10 @@ public abstract class obj extends Component {
        return Tra; 
     }
     void addUndo(){
-        System.out.println(this.Angle);
         parent.UnObjPoints.add(new objPoint(this.getLocation(),
-                 new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight()),
-                 this.PenSize, this.PenColor, this.BGColor, this.TextColor, this.ID,
-                 this.getLine(), this.str, this.Tra, this.Angle));
+                 new Point(getX() +getWidth(), getY() +getHeight()),
+                 PenSize, PenColor, BGColor, TextColor, ID,
+                 getLine(), str, Tra, Angle,X,Y,w,h));
 
         parent.undos.add(0);
         parent.ReObjPoints.removeAllElements();
@@ -198,26 +196,13 @@ public abstract class obj extends Component {
         parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
         parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
         
-        /*
-        for (object o : parent.Points) {
-            if (o.ObjID == ID) {
-                o.Sp = this.getLocation();
-                o.Ep = new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight());
-                parent.UnObjPoints.add(new objPoint(o.Sp, o.Ep, ID));
-
-                parent.undos.add(0);
-                parent.ReObjPoints.removeAllElements();
-                parent.redos.removeAllElements();
-                parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
-                parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
-            }
-        }*/
     }
     void setPoints(){
         for (object o : parent.Points) {
             if (o.ObjID == ID) {
                 o.Sp = this.getLocation();
                 o.Ep = new Point(obj.this.getX() + obj.this.getWidth(), obj.this.getY() + obj.this.getHeight());
+                o.PenSize=PenSize;
                 o.PenColor=PenColor;
                 o.BGColor=BGColor;
                 o.TextColor=TextColor;
@@ -235,8 +220,8 @@ public abstract class obj extends Component {
     }
     void setObjSize(int W,int H,Boolean b){
         if (TempTextField != null) {
-            TempTextField.setLocation(X + 20, Y + h / 2 - 15);
-            TempTextField.setSize(w - 40, 30);
+            TempTextField.setLocation(getX() + 20, getY() + getHeight() / 2 - 15);
+            TempTextField.setSize(getWidth() - 40, 30);
         }
         if(b)
             this.addUndo();
@@ -254,8 +239,8 @@ public abstract class obj extends Component {
     }
     void setObjLocation(int X,int Y,Boolean b){
         if (TempTextField != null) {
-            TempTextField.setLocation(X + 20, Y + h / 2 - 15);
-            TempTextField.setSize(w - 40, 30);
+            TempTextField.setLocation(getX() + 20, getY() + getHeight() / 2 - 15);
+            TempTextField.setSize(getWidth() - 40, 30);
         }
         if(b)
             this.addUndo();
@@ -295,6 +280,16 @@ public abstract class obj extends Component {
         h=this.getHeight();
         X=this.getX();
         Y=this.getY();
+        this.setPoints();
+    }
+    void setPenSize(int size,Boolean b) {
+        System.out.println(123);
+        if(b)
+            this.addUndo();
+        PenSize=size;
+        if(b)
+            this.setPoints();
+        this.repaint();
     }
     void setLine(int n,Boolean b){
         if(b)
@@ -323,8 +318,8 @@ public abstract class obj extends Component {
     void setArr(object p) {
         setText(p.str,false);
         setLine(p.LineSD,false);
-        setAngle(p.Angle,false);
         setXYwh(p.w,p.h,p.x,p.y,false);
+        setAngle(p.Angle,false);
         setTra(p.Tra,false);
     }
     void setPenColor(Color c, Boolean b) {

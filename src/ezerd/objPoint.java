@@ -32,7 +32,8 @@ public class objPoint {
         Tra=p.Tra;
         Angle=p.Angle;
     }
-    objPoint(Point s,Point e,float Size,Color c,Color c1,Color c2,int id,int SD,String S,int tra,int angle){
+    objPoint(Point s,Point e,float Size,Color c,Color c1,Color c2
+            ,int id,int SD,String S,int tra,int angle,int X,int Y,int W,int H){
         Sp=s;
         Ep=e;
         PenSize=Size;
@@ -44,5 +45,27 @@ public class objPoint {
         str=S;
         Tra=tra;
         Angle=angle;
+        x=X;
+        y=Y;
+        w=W;
+        h=H;
+    }
+
+    objPoint(object o) {
+        Sp=o.Sp;
+        Ep=o.Ep;
+        PenSize=o.PenSize;
+        PenColor=o.PenColor;
+        BGColor=o.BGColor;
+        TextColor=o.TextColor;
+        ID=o.ObjID;
+        LineSD=o.LineSD;
+        str=o.str;
+        Tra=o.Tra;
+        Angle=o.Angle;
+        x=o.x;
+        y=o.y;
+        w=o.w;
+        h=o.h;
     }
 }
