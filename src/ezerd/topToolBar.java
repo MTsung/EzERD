@@ -300,6 +300,9 @@ public class topToolBar extends Panel{
                 try {
                     for (object p : parent.WorkSpace.activePage.Points) {
                         if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
+                            parent.WorkSpace.activePage.undos.add(1);
+                            parent.WorkSpace.activePage.RePoints.removeAllElements();
+                            parent.WorkSpace.activePage.redos.removeAllElements();
                             if (p.ObjEnum == objEnum.rectangle) {
                                 o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
@@ -316,9 +319,6 @@ public class topToolBar extends Panel{
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
                             parent.AttributesToolBar.ObjList.setActiveObj(parent.WorkSpace.activePage.ObjID);
-                            o.setLocation(0, 0);
-                            o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
-                            o.setXYwh();
                             parent.WorkSpace.activePage.Objs.add(o);
                             parent.WorkSpace.activePage.setActiveObj(o);
                             parent.WorkSpace.activePage.CopyObj = o;
@@ -326,6 +326,9 @@ public class topToolBar extends Panel{
                                     new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
                                     p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str
                                     ,p.Angle,p.Tra,p.x,p.y,p.w,p.h));
+                            o.setArr(p);
+                            o.setLocation(0, 0);
+                            o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
                         }
                     }
                 } catch (Throwable ee) {

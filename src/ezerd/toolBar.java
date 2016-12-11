@@ -55,8 +55,6 @@ public class toolBar extends Panel{
             public void actionPerformed(ActionEvent e) {
                 creatingObj(objEnum.graffiti,GraffitiBtn);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                //Cursor cusTand = toolBar.this.getToolkit().createCustomCursor( new ImageIcon("Line.png").getImage(),new Point(5,40),"Pan");  
-                //parent.Ws.activePage.setCursor(cusTand);
             }
         });
         ArrBtn.setBackground(this.getBackground());
@@ -130,11 +128,8 @@ public class toolBar extends Panel{
             }
         }
         if(parent.WorkSpace.activePage!=null){ 
-            //if(parent.WorkSpace.activePage.PageActionEnum==pageActionEnum.idle)
-            {
-                parent.WorkSpace.activePage.PageActionEnum=pageActionEnum.ready2createObject;
-                parent.WorkSpace.activePage.ObjEnum = obj;
-            }
+            parent.WorkSpace.activePage.PageActionEnum = pageActionEnum.ready2createObject;
+            parent.WorkSpace.activePage.ObjEnum = obj;
         }
     }
 }

@@ -96,6 +96,7 @@ public class objAttributesPanel extends Panel{
                     TextLocation[0].setText("0");
                     TextLocation[1].setText("0");
                 }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         TextSize[1]=new TextField("0",3);
@@ -119,6 +120,7 @@ public class objAttributesPanel extends Panel{
                     TextLocation[0].setText("0");
                     TextLocation[1].setText("0");
                 }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         
@@ -144,6 +146,7 @@ public class objAttributesPanel extends Panel{
                     TextLocation[0].setText("0");
                     TextLocation[1].setText("0");
                 }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         TextLocation[1]=new TextField("0",3);
@@ -167,6 +170,7 @@ public class objAttributesPanel extends Panel{
                     TextLocation[0].setText("0");
                     TextLocation[1].setText("0");
                 }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         
@@ -189,6 +193,7 @@ public class objAttributesPanel extends Panel{
                 }else{
                     TextTra.setText("100");
                 }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         TextAngle=new TextField("0",3); 
@@ -209,6 +214,7 @@ public class objAttributesPanel extends Panel{
                 }else{
                     TextAngle.setText("0");
                 }
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         
@@ -265,6 +271,7 @@ public class objAttributesPanel extends Panel{
             public void itemStateChanged(ItemEvent e) {
                 if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null)
                     AtoolBar.parent.WorkSpace.activePage.activeObj.setLine(choice.getSelectedIndex(),true);
+                AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
         

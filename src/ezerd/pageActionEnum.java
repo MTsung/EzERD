@@ -10,6 +10,5 @@ package ezerd;
  * @author CMC
  */
 public enum pageActionEnum {
-    idle, ready2draw, drawing, ready2createObject, creatingObject,
-    actived, inactived, ready2move, moving
+    idle,ready2createObject,creatingObject,moving
 }

@@ -41,7 +41,6 @@ public class moveNode{
             Node[i].setVisible(false);
             Node[i].addKeyListener(new keyListener(parent.parent));/**/
             parent.add(Node[i]);
-            
         }
         Node[0].setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
         Node[0].addMouseMotionListener(new MouseAdapter() {
@@ -323,6 +322,7 @@ public class moveNode{
                 ShowNode();
                 P=true;
                 parent.activeObj.setPoints();
+                parent.parent.MainWin.requestFocusInWindow();
             }
         });
     }

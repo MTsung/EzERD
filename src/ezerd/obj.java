@@ -107,7 +107,6 @@ public abstract class obj extends Component {
                     Sp=e.getPoint();
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(obj.this.getX(), obj.this.getY());
                     parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(obj.this.getWidth(), obj.this.getHeight());
-                    //parent.parent.AttributesToolBar.AttributesBox.PenSizeSlider.setValue((int) PenSize);
                     Graphics2D g=(Graphics2D)parent.getGraphics();
                     g.setXORMode(new Color(255,255,0));
                     g.setStroke(new BasicStroke(2,CAP_ROUND,JOIN_ROUND));
@@ -135,6 +134,7 @@ public abstract class obj extends Component {
                             public void actionPerformed(ActionEvent e) {
                                 obj.this.setText(TempTextField.getText(),true);
                                 parent.remove(TempTextField);
+                                parent.parent.MainWin.requestFocusInWindow();
                                 obj.this.repaint();
                             }
                         });

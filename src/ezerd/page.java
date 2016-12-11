@@ -166,12 +166,12 @@ public class page extends Panel{
                     Points.add(new object(Sp,Ep,1,temp.LineColorBtn.getBackground(),temp.BGColorBtn.getBackground(),
                                 temp.TextColorBtn.getBackground(),ObjEnum,0,0,""));
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
-                    Graphics g = page.this.getGraphics();
-                    g.setXORMode(Color.yellow);
                     if (Ep != null && Sp.x != Ep.x && Sp.y != Ep.y) {
                         undos.add(1);
                         RePoints.removeAllElements();
                         redos.removeAllElements();
+                        Graphics g = page.this.getGraphics();
+                        g.setXORMode(Color.yellow);
                         g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y
                                 , Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         obj o = null;
