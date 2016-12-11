@@ -196,12 +196,13 @@ public class page extends Panel{
                         parent.AttributesToolBar.ObjList.addObj(ObjID);
                         parent.AttributesToolBar.ObjList.setActiveObj(ObjID);
                        
-                        o.setLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y);
-                        o.setSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
+                        o.setObjLocation((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y,false);
+                        o.setObjSize(Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y),false);
                         Objs.add(o);
                         activeObj=o;
                         Points.add(new object(Sp,Ep,PenSize,o.PenColor,o.BGColor,o.TextColor,ObjEnum,ObjID++,
                                     temp.choice.getSelectedIndex(),o.str));
+                        o.setTra(Integer.valueOf(temp.TextTra.getText()), false);
                         o.setXYwh();
                     }
                     PageActionEnum=PageActionEnum.ready2createObject;

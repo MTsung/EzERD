@@ -327,8 +327,8 @@ public class topToolBar extends Panel{
                                     p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str
                                     ,p.Angle,p.Tra,p.x,p.y,p.w,p.h));
                             o.setArr(p);
-                            o.setLocation(0, 0);
-                            o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                            o.setObjLocation(0, 0,false);
+                            o.setObjSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y),false);
                         }
                     }
                 } catch (Throwable ee) {

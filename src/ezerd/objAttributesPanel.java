@@ -236,13 +236,13 @@ public class objAttributesPanel extends Panel{
                     } else {
                         n = Integer.valueOf(PenSizeText.getText());
                     }
-                    if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
-                        AtoolBar.parent.WorkSpace.activePage.activeObj.setPenSize(n,true);
-                    AtoolBar.parent.WorkSpace.activePage.repaint();
-                }
+                    if (AtoolBar.parent.WorkSpace.activePage.activeObj != null) {
+                        AtoolBar.parent.WorkSpace.activePage.activeObj.setPenSize(n, true);
+                        AtoolBar.parent.WorkSpace.activePage.repaint();
+                    }
                     PenSizeText.setText("" + n);
                 } catch (Exception ex) {
-                    PenSizeText.setText("" + n);
+                    PenSizeText.setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.PenSize);
                 }
                 AtoolBar.parent.MainWin.requestFocusInWindow();
             }
