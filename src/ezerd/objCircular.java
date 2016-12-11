@@ -33,7 +33,7 @@ public class objCircular extends obj{
             g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND));
         }else if(Line==LineEnum.Dotted){
             g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND,
-                     0, new float[]{16, 8}, 0));
+                     0, new float[]{PenSize*4, PenSize*2}, 0));
         }
         g2.setColor(PenColor);
         g2.drawOval(this.getWidth()/2-w/2+(int)PenSize/2, this.getHeight()/2-h/2+(int)PenSize/2,

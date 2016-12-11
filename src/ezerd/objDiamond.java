@@ -41,7 +41,7 @@ public class objDiamond extends obj{
             g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND));
         }else if(Line==LineEnum.Dotted){
             g2.setStroke(new BasicStroke(PenSize, CAP_ROUND, JOIN_ROUND,
-                     0, new float[]{16, 8}, 0));
+                     0, new float[]{PenSize*4, PenSize*2}, 0));
         }
         g2.setColor(PenColor);
         g2.drawPolygon(x, y, 4);
