@@ -13,13 +13,14 @@ import java.awt.Color;
  */
 public class objArrowXY {
     obj SObj,EObj;
-    int SObjID,EObjID;
+    int SObjID,EObjID,Solid;
     Color ArrowColor;
-    objArrowXY(obj s,obj e,int sid,int eid,Color C){
+    objArrowXY(obj s,obj e,int sid,int eid,Color C,int S){
         SObj=s;
         EObj=e;
         SObjID=sid;
         EObjID=eid;
         ArrowColor=C;
+        Solid=S;
     }
 }

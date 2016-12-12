@@ -75,10 +75,10 @@ public class page extends Panel{
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
-                        drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                        drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
                     }
                     Ep = e.getPoint();
-                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
                 }else if(PageActionEnum==PageActionEnum.creatingObject){
                     Graphics g = page.this.getGraphics();
                     g.setXORMode(Color.yellow);
@@ -109,14 +109,15 @@ public class page extends Panel{
             
             @Override
             public void mouseMoved(MouseEvent e) {
+                objAttributesPanel temp=parent.AttributesToolBar.AttributesBox.ObjAttributesPanel;
                 if (ObjEnum == ObjEnum.arrow && ObjArrowJ && Sp!=null) {
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
-                        drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                        drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
                     }
                     Ep = e.getPoint();
-                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
                 }
                 parent.MessageBar.XY=e.getPoint();
                 parent.MessageBar.updateMessage();
@@ -162,9 +163,9 @@ public class page extends Panel{
                     redos.removeAllElements();
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setColor(temp.LineColorBtn.getBackground());
-                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g);
+                    drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
                     Points.add(new object(Sp,Ep,1,temp.LineColorBtn.getBackground(),temp.BGColorBtn.getBackground(),
-                                temp.TextColorBtn.getBackground(),ObjEnum,0,0,""));
+                                temp.TextColorBtn.getBackground(),ObjEnum,0,temp.choice.getSelectedIndex(),""));
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     if (Ep != null && Sp.x != Ep.x && Sp.y != Ep.y) {
                         undos.add(1);
@@ -178,19 +179,19 @@ public class page extends Panel{
                         if (ObjEnum == ObjEnum.rectangle) {
                             o = new objRectangle(page.this,temp.LineColorBtn.getBackground()
                                     ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
-                                    ,temp.choice.getSelectedIndex(),"");
+                                    ,temp.choice.getSelectedIndex(),"",true);
                         } else if (ObjEnum == ObjEnum.circular) {
                             o = new objCircular(page.this,temp.LineColorBtn.getBackground()
                                     ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
-                                    ,temp.choice.getSelectedIndex(),"");
+                                    ,temp.choice.getSelectedIndex(),"",true);
                         } else if (ObjEnum == ObjEnum.diamond) {
                             o = new objDiamond(page.this,temp.LineColorBtn.getBackground()
                                     ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
-                                    ,temp.choice.getSelectedIndex(),"");
+                                    ,temp.choice.getSelectedIndex(),"",true);
                         }else if (ObjEnum == ObjEnum.text) {
                             o = new objText(page.this,temp.LineColorBtn.getBackground()
                                     ,temp.BGColorBtn.getBackground(),temp.TextColorBtn.getBackground(), PenSize,ObjID
-                                    ,temp.choice.getSelectedIndex(),"text");
+                                    ,temp.choice.getSelectedIndex(),"text",true);
                         }
                         page.this.add(o, 0);
                         parent.AttributesToolBar.ObjList.addObj(ObjID);
@@ -237,6 +238,7 @@ public class page extends Panel{
         parent.MainWin.MenuBar.redoM.setEnabled(redos.size() != 0);
         popupMenu1.RedoMenuItem.setEnabled(redos.size() != 0);
         parent.TopToolBar.CopyBtn.setEnabled(activeObj != null);
+        parent.TopToolBar.DelBtn.setEnabled(activeObj != null);
         parent.MainWin.MenuBar.copyM.setEnabled(activeObj != null);
         popupMenu1.CopyMenuItem.setEnabled(activeObj != null);
         parent.TopToolBar.PasteBtn.setEnabled(CopyObj != null);
@@ -271,67 +273,78 @@ public class page extends Panel{
         }
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Graphics2D g2 = (Graphics2D)bufferGraphics;  
-        for(object p:Points){
+        for (object p : Points) {
             g2.setColor(p.PenColor);
             g2.setStroke(new BasicStroke(p.PenSize, CAP_ROUND, JOIN_ROUND));
             if (p.ObjEnum == ObjEnum.graffiti) {
                 g2.drawLine(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y);
             } else if (p.ObjEnum == ObjEnum.arrow) {
-                drawAL(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y, g2);
+                drawAL(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y, g2,p.LineSD);
             } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 obj o = null;
                 if (p.ObjEnum == ObjEnum.rectangle) {
-                    o = new objRectangle(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
+                    o = new objRectangle(this, p.PenColor, p.BGColor, p.TextColor, p.PenSize, p.ObjID, p.LineSD, p.str,p.Visible);
                 } else if (p.ObjEnum == ObjEnum.circular) {
-                    o = new objCircular(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
+                    o = new objCircular(this, p.PenColor, p.BGColor, p.TextColor, p.PenSize, p.ObjID, p.LineSD, p.str,p.Visible);
                 } else if (p.ObjEnum == ObjEnum.diamond) {
-                    o = new objDiamond(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
+                    o = new objDiamond(this, p.PenColor, p.BGColor, p.TextColor, p.PenSize, p.ObjID, p.LineSD, p.str,p.Visible);
                 } else if (p.ObjEnum == ObjEnum.text) {
-                    o = new objText(this, p.PenColor,p.BGColor,p.TextColor, p.PenSize,p.ObjID,p.LineSD,p.str);
+                    o = new objText(this, p.PenColor, p.BGColor, p.TextColor, p.PenSize, p.ObjID, p.LineSD, p.str,p.Visible);
                 }
                 o.setArr(p);
-                //activeObj=o;
                 Objs.add(o);
                 this.add(o, 0);
-                parent.AttributesToolBar.ObjList.addObj(p.ObjID);
-                ObjID=p.ObjID+1;
+                ObjID = p.ObjID + 1;
+                if(p.Visible)
+                    parent.AttributesToolBar.ObjList.addObj(p.ObjID);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
             }
+
         }
         for(objArrowXY obja:ObjArrowXYs){
-            if(obja.SObj!=null&&obja.EObj!=null){
-                g2.setColor(obja.ArrowColor);
-                int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
-                if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {
-                    SX += obja.SObj.getWidth();
-                    SY += obja.SObj.getHeight() / 2;
-                    EY += obja.EObj.getHeight() / 2;
-                } else if (obja.SObj.getX() > obja.EObj.getX() + obja.EObj.getWidth()) {
-                    SY += obja.SObj.getHeight() / 2;
-                    EX += obja.EObj.getWidth();
-                    EY += obja.EObj.getHeight() / 2;
-                } else {
-                    if (obja.SObj.getY() + obja.SObj.getHeight() < obja.EObj.getY()) {
-                        SX += obja.SObj.getWidth() / 2;
-                        SY += obja.SObj.getHeight();
-                        EX += obja.EObj.getWidth() / 2;
-                    } else if (obja.SObj.getY() > obja.EObj.getY() + obja.EObj.getHeight()) {
-                        SX += obja.SObj.getWidth() / 2;
-                        EX += obja.EObj.getWidth() / 2;
-                        EY += obja.EObj.getHeight();
-                    } else {
-                        SX += obja.SObj.getWidth() / 2;
-                        SY += obja.SObj.getHeight() / 2;
-                        EX += obja.EObj.getWidth() / 2;
-                        EY += obja.EObj.getHeight() / 2;
-                    }
+            for (obj o : Objs) {
+                if (obja.SObjID == o.ID) {
+                    obja.SObj = o;
                 }
-                g2.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
-                drawAL(SX, SY, EX, EY, g2);
-                if (ArrowPaint) {
-                    repaint();
-                    ArrowPaint = false;
+                if (obja.EObjID == o.ID) {
+                    obja.EObj = o;
+                }
+            }
+            if (obja.SObj != null && obja.EObj != null) {
+                if (obja.SObj.Visible && obja.EObj.Visible) {
+                    g2.setColor(obja.ArrowColor);
+                    int SX = obja.SObj.getX(), SY = obja.SObj.getY(), EX = obja.EObj.getX(), EY = obja.EObj.getY();
+                    if (obja.SObj.getX() + obja.SObj.getWidth() < obja.EObj.getX()) {
+                        SX += obja.SObj.getWidth();
+                        SY += obja.SObj.getHeight() / 2;
+                        EY += obja.EObj.getHeight() / 2;
+                    } else if (obja.SObj.getX() > obja.EObj.getX() + obja.EObj.getWidth()) {
+                        SY += obja.SObj.getHeight() / 2;
+                        EX += obja.EObj.getWidth();
+                        EY += obja.EObj.getHeight() / 2;
+                    } else {
+                        if (obja.SObj.getY() + obja.SObj.getHeight() < obja.EObj.getY()) {
+                            SX += obja.SObj.getWidth() / 2;
+                            SY += obja.SObj.getHeight();
+                            EX += obja.EObj.getWidth() / 2;
+                        } else if (obja.SObj.getY() > obja.EObj.getY() + obja.EObj.getHeight()) {
+                            SX += obja.SObj.getWidth() / 2;
+                            EX += obja.EObj.getWidth() / 2;
+                            EY += obja.EObj.getHeight();
+                        } else {
+                            SX += obja.SObj.getWidth() / 2;
+                            SY += obja.SObj.getHeight() / 2;
+                            EX += obja.EObj.getWidth() / 2;
+                            EY += obja.EObj.getHeight() / 2;
+                        }
+                    }
+                    g2.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
+                    drawAL(SX, SY, EX, EY, g2,obja.Solid);
+                    if (ArrowPaint) {
+                        repaint();
+                        ArrowPaint = false;
+                    }
                 }
             }
         }
@@ -359,7 +372,7 @@ public class page extends Panel{
     }
      
      /*http://blog.csdn.net/wqjsir/article/details/6095277*/
-    public static void drawAL(int sx, int sy, int ex, int ey, Graphics2D g2) {
+    public static void drawAL(int sx, int sy, int ex, int ey, Graphics2D g2,int s) {
         double H = 20; // 箭头高度  
         double L = 10; // 底边的一半  
         int x3 = 0;
@@ -384,6 +397,12 @@ public class page extends Panel{
         Double Y4 = new Double(y_4);
         y4 = Y4.intValue();
         // 画线  
+        if (s == 1) {
+            g2.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND,
+                    0, new float[]{12, 6}, 0));
+        }else{
+            g2.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
+        }
         g2.drawLine(sx, sy, ex, ey);
         //  
         GeneralPath triangle = new GeneralPath();
@@ -392,6 +411,7 @@ public class page extends Panel{
         triangle.lineTo(x4, y4);
         //triangle.closePath();  
         //实心箭头  
+        g2.setStroke(new BasicStroke(1, CAP_ROUND, JOIN_ROUND));
         g2.fill(triangle);
         //非实心箭头  
         //g2.draw(triangle);  

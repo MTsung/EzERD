@@ -21,6 +21,7 @@ public class object {
     int ObjID,LineSD,Tra=100,Angle=0;
     int w,h,x,y;
     String str;
+    Boolean Visible=true;
     object(Point s,Point e,float Size,Color c,Color c1,Color c2,objEnum O,int id,int SD,String S){
         Sp=s;
         Ep=e;
@@ -35,7 +36,7 @@ public class object {
     }
     object(Point s,Point e,float Size,Color c,Color c1,Color c2
             ,objEnum O,int id,int SD,String S,int angle,int tra
-            ,int X,int Y,int W,int H){
+            ,int X,int Y,int W,int H,Boolean V){
         Sp=s;
         Ep=e;
         PenSize=Size;
@@ -52,7 +53,6 @@ public class object {
         y=Y;
         w=W;
         h=H;
+        Visible=V;
     }
-
-    
 }

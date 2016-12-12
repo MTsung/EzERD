@@ -15,6 +15,7 @@ import java.awt.event.*;
  */ 
 
 public abstract class obj extends Component {
+
     enum LineEnum {
         Solid,Dotted
     } //實線 虛線
@@ -30,9 +31,10 @@ public abstract class obj extends Component {
     String str;
     pageActionEnum tempPAE;
     TextField TempTextField;
+    Boolean Visible;
     obj(){  
     }
-    obj(page p,Color c,Color c1,Color c2,float s,int id,int LineSD,String S){
+    obj(page p,Color c,Color c1,Color c2,float s,int id,int LineSD,String S,Boolean V){
         parent=p;
         PenColor=c;
         BGColor=c1;
@@ -41,6 +43,8 @@ public abstract class obj extends Component {
         PenSize = s;
         ID=id;
         str=S;
+        Visible=V;
+        this.setVisible(Visible);
         this.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e){
@@ -67,10 +71,12 @@ public abstract class obj extends Component {
                     Graphics2D g2 = (Graphics2D)parent.getGraphics();
                     g2.setXORMode(Color.yellow);
                     if (parent.Ep != null) {
-                        drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2);
+                        drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2
+                        ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex());
                     }
                     parent.Ep=new Point(obj.this.getX()+e.getX(),obj.this.getY()+e.getY());
-                    drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2);
+                    drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2
+                        ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex());
                 }
                 if (parent.ObjEnum == objEnum.arrow) {
                     obj.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -95,7 +101,8 @@ public abstract class obj extends Component {
                     parent.EObj=obj.this;
                     parent.ObjArrowXYs.add(new objArrowXY(parent.SObj,parent.EObj
                                                     ,parent.SObj.ID,parent.EObj.ID
-                            ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.LineColorBtn.getBackground()));
+                            ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.LineColorBtn.getBackground()
+                            ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex()));
                     parent.undos.add(-1);
                     parent.ReObjPoints.removeAllElements();
                     parent.redos.removeAllElements();
@@ -188,8 +195,7 @@ public abstract class obj extends Component {
         parent.UnObjPoints.add(new objPoint(this.getLocation(),
                  new Point(getX() +getWidth(), getY() +getHeight()),
                  PenSize, PenColor, BGColor, TextColor, ID,
-                 getLine(), str, Tra, Angle,X,Y,w,h));
-
+                 getLine(), str, Tra, Angle,X,Y,w,h,Visible));
         parent.undos.add(0);
         parent.ReObjPoints.removeAllElements();
         parent.redos.removeAllElements();
@@ -214,6 +220,7 @@ public abstract class obj extends Component {
                 o.y=Y;
                 o.w=w;
                 o.h=h;
+                o.Visible=Visible;
             }
         }
         parent.repaint();
@@ -283,7 +290,6 @@ public abstract class obj extends Component {
         this.setPoints();
     }
     void setPenSize(int size,Boolean b) {
-        System.out.println(123);
         if(b)
             this.addUndo();
         PenSize=size;
@@ -321,6 +327,7 @@ public abstract class obj extends Component {
         setXYwh(p.w,p.h,p.x,p.y,false);
         setAngle(p.Angle,false);
         setTra(p.Tra,false);
+        setObjVisible(p.Visible,false);
     }
     void setPenColor(Color c, Boolean b) {
         if(b)
@@ -346,23 +353,19 @@ public abstract class obj extends Component {
             this.setPoints();
     }
     
+    void setObjVisible(Boolean V,Boolean b) {
+        if(b)
+            this.addUndo();
+        Visible=V;
+        this.setVisible(Visible);
+        if(b)
+            this.setPoints();
+    }
     
     public abstract void paintObj(Graphics g);
     public void paint(Graphics g)
     {
         paintObj(g);
-        for (object o : parent.Points) {
-            if (o.ObjID == ID) {
-                for (objArrowXY obja : parent.ObjArrowXYs) {
-                    if (obja.SObjID == o.ObjID) {
-                        obja.SObj = obj.this;
-                    }
-                    if (obja.EObjID == o.ObjID) {
-                        obja.EObj = obj.this;
-                    }
-                }
-            }
-        }
         for(objListPanel p:parent.parent.AttributesToolBar.AttributesBox.AtoolBar.ObjList.objListPanels){
             if(p.ObjID==this.ID)
                 p.repaint();

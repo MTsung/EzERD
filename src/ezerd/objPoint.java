@@ -19,6 +19,7 @@ public class objPoint {
     int ID,LineSD,Tra=100,Angle=0;
     int w,h,x,y;
     String str;
+    Boolean Visible;
     objPoint(objPoint p){
         Sp=p.Sp;
         Ep=p.Ep;
@@ -31,9 +32,10 @@ public class objPoint {
         str=p.str;
         Tra=p.Tra;
         Angle=p.Angle;
+        Visible=p.Visible;
     }
     objPoint(Point s,Point e,float Size,Color c,Color c1,Color c2
-            ,int id,int SD,String S,int tra,int angle,int X,int Y,int W,int H){
+            ,int id,int SD,String S,int tra,int angle,int X,int Y,int W,int H,Boolean V){
         Sp=s;
         Ep=e;
         PenSize=Size;
@@ -49,6 +51,7 @@ public class objPoint {
         y=Y;
         w=W;
         h=H;
+        Visible=V;
     }
 
     objPoint(object o) {
@@ -67,5 +70,6 @@ public class objPoint {
         y=o.y;
         w=o.w;
         h=o.h;
+        Visible=o.Visible;
     }
 }

@@ -111,16 +111,16 @@ public class menuBar extends MenuBar{
                         if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
                             if (p.ObjEnum == objEnum.rectangle) {
                                 o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             } else if (p.ObjEnum == objEnum.circular) {
                                 o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             } else if (p.ObjEnum == objEnum.diamond) {
                                 o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             } else if (p.ObjEnum == p.ObjEnum.text) {
                                 o = new objText(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                         p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             }
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);

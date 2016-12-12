@@ -42,6 +42,7 @@ public class topToolBar extends Panel{
             RedoBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Redo.png"))));
             CopyBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Copy.png"))));
             PasteBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Paste.png"))));
+            DelBtn = new JButton(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("icon/Delete.png"))));
         }catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -100,7 +101,7 @@ public class topToolBar extends Panel{
                             if(newLine.startsWith("Arr,")){
                                 String[] L = newLine.split(",");
                                 parent.WorkSpace.activePage.ObjArrowXYs.add(new objArrowXY(null,null,Integer.parseInt(L[1])
-                                                        ,Integer.parseInt(L[2]),new Color(Integer.parseInt(L[3]))));
+                                                        ,Integer.parseInt(L[2]),new Color(Integer.parseInt(L[3])),Integer.parseInt(L[4])));
                             }else if(newLine.startsWith("pageSize,")){
                                 String[] L = newLine.split(",");
                                 parent.WorkSpace.activePage.setPageSize(Integer.parseInt(L[1]), Integer.parseInt(L[2]));
@@ -113,7 +114,7 @@ public class topToolBar extends Panel{
                                                                         ,objEnum.valueOf(L[8]),Integer.parseInt(L[9]),Integer.parseInt(L[10])
                                                                         ,L[11],Integer.parseInt(L[12]),Integer.parseInt(L[13]),Integer.parseInt(L[14])
                                                                         ,Integer.parseInt(L[15]),Integer.parseInt(L[16]),Integer.parseInt(L[17])
-                                                                        ));
+                                                                        ,true));
                             }
                         }
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -142,14 +143,17 @@ public class topToolBar extends Panel{
                         PrintWriter pw   = new PrintWriter(selectedFile);
                         pw.write("pageSize," + P.x + "," + P.y + "\r\n");
                         for(object p:parent.WorkSpace.activePage.Points){
-                            pw.write("" + p.Sp.x + "," + p.Sp.y + "," + p.Ep.x + "," + p.Ep.y + "," + p.PenSize
-                                    + "," + p.PenColor.getRGB()+ "," + p.BGColor.getRGB() + "," + p.TextColor.getRGB()
-                                    + "," + p.ObjEnum + "," + p.ObjID + "," + p.LineSD
-                                    + "," + p.str + "," + p.Angle + "," + p.Tra
-                                    + "," + p.x + "," + p.y + "," + p.w + "," + p.h +"\r\n");
+                            if(p.Visible){
+                                pw.write("" + p.Sp.x + "," + p.Sp.y + "," + p.Ep.x + "," + p.Ep.y + "," + p.PenSize
+                                        + "," + p.PenColor.getRGB() + "," + p.BGColor.getRGB() + "," + p.TextColor.getRGB()
+                                        + "," + p.ObjEnum + "," + p.ObjID + "," + p.LineSD
+                                        + "," + p.str + "," + p.Angle + "," + p.Tra
+                                        + "," + p.x + "," + p.y + "," + p.w + "," + p.h + "\r\n");
+                            }
                         }
                         for(objArrowXY obja:parent.WorkSpace.activePage.ObjArrowXYs){
-                            pw.write("Arr," + obja.SObjID + "," + obja.EObjID + "," + obja.ArrowColor.getRGB() +"\r\n");
+                            pw.write("Arr," + obja.SObjID + "," + obja.EObjID + "," + obja.ArrowColor.getRGB() +
+                                    "," + obja.Solid +"\r\n");
                         }
                         pw.close();
                         parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setToolTipText(fileChooser.getDirectory() + fileChooser.getFile());
@@ -193,6 +197,7 @@ public class topToolBar extends Panel{
                                 o.y=objPointTemp.y;
                                 o.w=objPointTemp.w;
                                 o.h=objPointTemp.h;
+                                o.Visible=objPointTemp.Visible;
                             }
                         }
                         parent.WorkSpace.activePage.UnObjPoints.remove(parent.WorkSpace.activePage.UnObjPoints.size()-1);
@@ -251,6 +256,7 @@ public class topToolBar extends Panel{
                                 o.y=objPointTemp.y;
                                 o.w=objPointTemp.w;
                                 o.h=objPointTemp.h;
+                                o.Visible=objPointTemp.Visible;
                             }
                         }
                         parent.WorkSpace.activePage.ReObjPoints.remove(parent.WorkSpace.activePage.ReObjPoints.size()-1);
@@ -285,6 +291,7 @@ public class topToolBar extends Panel{
             public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
                 parent.WorkSpace.activePage.repaint();
+                parent.MainWin.requestFocusInWindow();
             }
         });
         
@@ -305,16 +312,16 @@ public class topToolBar extends Panel{
                             parent.WorkSpace.activePage.redos.removeAllElements();
                             if (p.ObjEnum == objEnum.rectangle) {
                                 o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             } else if (p.ObjEnum == objEnum.circular) {
                                 o = new objCircular(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             } else if (p.ObjEnum == objEnum.diamond) {
                                 o = new objDiamond(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             } else if (p.ObjEnum == p.ObjEnum.text) {
                                 o = new objText(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,
-                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str);
+                                        p.PenSize, parent.WorkSpace.activePage.ObjID, p.LineSD, p.str,true);
                             }
                             parent.WorkSpace.activePage.add(o, 0);
                             parent.AttributesToolBar.ObjList.addObj(parent.WorkSpace.activePage.ObjID);
@@ -325,7 +332,7 @@ public class topToolBar extends Panel{
                             parent.WorkSpace.activePage.Points.add(new object(new Point(0, 0),
                                     new Point(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
                                     p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str
-                                    ,p.Angle,p.Tra,p.x,p.y,p.w,p.h));
+                                    ,p.Angle,p.Tra,p.x,p.y,p.w,p.h,o.Visible));
                             o.setArr(p);
                             o.setObjLocation(0, 0,false);
                             o.setObjSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y),false);
@@ -333,6 +340,26 @@ public class topToolBar extends Panel{
                     }
                 } catch (Throwable ee) {
                 }
+                parent.MainWin.requestFocusInWindow();
+            }
+        });
+        
+        DelBtn.setBackground(this.getBackground());
+        DelBtn.setToolTipText("Delete(Delete)");
+        DelBtn.setActionCommand("Delete");
+        DelBtn.setBorder(null);
+        this.add(DelBtn);
+        DelBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.WorkSpace.activePage.activeObj.setObjVisible(false,true);
+                parent.WorkSpace.activePage.setActiveObj(null);
+                parent.WorkSpace.activePage.PaintObj = true;
+                parent.WorkSpace.activePage.ArrowPaint = true;
+                parent.WorkSpace.activePage.removeAll();
+                parent.AttributesToolBar.ObjList.reset();
+                parent.WorkSpace.activePage.repaint();
+                parent.MainWin.requestFocusInWindow();
             }
         });
         
