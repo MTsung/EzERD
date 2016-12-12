@@ -18,8 +18,8 @@ public class objCircular extends obj{
     objCircular(){
         super();
     }
-    objCircular(page p,Color c,Color c1,Color c2,float s,int id,int n,String S){
-        super(p,c,c1,c2,s,id,n,S);
+    objCircular(page p,Color c,Color c1,Color c2,float s,int id,int n,String S,Boolean V){
+        super(p,c,c1,c2,s,id,n,S,V);
     }
     @Override
     public void paintObj(Graphics g) {
