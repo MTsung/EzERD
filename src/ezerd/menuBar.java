@@ -229,7 +229,9 @@ public class menuBar extends MenuBar{
             } catch (Exception ex) {
                 System.out.println("panel not saved" + ex.getMessage());
             }
-            parent.WorkSpace.activePage.MoveNode.ShowNode();
+            if (parent.WorkSpace.activePage.activeObj != null) {
+                parent.WorkSpace.activePage.MoveNode.ShowNode();
+            }
         }
     }
 }
