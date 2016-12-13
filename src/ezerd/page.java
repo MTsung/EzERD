@@ -299,6 +299,7 @@ public class page extends Panel{
                     parent.AttributesToolBar.ObjList.addObj(p.ObjID);
                 o.setLocation((p.Sp.x < p.Ep.x) ? p.Sp.x : p.Ep.x, (p.Sp.y < p.Ep.y) ? p.Sp.y : p.Ep.y);
                 o.setSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y));
+                activeObj = null;
             }
 
         }

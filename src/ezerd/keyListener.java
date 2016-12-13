@@ -46,6 +46,10 @@ public class keyListener implements KeyListener{
             parent.TopToolBar.CopyBtn.doClick();
         }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V){
             parent.TopToolBar.PasteBtn.doClick();
+        }else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V){
+            parent.TopToolBar.PasteBtn.doClick();
+        }else if(e.getKeyCode() == KeyEvent.VK_DELETE){
+            parent.TopToolBar.DelBtn.doClick();
         }
         //System.out.println(e.getKeyCode());
         parent.MainWin.requestFocusInWindow();

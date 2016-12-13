@@ -17,7 +17,6 @@ import javax.swing.event.*;
  * @author CMC
  */
 public class moveNode{
-
     page parent;
     Point Sp, Ep;
     Panel[] Node = new Panel[8];
@@ -33,14 +32,14 @@ public class moveNode{
         N.setSize(15, 15);
         N.setBackground(Color.GREEN);
         N.setVisible(false);
-        parent.add(N);
+        parent.add(N,0);
         for (int i = 0; i < 8; i++) {
             Node[i] = new Panel();
             Node[i].setSize(NodeW, NodeW);
             Node[i].setBackground(Color.BLUE);
             Node[i].setVisible(false);
             Node[i].addKeyListener(new keyListener(parent.parent));/**/
-            parent.add(Node[i]);
+            parent.add(Node[i],0);
         }
         Node[0].setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
         Node[0].addMouseMotionListener(new MouseAdapter() {
