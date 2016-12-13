@@ -70,10 +70,15 @@ public class rightClickMenu extends PopupMenu{
                             parent.WorkSpace.activePage.Points.add(new object(new Point(XY.x,XY.y),
                                     new Point(XY.x+Math.abs(p.Sp.x - p.Ep.x), XY.y+Math.abs(p.Sp.y - p.Ep.y)), p.PenSize, p.PenColor,
                                     p.BGColor,p.TextColor,p.ObjEnum, parent.WorkSpace.activePage.ObjID++,p.LineSD,p.str
-                                    ,p.Angle,p.Tra,p.x,p.y,p.w,p.h,p.Visible));
+                                    ,p.Angle,p.Tra,p.x,p.y,p.w,p.h,true));
                             o.setArr(p);
                             o.setObjLocation(XY.x-parent.WorkSpace.activePage.CopyObj.getWidth()/2,XY.y-parent.WorkSpace.activePage.CopyObj.getHeight()/2,false);
                             o.setObjSize(Math.abs(p.Sp.x - p.Ep.x), Math.abs(p.Sp.y - p.Ep.y),false);
+                            parent.WorkSpace.activePage.PaintObj = true;
+                            parent.WorkSpace.activePage.ArrowPaint = true;
+                            parent.WorkSpace.activePage.removeAll();
+                            parent.AttributesToolBar.ObjList.reset();
+                            parent.WorkSpace.activePage.repaint();
                         }
                     }
                 } catch (Throwable ee) {
