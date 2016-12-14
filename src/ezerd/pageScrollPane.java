@@ -35,4 +35,7 @@ public class pageScrollPane extends ScrollPane{
         parent.WorkSpace.Pages.add(p);
         parent.ToolBar.ChoBtn.doClick();
     }
+    void cloPage(){
+        parent.PageToolBar.delButton();
+    }
 }

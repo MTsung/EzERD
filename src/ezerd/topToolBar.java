@@ -73,9 +73,9 @@ public class topToolBar extends Panel{
                         if(0==JOptionPane.showConfirmDialog(null, ClosingMessage + 
                                                                 parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace("*","") 
                                                                 + ClosingMessage1,Mess,2,JOptionPane.PLAIN_MESSAGE ) )
-                            parent.WorkSpace.cloPage();
+                            parent.PageScrollPane.cloPage();
                     }else
-                        parent.WorkSpace.cloPage();
+                        parent.PageScrollPane.cloPage();
             }
         });
         

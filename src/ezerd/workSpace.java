@@ -28,11 +28,6 @@ public class workSpace extends Panel{
         Pages = new Vector<page>();
         
     }
-    
-    void cloPage(){
-        parent.PageToolBar.delButton();
-    }
-    
     void prevPage()
     {
         int i;
