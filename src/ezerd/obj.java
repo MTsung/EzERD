@@ -20,6 +20,7 @@ public abstract class obj extends Component {
         Solid,Dotted
     } //實線 虛線
     LineEnum Line=LineEnum.Solid;
+    objEnum ObjEnum;
     Color PenColor,TextColor,BGColor;
     float PenSize;
     page parent;
@@ -104,7 +105,7 @@ public abstract class obj extends Component {
                             ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.LineColorBtn.getBackground()
                             ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex()));
                     parent.undos.add(-1);
-                    parent.ReObjPoints.removeAllElements();
+                    parent.RedoPoints.removeAllElements();
                     parent.redos.removeAllElements();
                     parent.SObj=null;
                     parent.EObj=null;
@@ -192,12 +193,12 @@ public abstract class obj extends Component {
        return Tra; 
     }
     void addUndo(){
-        parent.UnObjPoints.add(new objPoint(this.getLocation(),
-                 new Point(getX() +getWidth(), getY() +getHeight()),
-                 PenSize, PenColor, BGColor, TextColor, ID,
-                 getLine(), str, Tra, Angle,X,Y,w,h,Visible));
+        parent.UndoPoints.add(new object(this.getLocation(),
+                new Point(getX() + getWidth(), getY() + getHeight()),
+                PenSize, PenColor, BGColor, TextColor, ObjEnum, ID,
+                getLine(), str, Angle, Tra, X, Y, w, h, Visible));
         parent.undos.add(0);
-        parent.ReObjPoints.removeAllElements();
+        parent.RedoPoints.removeAllElements();
         parent.redos.removeAllElements();
         parent.parent.TopToolBar.UndoBtn.setEnabled(parent.undos.size() == 0 ? false : true);
         parent.parent.TopToolBar.RedoBtn.setEnabled(parent.redos.size() == 0 ? false : true);
@@ -332,7 +333,7 @@ public abstract class obj extends Component {
     void setPenColor(Color c, Boolean b) {
         if(b)
             this.addUndo();
-        PenColor=c;
+        PenColor=new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(Tra*2.55));
         if(b)
             this.setPoints();
     }
@@ -340,7 +341,7 @@ public abstract class obj extends Component {
     void setBGColor(Color c, Boolean b) {
         if(b)
             this.addUndo();
-        BGColor=c;
+        BGColor=new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(Tra*2.55));
         if(b)
             this.setPoints();
     }
@@ -348,7 +349,7 @@ public abstract class obj extends Component {
     void setTextColor(Color c, Boolean b) {
         if(b)
             this.addUndo();
-        TextColor=c;
+        TextColor=new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(Tra*2.55));
         if(b)
             this.setPoints();
     }

@@ -180,19 +180,23 @@ public class objAttributesPanel extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AtoolBar.parent.WorkSpace.activePage.ArrowPaint=true;
-                if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
                     try {
                         if(Integer.valueOf(TextTra.getText())>100)
                             TextTra.setText(""+100);
                         if(Integer.valueOf(TextTra.getText())<0)
                             TextTra.setText(""+0);
-                        AtoolBar.parent.WorkSpace.activePage.activeObj.setTra(Integer.valueOf(TextTra.getText()),true);
+                        if (AtoolBar.parent.WorkSpace.activePage.activeObj != null) 
+                            AtoolBar.parent.WorkSpace.activePage.activeObj.setTra(Integer.valueOf(TextTra.getText()), true);
+                        resetColor();
                     } catch (Exception ex) {
-                        TextTra.setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getTra());
+                        if (AtoolBar.parent.WorkSpace.activePage.activeObj != null) 
+                            TextTra.setText("" + AtoolBar.parent.WorkSpace.activePage.activeObj.getTra());
+                        else
+                            TextTra.setText("100");
+                        resetColor();
                     }
-                }else{
-                    TextTra.setText("100");
-                }
+                    //AtoolBar.parent.WorkSpace.activePage.activeObj.setTra(Integer.valueOf(TextTra.getText()),true);
+                
                 AtoolBar.parent.MainWin.requestFocusInWindow();
             }
         });
@@ -331,6 +335,17 @@ public class objAttributesPanel extends Panel{
         if(AtoolBar.parent.WorkSpace.activePage.activeObj!=null){
             AtoolBar.parent.WorkSpace.activePage.activeObj.setTextColor(c,true);
         }
+    }
+    void resetColor(){
+        LineColorBtn.setBackground(
+                new Color(LineColorBtn.getBackground().getRed(),LineColorBtn.getBackground().getGreen()
+                        ,LineColorBtn.getBackground().getBlue(),(int)(Integer.valueOf(TextTra.getText())*2.55)));
+        BGColorBtn.setBackground(
+                new Color(BGColorBtn.getBackground().getRed(),BGColorBtn.getBackground().getGreen()
+                        ,BGColorBtn.getBackground().getBlue(),(int)(Integer.valueOf(TextTra.getText())*2.55)));
+        TextColorBtn.setBackground(
+                new Color(TextColorBtn.getBackground().getRed(),TextColorBtn.getBackground().getGreen()
+                        ,TextColorBtn.getBackground().getBlue(),(int)(Integer.valueOf(TextTra.getText())*2.55)));
     }
     void setLineSD(int n){
         choice.select(n);

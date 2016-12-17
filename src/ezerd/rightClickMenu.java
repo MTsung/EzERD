@@ -46,7 +46,7 @@ public class rightClickMenu extends PopupMenu{
                     for (object p : parent.WorkSpace.activePage.Points) {
                         if (p.ObjID == parent.WorkSpace.activePage.CopyObj.ID) {
                             parent.WorkSpace.activePage.undos.add(1);
-                            parent.WorkSpace.activePage.RePoints.removeAllElements();
+                            parent.WorkSpace.activePage.RedoPoints.removeAllElements();
                             parent.WorkSpace.activePage.redos.removeAllElements();
                             if (p.ObjEnum == objEnum.rectangle) {
                                 o = new objRectangle(parent.WorkSpace.activePage, p.PenColor, p.BGColor, p.TextColor,

@@ -20,6 +20,7 @@ public class objCircular extends obj{
     }
     objCircular(page p,Color c,Color c1,Color c2,float s,int id,int n,String S,Boolean V){
         super(p,c,c1,c2,s,id,n,S,V);
+        ObjEnum=ObjEnum.circular;
     }
     @Override
     public void paintObj(Graphics g) {

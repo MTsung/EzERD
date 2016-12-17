@@ -23,8 +23,7 @@ public class page extends Panel{
     Boolean PaintObj=true,ObjArrowJ=false,ArrowPaint=true;
     ezERD parent;
     Point Sp,Ep;
-    Vector<object> Points,UndoPoints,RePoints;
-    Vector<objPoint> UnObjPoints,ReObjPoints;
+    Vector<object> Points,UndoPoints,RedoPoints;
     Vector<objArrowXY> ObjArrowXYs,ReObjArrowXYs;
     Vector<obj> Objs;
     Stack<Integer> undos,redos;
@@ -41,13 +40,11 @@ public class page extends Panel{
         super();      
         parent=p;      
         Objs=new Vector<obj>();
-        UnObjPoints=new Vector<objPoint>();
-        ReObjPoints=new Vector<objPoint>();
         ObjArrowXYs=new Vector<objArrowXY>();
         ReObjArrowXYs=new Vector<objArrowXY>();
         Points=new Vector<object>();
         UndoPoints=new Vector<object>();
-        RePoints=new Vector<object>();
+        RedoPoints=new Vector<object>();
         undos=new Stack<Integer>();
         redos=new Stack<Integer>();
         PageActionEnum=PageActionEnum.idle;
@@ -155,11 +152,11 @@ public class page extends Panel{
                 } else if(ObjEnum == ObjEnum.graffiti){
                     if(undo!=0)
                         undos.add(undo);
-                    RePoints.removeAllElements();
+                    RedoPoints.removeAllElements();
                     redos.removeAllElements();
                 } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null && Ep != null) {
                     undos.add(1);
-                    RePoints.removeAllElements();
+                    RedoPoints.removeAllElements();
                     redos.removeAllElements();
                     Graphics2D g = (Graphics2D)page.this.getGraphics();
                     g.setColor(temp.LineColorBtn.getBackground());
@@ -169,7 +166,7 @@ public class page extends Panel{
                 } else if (PageActionEnum==PageActionEnum.creatingObject) {
                     if (Ep != null && Sp.x != Ep.x && Sp.y != Ep.y) {
                         undos.add(1);
-                        RePoints.removeAllElements();
+                        RedoPoints.removeAllElements();
                         redos.removeAllElements();
                         Graphics g = page.this.getGraphics();
                         g.setXORMode(Color.yellow);
@@ -259,7 +256,6 @@ public class page extends Panel{
         }else{
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(0,0);
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(0,0);
-            parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextTra(100);
             MoveNode.HideNode();
         }
         
@@ -282,6 +278,7 @@ public class page extends Panel{
                 drawAL(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y, g2,p.LineSD);
             } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 obj o = null;
+                System.out.println(p.ObjEnum);
                 if (p.ObjEnum == ObjEnum.rectangle) {
                     o = new objRectangle(this, p.PenColor, p.BGColor, p.TextColor, p.PenSize, p.ObjID, p.LineSD, p.str,p.Visible);
                 } else if (p.ObjEnum == ObjEnum.circular) {

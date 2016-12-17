@@ -55,4 +55,28 @@ public class object {
         h=H;
         Visible=V;
     }
+    object(object o){
+        move(o);
+    }
+    void move(object o){
+        
+        Sp = o.Sp;
+        Ep = o.Ep;
+        PenSize = o.PenSize;
+        PenColor = o.PenColor;
+        BGColor = o.BGColor;
+        TextColor = o.TextColor;
+        ObjEnum = o.ObjEnum;
+        ObjID = o.ObjID;
+        LineSD = o.LineSD;
+        str = o.str;
+        Angle = o.Angle;
+        Tra =o.Tra;
+        x = o.x;
+        y = o.y;
+        w = o.w;
+        h = o.h;
+        Visible = o.Visible;
+    }
+
 }
