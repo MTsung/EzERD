@@ -22,6 +22,7 @@ public class objDiamond extends obj{
     }
     objDiamond(page p,Color c,Color c1,Color c2,float s,int id,int n,String S,Boolean V){
         super(p,c,c1,c2,s,id,n,S,V);
+        ObjEnum=ObjEnum.diamond;
     }
 
     @Override
