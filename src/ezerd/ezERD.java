@@ -13,26 +13,26 @@ import java.io.*;
  * @author CMC
  */
 public class ezERD {
-    mainWin MainWin;
-    topToolBar TopToolBar;
-    messageBar MessageBar;
-    workSpace WorkSpace;
-    pageToolBar PageToolBar;
-    pageScrollPane PageScrollPane;
-    toolBar ToolBar;
-    attributesToolBar AttributesToolBar;
+    ezMainWin MainWin;
+    ezTopToolBar TopToolBar;
+    ezMessageBar MessageBar;
+    ezWorkSpace WorkSpace;
+    ezPageToolBar PageToolBar;
+    ezPageScrollPane PageScrollPane;
+    ezToolBar ToolBar;
+    ezAttributesToolBar AttributesToolBar;
     int TotalPages=1;
     int CurPage=0;
     
     ezERD() {
-        MainWin =new mainWin(this);
-        TopToolBar=new topToolBar(this);
-        MessageBar=new messageBar(this);
-        WorkSpace=new workSpace(this);
-        ToolBar=new toolBar(this);
-        AttributesToolBar=new attributesToolBar(this);
-        PageToolBar=new pageToolBar(WorkSpace);
-        PageScrollPane=new pageScrollPane(this);
+        MainWin =new ezMainWin(this);
+        TopToolBar=new ezTopToolBar(this);
+        MessageBar=new ezMessageBar(this);
+        WorkSpace=new ezWorkSpace(this);
+        ToolBar=new ezToolBar(this);
+        AttributesToolBar=new ezAttributesToolBar(this);
+        PageToolBar=new ezPageToolBar(WorkSpace);
+        PageScrollPane=new ezPageScrollPane(this);
         
         MainWin.addToolBar(ToolBar);
         MainWin.addWorkSpace(WorkSpace);
@@ -40,7 +40,7 @@ public class ezERD {
         MainWin.addMessagebar(MessageBar);
         WorkSpace.addPageToolBar(PageToolBar);
         WorkSpace.addPageScrollPane(PageScrollPane);
-        PageScrollPane.addPage(new page(this),"NewPage.sss");
+        PageScrollPane.addPage(new ezPage(this),"NewPage.sss");
         MainWin.addAttributesToolBar(AttributesToolBar);
     }
     void run(){
@@ -52,7 +52,7 @@ public class ezERD {
         try {
             File selectedFile = new File("Language.ini");
             BufferedReader br = new BufferedReader(new FileReader(selectedFile));
-            new ezerdLanguage(this,br.readLine());
+            new ezLanguage(this,br.readLine());
         } catch (Exception ex) {
         }
     }
