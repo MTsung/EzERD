@@ -367,7 +367,7 @@ public class ezPage extends Panel{
         else{
             parent.AttributesToolBar.ObjList.setActiveObj(0);
         }
-        //this.repaint();
+        this.repaint();
     }
      
      /*http://blog.csdn.net/wqjsir/article/details/6095277*/

@@ -49,9 +49,7 @@ public class ezKeyListener implements KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_DELETE){
             parent.TopToolBar.DelBtn.doClick();
         }
-        //System.out.println(e.getKeyCode());
         parent.MainWin.requestFocusInWindow();
-               
     }
 
     @Override

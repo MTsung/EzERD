@@ -18,6 +18,7 @@ public class ezMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-            (new ezERD()).run();
+        ezERD EzERD=new ezERD();
+        EzERD.run();
     }
 }

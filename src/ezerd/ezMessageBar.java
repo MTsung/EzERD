@@ -22,8 +22,7 @@ public class ezMessageBar extends Panel{
     
     public void updatePageInfo()
     {
-        //pageInfo.setText(""+ parent.curPage + "/" + parent.totalPages);
-        pageInfo.setText("(" + XY.x + "," + XY.y + ")");// +parent.totalPages);
+        pageInfo.setText("(" + XY.x + "," + XY.y + ")");
     }
     
     public void updateMessage()

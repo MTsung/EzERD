@@ -54,8 +54,6 @@ public class ezColorWin extends Frame{
                     AttributesToolBar.AttributesBox.ObjAttributesPanel.setBGColor(ColorTextPanel.getColor());
                 }
                 ezColorWin.this.setVisible(false);
-                //if(AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null)
-                    //AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
             }
         });
         

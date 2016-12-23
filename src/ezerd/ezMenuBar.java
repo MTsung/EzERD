@@ -156,21 +156,7 @@ public class ezMenuBar extends MenuBar{
                     Logger.getLogger(ezMenuBar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });/*
-        JP= new MenuItem("日本語(Japan)");
-        JP.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    File selectedFile = new File("Language.ini");
-                    PrintWriter pw   = new PrintWriter(selectedFile);
-                    pw.write("Japan");     
-                    pw.close();
-                    menuBar.this.parent.setLanguage();
-                } catch (IOException ex) {
-                    Logger.getLogger(menuBar.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });*/
+        });
         EN= new MenuItem("English");
         EN.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

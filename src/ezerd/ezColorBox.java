@@ -32,8 +32,6 @@ public class ezColorBox extends Panel{
                 ezColorBox.this.repaint();
             }
             public void mouseMoved(MouseEvent e) {
-                //AttributesToolBar.parent.MessageBar.XY=e.getPoint();
-                //AttributesToolBar.parent.MessageBar.updateMessage();
             }
         });
         this.addMouseListener(new MouseAdapter(){
@@ -43,16 +41,6 @@ public class ezColorBox extends Panel{
                 ezColorBox.this.repaint();
             }
             public void mouseReleased(MouseEvent e){
-                /*
-                if (parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj != null
-                        && parent.AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum == pageActionEnum.idle) {
-                    for (object o : parent.AttributesToolBar.parent.WorkSpace.activePage.Points) {
-                        if (o.ObjID == parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.ID) {
-                            //AttributesToolBar.parent.WorkSpace.activePage.undos.add(-2);
-                            o.PenColor = new Color(ColorInt);
-                        }
-                    }
-                }*/
             }
         });
         for(Component a:this.getComponents())/**/
@@ -119,13 +107,10 @@ public class ezColorBox extends Panel{
         paint(g);
     }
     public void paint(Graphics g){
-        
         bufferImage = createImage(ColorBoxWidth+1, ColorBoxWidth+36);
         bufferGraphics = bufferImage.getGraphics();
-        
         for(int i=0;i<=ColorBoxWidth;i++){
             for(int j=0;j<=ColorBoxWidth;j++){
-                //System.out.println((float)i/nnn );
                 bufferGraphics.setColor(new Color(Color.HSBtoRGB((float)(XX+4)/ColorBoxWidth , (float)i/ColorBoxWidth , (float)j/ColorBoxWidth)));
                 bufferGraphics.drawLine(i, j+35 , i , j+35);
             }
@@ -150,12 +135,6 @@ public class ezColorBox extends Panel{
         g.drawImage(bufferImage, 0, 0, this);
         BufferedImage bufImg = (BufferedImage) bufferImage;
         ColorInt=bufImg.getRGB(X,Y);
-        if(parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj!=null
-                &&parent.AttributesToolBar.parent.WorkSpace.activePage.PageActionEnum==ezPageActionEnum.idle){
-            //parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.PenColor=new Color(ColorInt);
-            parent.AttributesToolBar.parent.WorkSpace.activePage.activeObj.repaint();
-        }
-        //parent.AttributesToolBar.parent.WorkSpace.activePage.PenColor=new Color(ColorInt);
         parent.ColorTextPanel.setColor(new Color(ColorInt));
         parent.ColorTextPanel.TextRGB[0].setText(""+new Color(ColorInt).getRed());
         parent.ColorTextPanel.TextRGB[1].setText(""+new Color(ColorInt).getGreen());
@@ -164,7 +143,5 @@ public class ezColorBox extends Panel{
         parent.ColorTextPanel.TextHSB[1].setText(""+(float)X/ColorBoxWidth*100);
         parent.ColorTextPanel.TextHSB[2].setText(""+(float)(Y-35)/ColorBoxWidth*100);
         parent.AttributesToolBar.parent.MainWin.requestFocusInWindow();
-        
-        
     } 
 }

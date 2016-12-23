@@ -54,6 +54,7 @@ public abstract class ezObj extends Component {
                 }else if(parent.PageActionEnum==ezPageActionEnum.moving){
                     if(Ep==null)
                         ezObj.this.addUndo();
+//                    System.out.println(ezObj.this);
                     Ep = e.getPoint();
                     ezObj.this.setObjLocation(X + (Ep.x - Sp.x),
                                          Y + (Ep.y - Sp.y),false);
