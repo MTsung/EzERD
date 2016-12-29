@@ -59,7 +59,7 @@ public class ezPage extends Panel{
                 ezObjAttributesPanel temp=parent.AttributesToolBar.AttributesBox.ObjAttributesPanel;
                 //System.out.println("mouseReleased");
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                }else if(ObjEnum == ObjEnum.graffiti){
+                }else if(PageActionEnum==PageActionEnum.creatingGraffiti){
                     Graphics2D g = (Graphics2D)ezPage.this.getGraphics();    
                     g.setStroke(new BasicStroke(PenSize,CAP_ROUND,JOIN_ROUND));
                     g.setColor(temp.LineColorBtn.getBackground());
@@ -69,7 +69,7 @@ public class ezPage extends Panel{
                                 temp.TextColorBtn.getBackground(),ObjEnum.graffiti,0,0,""));
                     Sp=Ep;
                     undo++; 
-                }else if(ObjEnum==ObjEnum.arrow && Sp!=null){
+                }else if(PageActionEnum==PageActionEnum.creatingArrow && Sp!=null){
                     Graphics2D g = (Graphics2D)ezPage.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
@@ -77,7 +77,7 @@ public class ezPage extends Panel{
                     }
                     Ep = e.getPoint();
                     drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
-                }else if(PageActionEnum==PageActionEnum.creatingObject){
+                }else if(PageActionEnum==PageActionEnum.creatingObj){
                     Graphics g = ezPage.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
@@ -108,7 +108,7 @@ public class ezPage extends Panel{
             @Override
             public void mouseMoved(MouseEvent e) {
                 ezObjAttributesPanel temp=parent.AttributesToolBar.AttributesBox.ObjAttributesPanel;
-                if (ObjEnum == ObjEnum.arrow && ObjArrowJ && Sp!=null) {
+                if (PageActionEnum==PageActionEnum.creatingArrow && ObjArrowJ && Sp!=null) {
                     Graphics2D g = (Graphics2D)ezPage.this.getGraphics();
                     g.setXORMode(Color.yellow);
                     if (Ep != null) {
@@ -127,18 +127,16 @@ public class ezPage extends Panel{
             public void mousePressed(MouseEvent e){
                 //System.out.println("mousePressed");
                 PenSize=Float.valueOf(parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.PenSizeText.getText());
-                if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                }else if(ObjEnum == ObjEnum.graffiti){
+                if(PageActionEnum==PageActionEnum.creatingGraffiti){
                     Sp=e.getPoint();
                     undo=0;
-                }else if(SObj!=null||EObj!=null){
+                } else if (PageActionEnum == PageActionEnum.creatingArrow && (SObj != null || EObj != null)) {
                     SObj=EObj=null;
                     ObjArrowJ=false;
-                }else if(ObjEnum==ObjEnum.arrow){
+                }else if(PageActionEnum == PageActionEnum.creatingArrow){
                     Sp=e.getPoint();
-                }else if(PageActionEnum == PageActionEnum.ready2createObject ){
+                }else if(PageActionEnum == PageActionEnum.creatingObj ){
                     Sp = e.getPoint();
-                    PageActionEnum = PageActionEnum.creatingObject;
                 }
                 setActiveObj(null);
             }
@@ -150,12 +148,12 @@ public class ezPage extends Panel{
                 if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
                     popupMenu1.XY=e.getPoint();
                     popupMenu1.show(ezPage.this, e.getX(), e.getY());
-                } else if(ObjEnum == ObjEnum.graffiti){
+                } else if(PageActionEnum == PageActionEnum.creatingGraffiti){
                     if(undo!=0)
                         undos.add(undo);
                     RedoPoints.removeAllElements();
                     redos.removeAllElements();
-                } else if (ObjEnum == ObjEnum.arrow && SObj == null && EObj == null && Ep != null) {
+                } else if (PageActionEnum == PageActionEnum.creatingArrow && SObj == null && EObj == null && Ep != null) {
                     undos.add(1);
                     RedoPoints.removeAllElements();
                     redos.removeAllElements();
@@ -164,7 +162,7 @@ public class ezPage extends Panel{
                     drawAL(Sp.x,Sp.y,Ep.x,Ep.y,g,temp.choice.getSelectedIndex());
                     Points.add(new ezObject(Sp,Ep,1,temp.LineColorBtn.getBackground(),temp.BGColorBtn.getBackground(),
                                 temp.TextColorBtn.getBackground(),ObjEnum,0,temp.choice.getSelectedIndex(),""));
-                } else if (PageActionEnum==PageActionEnum.creatingObject) {
+                } else if (PageActionEnum==PageActionEnum.creatingObj) {
                     if (Ep != null && Sp.x != Ep.x && Sp.y != Ep.y) {
                         undos.add(1);
                         RedoPoints.removeAllElements();
@@ -204,7 +202,6 @@ public class ezPage extends Panel{
                         o.setTra(Integer.valueOf(temp.TextTra.getText()), false);
                         o.setXYwh();
                     }
-                    PageActionEnum=PageActionEnum.ready2createObject;
                 }  
                 //page.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 Ep=Sp=null;
@@ -230,17 +227,19 @@ public class ezPage extends Panel{
         g.drawImage(paintPage(), 0, 0, this);
         parent.MainWin.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         parent.TopToolBar.UndoBtn.setEnabled(undos.size() != 0 );
-        parent.MainWin.MenuBar.undoM.setEnabled(undos.size() != 0);
+        parent.MainWin.MenuBar.UndoM.setEnabled(undos.size() != 0);
         popupMenu1.UndoMenuItem.setEnabled(undos.size() != 0);
         parent.TopToolBar.RedoBtn.setEnabled(redos.size() != 0);
-        parent.MainWin.MenuBar.redoM.setEnabled(redos.size() != 0);
+        parent.MainWin.MenuBar.RedoM.setEnabled(redos.size() != 0);
         popupMenu1.RedoMenuItem.setEnabled(redos.size() != 0);
         parent.TopToolBar.CopyBtn.setEnabled(activeObj != null);
         parent.TopToolBar.DelBtn.setEnabled(activeObj != null);
-        parent.MainWin.MenuBar.copyM.setEnabled(activeObj != null);
+        popupMenu1.DelMenuItem.setEnabled(activeObj != null);
+        parent.MainWin.MenuBar.DelM.setEnabled(activeObj != null);
+        parent.MainWin.MenuBar.CopyM.setEnabled(activeObj != null);
         popupMenu1.CopyMenuItem.setEnabled(activeObj != null);
         parent.TopToolBar.PasteBtn.setEnabled(CopyObj != null);
-        parent.MainWin.MenuBar.pasteM.setEnabled(CopyObj != null);
+        parent.MainWin.MenuBar.PasteM.setEnabled(CopyObj != null);
         popupMenu1.PasteMenuItem.setEnabled(CopyObj != null);
         if(!parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().endsWith("*")&&undos.size()!=0)
                     parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).setText(
@@ -250,7 +249,7 @@ public class ezPage extends Panel{
         parent.AttributesToolBar.AttributesBox.PageSizePanel.PageH.setText(""+PageHeight);
         if(activeObj!=null){
             parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setActiveObjAtt(activeObj);
-            if(PageActionEnum!=PageActionEnum.moving && activeObj.isVisible()&&MoveNode.isRotateing()){
+            if(activeObj.isVisible() && MoveNode.isRotateing()){
                 MoveNode.ShowNode();
             }else
                 MoveNode.HideNode();
@@ -279,7 +278,7 @@ public class ezPage extends Panel{
                 drawAL(p.Sp.x, p.Sp.y, p.Ep.x, p.Ep.y, g2,p.LineSD);
             } else if (p.ObjEnum != ObjEnum.graffiti && PaintObj) {
                 ezObj o = null;
-                System.out.println(p.ObjEnum);
+                //System.out.println(p.ObjEnum);
                 if (p.ObjEnum == ObjEnum.rectangle) {
                     o = new ezObjRectangle(this, p.PenColor, p.BGColor, p.TextColor, p.PenSize, p.ObjID, p.LineSD, p.str,p.Visible);
                 } else if (p.ObjEnum == ObjEnum.circular) {

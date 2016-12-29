@@ -23,33 +23,33 @@ import javax.swing.event.*;
 public class ezMenuBar extends MenuBar{
     ezERD parent;
     Menu  FileMenu, EditMenu, LanguageMenu,ExportFileMenu,CachingPageMenu,AllPageMenu,PageMenu;
-    MenuItem newM,cloM,openM,saveM,undoM,redoM,TW,EN,JpgM,PngM,GifM,BmpM,copyM,pasteM;
+    MenuItem NewM,CloseM,OpenM,SaveM,UndoM,RedoM,TW,EN,JpgM,PngM,GifM,BmpM,CopyM,PasteM,DelM;
     ezMenuBar(ezERD p){
         super();
         parent=p;
         this.setFont(new ezFont());
         FileMenu = new Menu("File");
-        newM = new MenuItem("New Page(Ctrl+N)");
-        newM.addActionListener(new ActionListener() {
+        NewM = new MenuItem("New Page(Ctrl+N)");
+        NewM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.NewPageBtn.doClick();
             }
         });
-        cloM = new MenuItem("Close Page(Ctrl+W)");
-        cloM.addActionListener(new ActionListener() {
+        CloseM = new MenuItem("Close Page(Ctrl+W)");
+        CloseM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.ClosePageBtn.doClick();
             }
         });
         
-        openM = new MenuItem("Open File(Ctrl+O)");
-        openM.addActionListener(new ActionListener() {
+        OpenM = new MenuItem("Open File(Ctrl+O)");
+        OpenM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.OpenBtn.doClick();
             }
         });
-        saveM = new MenuItem("Save File(Ctrl+S)");
-        saveM.addActionListener(new ActionListener() {
+        SaveM = new MenuItem("Save File(Ctrl+S)");
+        SaveM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.SaveBtn.doClick();
             }
@@ -83,27 +83,27 @@ public class ezMenuBar extends MenuBar{
         AllPageMenu=new Menu("All Page");
         
         EditMenu = new Menu("Edit");
-        undoM = new MenuItem("Undo(Ctrl+Z)");
-        undoM.addActionListener(new ActionListener() {
+        UndoM = new MenuItem("Undo(Ctrl+Z)");
+        UndoM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.UndoBtn.doClick();
             }
         });
-        redoM = new MenuItem("Redo(Ctrl+Y)");
-        redoM.addActionListener(new ActionListener() {
+        RedoM = new MenuItem("Redo(Ctrl+Y)");
+        RedoM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.TopToolBar.RedoBtn.doClick();
             }
         });
-        copyM = new MenuItem("Copy(Ctrl+C)");
-        copyM.addActionListener(new ActionListener() {
+        CopyM = new MenuItem("Copy(Ctrl+C)");
+        CopyM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.CopyObj=parent.WorkSpace.activePage.activeObj;
-                pasteM.setEnabled(true);
+                PasteM.setEnabled(true);
             }
         });
-        pasteM = new MenuItem("Paste(Ctrl+V)");
-        pasteM.addActionListener(new ActionListener() {
+        PasteM = new MenuItem("Paste(Ctrl+V)");
+        PasteM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ezObj o=null;
                 try {
@@ -140,6 +140,12 @@ public class ezMenuBar extends MenuBar{
             }
         });
         
+        DelM = new MenuItem("Delete(Delete)");
+        DelM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.TopToolBar.DelBtn.doClick();
+            }
+        });
         PageMenu = new  Menu("Page");
         
         LanguageMenu = new Menu("Language");
@@ -176,19 +182,20 @@ public class ezMenuBar extends MenuBar{
         this.add(EditMenu);
         this.add(PageMenu);
         this.add(LanguageMenu);
-        FileMenu.add(newM);
-        FileMenu.add(cloM);
-        FileMenu.add(openM);
-        FileMenu.add(saveM);
+        FileMenu.add(NewM);
+        FileMenu.add(CloseM);
+        FileMenu.add(OpenM);
+        FileMenu.add(SaveM);
         FileMenu.add(ExportFileMenu);
         ExportFileMenu.add(JpgM);
         ExportFileMenu.add(PngM);
         ExportFileMenu.add(GifM);
         ExportFileMenu.add(BmpM);
-        EditMenu.add(undoM);
-        EditMenu.add(redoM);
-        EditMenu.add(copyM);
-        EditMenu.add(pasteM);
+        EditMenu.add(UndoM);
+        EditMenu.add(RedoM);
+        EditMenu.add(CopyM);
+        EditMenu.add(PasteM);
+        EditMenu.add(DelM);
         PageMenu.add(AllPageMenu);
         PageMenu.add(CachingPageMenu);
         LanguageMenu.add(TW);

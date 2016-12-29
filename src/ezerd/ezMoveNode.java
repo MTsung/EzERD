@@ -21,7 +21,7 @@ public class ezMoveNode{
     ezPage parent;
     Point Sp, Ep;
     Panel[] Node = new Panel[8];
-    Panel N;
+    Panel AngleNode;
     int NodeW = 10, w, h,x,y,TempAngle;
     Cursor CursorTemp;
     Boolean P=true;
@@ -29,11 +29,11 @@ public class ezMoveNode{
     ezMoveNode(ezPage p) {
         super();
         parent = p;
-        N=new Panel();
-        N.setSize(15, 15);
-        N.setBackground(Color.GREEN);
-        N.setVisible(false);
-        parent.add(N,0);
+        AngleNode=new Panel();
+        AngleNode.setSize(15, 15);
+        AngleNode.setBackground(Color.GREEN);
+        AngleNode.setVisible(false);
+        parent.add(AngleNode,0);
         for (int i = 0; i < 8; i++) {
             Node[i] = new Panel();
             Node[i].setSize(NodeW, NodeW);
@@ -290,7 +290,7 @@ public class ezMoveNode{
             }
         });
 
-        N.addMouseMotionListener(new MouseAdapter() {
+        AngleNode.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 int tt =(int) Math.toDegrees(Math.atan(
@@ -308,7 +308,7 @@ public class ezMoveNode{
                 parent.repaint();
             }
         });
-        N.addMouseListener(new MouseAdapter() {
+        AngleNode.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 Sp = new Point(parent.activeObj.getLocationOnScreen().x + parent.activeObj.getWidth() / 2,
@@ -333,7 +333,7 @@ public class ezMoveNode{
         for (Panel p : Node) {
             p.setVisible(true);
         }
-        N.setVisible(true);
+        AngleNode.setVisible(true);
         int Angle = parent.activeObj.Angle;
     
         int X = parent.activeObj.getX(), Y = parent.activeObj.getY(),
@@ -341,7 +341,7 @@ public class ezMoveNode{
         Node[0].setLocation(X - 3 - NodeW, Y - 3 - NodeW);
         Node[1].setLocation(X + W / 2 - NodeW / 2, Y - 3 - NodeW);
         Node[2].setLocation(X + W + 3, Y - 3 - NodeW);
-        N.setLocation(X + W / 2 - 15 / 2,Y - 30);
+        AngleNode.setLocation(X + W / 2 - 15 / 2,Y - 30);
         Node[3].setLocation(X - 3 - NodeW, Y + H / 2 - NodeW / 2);
         Node[4].setLocation(X + W + 3, Y + H / 2 - NodeW / 2);
         Node[5].setLocation(X - 3 - NodeW, Y + H + 3);
@@ -358,6 +358,6 @@ public class ezMoveNode{
         for (Panel p : Node) {
             p.setVisible(false);
         }
-        N.setVisible(false);
+        AngleNode.setVisible(false);
     }
 }

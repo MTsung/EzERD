@@ -35,7 +35,7 @@ public class ezPageScrollPane extends ScrollPane{
         parent.WorkSpace.Pages.add(p);
         parent.ToolBar.ChoBtn.doClick();
     }
-    void cloPage(){
+    void closePage(){
         parent.PageToolBar.delButton();
     }
 }

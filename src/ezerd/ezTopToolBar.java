@@ -73,9 +73,9 @@ public class ezTopToolBar extends Panel{
                         if(0==JOptionPane.showConfirmDialog(null, ClosingMessage + 
                                                                 parent.PageToolBar.Btns.elementAt(parent.PageToolBar.activeButton()).getText().replace("*","") 
                                                                 + ClosingMessage1,Mess,2,JOptionPane.PLAIN_MESSAGE ) )
-                            parent.PageScrollPane.cloPage();
+                            parent.PageScrollPane.closePage();
                     }else
-                        parent.PageScrollPane.cloPage();
+                        parent.PageScrollPane.closePage();
             }
         });
         

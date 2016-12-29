@@ -10,5 +10,5 @@ package ezerd;
  * @author CMC
  */
 public enum ezPageActionEnum {
-    idle,ready2createObject,creatingObject,moving
+    idle,creatingGraffiti,creatingArrow,creatingObj
 }

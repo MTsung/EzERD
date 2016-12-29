@@ -16,7 +16,7 @@ import javax.swing.event.*;
  */
 public class ezRightClickMenu extends PopupMenu{
     ezERD parent;
-    MenuItem UndoMenuItem,RedoMenuItem,CopyMenuItem,PasteMenuItem;
+    MenuItem UndoMenuItem,RedoMenuItem,CopyMenuItem,PasteMenuItem,DelMenuItem;
     Point XY;
     ezRightClickMenu(ezERD p){
         parent=p;
@@ -85,9 +85,16 @@ public class ezRightClickMenu extends PopupMenu{
                 }
             }
         });
+        DelMenuItem = new MenuItem("Delete");
+        DelMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.TopToolBar.DelBtn.doClick();
+            }
+        });
         this.add(UndoMenuItem);
         this.add(RedoMenuItem);
         this.add(CopyMenuItem);
         this.add(PasteMenuItem);
+        this.add(DelMenuItem);
     }
 }

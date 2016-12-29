@@ -41,8 +41,7 @@ public class ezToolBar extends Panel{
         ChoBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                creatingObj(ezObjEnum.N,ChoBtn);
-                parent.WorkSpace.activePage.PageActionEnum=ezPageActionEnum.idle;
+                creatingObj(ezPageActionEnum.idle,ezObjEnum.N,ChoBtn);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -53,7 +52,7 @@ public class ezToolBar extends Panel{
         GraffitiBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                creatingObj(ezObjEnum.graffiti,GraffitiBtn);
+                creatingObj(ezPageActionEnum.creatingGraffiti,ezObjEnum.graffiti,GraffitiBtn);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
             }
         });
@@ -62,9 +61,9 @@ public class ezToolBar extends Panel{
         ArrBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                creatingObj(ezPageActionEnum.creatingArrow,ezObjEnum.arrow,ArrBtn);
                 parent.WorkSpace.activePage.setActiveObj(null);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(ezObjEnum.arrow,ArrBtn);
             }
         });
         RecBtn.setBackground(this.getBackground());
@@ -72,8 +71,8 @@ public class ezToolBar extends Panel{
         RecBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                creatingObj(ezPageActionEnum.creatingObj,ezObjEnum.rectangle,RecBtn);
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(ezObjEnum.rectangle,RecBtn);
             }
         });
         DiaBtn.setBackground(this.getBackground());
@@ -82,7 +81,7 @@ public class ezToolBar extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(ezObjEnum.diamond,DiaBtn);
+                creatingObj(ezPageActionEnum.creatingObj,ezObjEnum.diamond,DiaBtn);
             }
         });
         CirBtn.setBackground(this.getBackground());
@@ -91,7 +90,7 @@ public class ezToolBar extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(ezObjEnum.circular,CirBtn);
+                creatingObj(ezPageActionEnum.creatingObj,ezObjEnum.circular,CirBtn);
             }
         });
         TextBtn.setBackground(this.getBackground());
@@ -100,7 +99,7 @@ public class ezToolBar extends Panel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.WorkSpace.activePage.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                creatingObj(ezObjEnum.text,TextBtn);
+                creatingObj(ezPageActionEnum.creatingObj,ezObjEnum.text,TextBtn);
             }
         });
         
@@ -118,7 +117,7 @@ public class ezToolBar extends Panel{
         
     }
     
-    void creatingObj(ezObjEnum obj,JButton Btn)
+    void creatingObj(ezPageActionEnum page,ezObjEnum obj,JButton Btn)
     {
         for (Component b : this.getComponents()) {
             if (b == Btn) {
@@ -128,7 +127,7 @@ public class ezToolBar extends Panel{
             }
         }
         if(parent.WorkSpace.activePage!=null){ 
-            parent.WorkSpace.activePage.PageActionEnum = ezPageActionEnum.ready2createObject;
+            parent.WorkSpace.activePage.PageActionEnum = page;
             parent.WorkSpace.activePage.ObjEnum = obj;
         }
     }

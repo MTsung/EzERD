@@ -46,39 +46,35 @@ public abstract class ezObj extends Component {
         str=S;
         Visible=V;
         this.setVisible(Visible);
-        this.addMouseMotionListener(new MouseAdapter(){
+        this.addMouseMotionListener(new MouseAdapter() {
             @Override
-            public void mouseDragged(MouseEvent e){
-                if(parent.ObjEnum==ezObjEnum.arrow){
-                    
-                }else if(parent.PageActionEnum==ezPageActionEnum.moving){
-                    if(Ep==null)
-                        ezObj.this.addUndo();
-//                    System.out.println(ezObj.this);
-                    Ep = e.getPoint();
-                    ezObj.this.setObjLocation(X + (Ep.x - Sp.x),
-                                         Y + (Ep.y - Sp.y),false);
+            public void mouseDragged(MouseEvent e) {
+                if (Ep == null) {
+                    ezObj.this.addUndo();
                 }
-                parent.ArrowPaint=true;
-            } 
+                Ep = e.getPoint();
+                ezObj.this.setObjLocation(X + (Ep.x - Sp.x),
+                        Y + (Ep.y - Sp.y), false);
+                parent.ArrowPaint = true;
+            }
             @Override
             public void mouseMoved(MouseEvent e) {
                 if (parent.ObjArrowJ) {
                     Graphics2D g = (Graphics2D) parent.getGraphics();
                     g.setColor(Color.BLUE);
                     g.setStroke(new BasicStroke(2, CAP_ROUND, JOIN_ROUND));
-                    g.drawRect(ezObj.this.getX()-3, ezObj.this.getY()-3,
-                                ezObj.this.getWidth() + 6, ezObj.this.getHeight() + 6);
-                    
-                    Graphics2D g2 = (Graphics2D)parent.getGraphics();
+                    g.drawRect(ezObj.this.getX() - 3, ezObj.this.getY() - 3,
+                            ezObj.this.getWidth() + 6, ezObj.this.getHeight() + 6);
+
+                    Graphics2D g2 = (Graphics2D) parent.getGraphics();
                     g2.setXORMode(Color.yellow);
                     if (parent.Ep != null) {
-                        drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2
-                        ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex());
+                        drawAL(parent.Sp.x, parent.Sp.y, parent.Ep.x, parent.Ep.y, g2,
+                                 parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex());
                     }
-                    parent.Ep=new Point(ezObj.this.getX()+e.getX(),ezObj.this.getY()+e.getY());
-                    drawAL(parent.Sp.x,parent.Sp.y,parent.Ep.x,parent.Ep.y,g2
-                        ,parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex());
+                    parent.Ep = new Point(ezObj.this.getX() + e.getX(), ezObj.this.getY() + e.getY());
+                    drawAL(parent.Sp.x, parent.Sp.y, parent.Ep.x, parent.Ep.y, g2,
+                             parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.choice.getSelectedIndex());
                 }
                 if (parent.ObjEnum == ezObjEnum.arrow) {
                     ezObj.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -90,8 +86,6 @@ public abstract class ezObj extends Component {
         this.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                tempPAE=parent.PageActionEnum;
-                parent.PageActionEnum=ezPageActionEnum.moving;
                 if(parent.ObjEnum==ezObjEnum.arrow&&!parent.ObjArrowJ){
                     parent.ObjArrowJ=true;
                     parent.Sp=new Point(ezObj.this.getX()+ezObj.this.getWidth()/2
@@ -112,39 +106,35 @@ public abstract class ezObj extends Component {
                     parent.EObj=null;
                     parent.repaint();
                     parent.Ep=null;
-                }else if(parent.PageActionEnum==ezPageActionEnum.moving){
-                    Sp=e.getPoint();
-                    parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(ezObj.this.getX(), ezObj.this.getY());
-                    parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(ezObj.this.getWidth(), ezObj.this.getHeight());
-                    
-                    parent.setActiveObj(ezObj.this);
-                    parent.repaint();
                 }
+                Sp = e.getPoint();
+                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(ezObj.this.getX(), ezObj.this.getY());
+                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(ezObj.this.getWidth(), ezObj.this.getHeight());
+
+                parent.setActiveObj(ezObj.this);
+                parent.repaint();
             }
             @Override
-            public void mouseReleased(MouseEvent e){
-                if (parent.ObjEnum == ezObjEnum.arrow) {
-                } else if (parent.PageActionEnum == ezPageActionEnum.moving) {
-                    ezObj.this.setPoints();
-                    parent.PageActionEnum = tempPAE;
-                    if (e.getClickCount() != 1) {
-                        if(TempTextField!=null)
-                            parent.remove(TempTextField);
-                        TempTextField=new TextField(ezObj.this.str);
-                        TempTextField.setLocation(ezObj.this.getX()+20,ezObj.this.getY()+ezObj.this.getHeight()/2-15);
-                        TempTextField.setSize(ezObj.this.getWidth()-40, 30);
-                        TempTextField.setFont(new ezFont());
-                        TempTextField.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                ezObj.this.setText(TempTextField.getText(),true);
-                                parent.remove(TempTextField);
-                                parent.parent.MainWin.requestFocusInWindow();
-                                ezObj.this.repaint();
-                            }
-                        });
-                        parent.add(TempTextField,0);
+            public void mouseReleased(MouseEvent e) {
+                ezObj.this.setPoints();
+                if (e.getClickCount() != 1) {
+                    if (TempTextField != null) {
+                        parent.remove(TempTextField);
                     }
+                    TempTextField = new TextField(ezObj.this.str);
+                    TempTextField.setLocation(ezObj.this.getX() + 20, ezObj.this.getY() + ezObj.this.getHeight() / 2 - 15);
+                    TempTextField.setSize(ezObj.this.getWidth() - 40, 30);
+                    TempTextField.setFont(new ezFont());
+                    TempTextField.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ezObj.this.setText(TempTextField.getText(), true);
+                            parent.remove(TempTextField);
+                            parent.parent.MainWin.requestFocusInWindow();
+                            ezObj.this.repaint();
+                        }
+                    });
+                    parent.add(TempTextField, 0);
                 }
                 parent.repaint();
                 Ep = null;
@@ -152,7 +142,7 @@ public abstract class ezObj extends Component {
                     parent.popupMenu1.XY = new Point(ezObj.this.getX() + e.getX(), ezObj.this.getY() + e.getY());
                     parent.popupMenu1.show(ezObj.this, e.getX(), e.getY());
                 }
-                
+
             }
             @Override
             public void mouseEntered(MouseEvent e) {
