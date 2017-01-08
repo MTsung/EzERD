@@ -371,8 +371,8 @@ public class ezPage extends Panel{
      
      /*http://blog.csdn.net/wqjsir/article/details/6095277*/
     public static void drawAL(int sx, int sy, int ex, int ey, Graphics2D g2,int s) {
-        double H = 20; // 箭头高度  
-        double L = 10; // 底边的一半  
+        double H = 10; // 箭头高度  
+        double L = 6; // 底边的一半  
         int x3 = 0;
         int y3 = 0;
         int x4 = 0;

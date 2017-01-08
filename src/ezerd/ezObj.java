@@ -49,13 +49,15 @@ public abstract class ezObj extends Component {
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (Ep == null) {
-                    ezObj.this.addUndo();
+                if(parent.ObjEnum!=ezObjEnum.arrow){
+                    if (Ep == null) {
+                        ezObj.this.addUndo();
+                    }
+                    Ep = e.getPoint();
+                    ezObj.this.setObjLocation(X + (Ep.x - Sp.x),
+                            Y + (Ep.y - Sp.y), false);
+                    parent.ArrowPaint = true;
                 }
-                Ep = e.getPoint();
-                ezObj.this.setObjLocation(X + (Ep.x - Sp.x),
-                        Y + (Ep.y - Sp.y), false);
-                parent.ArrowPaint = true;
             }
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -106,13 +108,14 @@ public abstract class ezObj extends Component {
                     parent.EObj=null;
                     parent.repaint();
                     parent.Ep=null;
-                }
-                Sp = e.getPoint();
-                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(ezObj.this.getX(), ezObj.this.getY());
-                parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(ezObj.this.getWidth(), ezObj.this.getHeight());
+                }else{
+                    Sp = e.getPoint();
+                    parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextLocation(ezObj.this.getX(), ezObj.this.getY());
+                    parent.parent.AttributesToolBar.AttributesBox.ObjAttributesPanel.setTextSize(ezObj.this.getWidth(), ezObj.this.getHeight());
 
-                parent.setActiveObj(ezObj.this);
-                parent.repaint();
+                    parent.setActiveObj(ezObj.this);
+                    parent.repaint();
+                }
             }
             @Override
             public void mouseReleased(MouseEvent e) {

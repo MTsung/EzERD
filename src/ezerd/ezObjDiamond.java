@@ -50,7 +50,17 @@ public class ezObjDiamond extends ezObj{
         g2.setColor(TextColor);
         if(str!=null){
             g2.setFont(new ezFont());
-            g2.drawString(str,this.getWidth()/2-str.length()*6,this.getHeight()/2+7);
+            int ch = 0;
+            int en = 0;
+            for (int i = 0; i < str.length(); i++) {
+                char c = str.charAt(i);
+                if ((int) c < 256) {
+                    en++;
+                } else {
+                    ch++;
+                }
+            }
+            g2.drawString(str,this.getWidth()/2-(ch*2+en)*5,this.getHeight()/2+7);
         }
         
    }
