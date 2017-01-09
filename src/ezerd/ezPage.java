@@ -167,10 +167,6 @@ public class ezPage extends Panel{
                         undos.add(1);
                         RedoPoints.removeAllElements();
                         redos.removeAllElements();
-                        Graphics g = ezPage.this.getGraphics();
-                        g.setXORMode(Color.yellow);
-                        g.drawRect((Sp.x < Ep.x) ? Sp.x : Ep.x, (Sp.y < Ep.y) ? Sp.y : Ep.y
-                                , Math.abs(Sp.x - Ep.x), Math.abs(Sp.y - Ep.y));
                         ezObj o = null;
                         if (ObjEnum == ObjEnum.rectangle) {
                             o = new ezObjRectangle(ezPage.this,temp.LineColorBtn.getBackground()
